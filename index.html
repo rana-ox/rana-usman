@@ -2,268 +2,101 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Free Notes of IR by Rana | Simplified IR Study Resources</title>
+  <title>IR Notes Hub</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+   <link rel="icon" href="/assets/img/icon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/assests/img/icon.ico" type="image/x-icon">
+  
+  <meta name="description" content="Get the best study hacks, time management tips, and exclusive student benefits like the GitHub Student Developer Pack for Federal Urdu University students.">
+  <meta name="keywords" content="Study Hacks, IR Notes, Federal Urdu University, GitHub Student Pack">
 
-  <!-- Canonical -->
-  <link rel="canonical" href="https://ranausman.me/">
-
-  <!-- SITE ICON -->
-  <link rel="icon" href="/assests/img/icon.ico" type="image/x-icon">
-
-  <!-- Basic SEO -->
-  <meta name="site-name" content="Free Notes of IR by Rana">
-  <meta name="description" content="Free Notes of IR by Rana offers simplified notes, study hacks, and career guidance for International Relations students.">
-  <meta name="keywords" content="Free IR Notes, Study Hacks, International Relations, Federal Urdu University, GitHub Student Pack">
-
-  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ranausman.me/">
-  <meta property="og:title" content="Free Notes of IR by Rana | Simplified IR Study Resources">
-  <meta property="og:description" content="Simplified notes, study hacks, and career guidance for IR students.">
+  <meta property="og:title" content="Study Hacks | IR Notes Hub">
+  <meta property="og:description" content="Unlock smart tips and exclusive student benefits. Federal Urdu University students can now get the GitHub Developer Program for free!">
   <meta property="og:image" content="https://ranausman.me/assests/img/close-up-of-student-studying.jpg">
 
-  <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://ranausman.me/">
-  <meta property="twitter:title" content="Free Notes of IR by Rana | Simplified IR Study Resources">
-  <meta property="twitter:description" content="Simplified notes, study hacks, and career guidance for IR students.">
-  <meta property="twitter:image" content="https://ranausman.me/assests/img/close-up-of-student-studying.jpg">
-
-  <!-- Structured Data: WebSite -->
+  <meta property="twitter:title" content="Study Hacks | IR Notes Hub">
+  <meta property="twitter:description" content="Unlock smart tips and exclusive student benefits. Federal Urdu University students can now get the GitHub Developer Program for free!">
+  <meta property="twitter:image" content="https://ranausman.me/assets/img/close-up-of-student-studying.jpg">
+  
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Free Notes of IR by Rana",
-    "alternateName": "IR Notes",
+    "name": "Notes by Rana Usman",
     "url": "https://ranausman.me/"
   }
   </script>
-
-  <!-- Structured Data: Organization -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Free Notes of IR by Rana",
-    "url": "https://ranausman.me/",
-    "logo": "https://ranausman.me/assests/img/icon.ico",
-    "sameAs": [
-      "https://twitter.com/yourhandle",
-      "https://www.facebook.com/yourhandle"
-    ]
-  }
-  </script>
-
+  
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1914900211366391" crossorigin="anonymous"></script>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
   <style>
-    :root {
-      --bg1: #ff9a9e;
-      --bg2: #fad0c4;
-      --hero1: #00c6ff;
-      --hero2: #0072ff;
-      --accent: #00b8d9;
-      --card-bg: #ffffff;
-      --text-main: #2f2f2f;
-      --text-sub: #555;
-      --yellow: #ffeb3b;
-      --pink1: #ff512f;
-      --pink2: #dd2476;
-    }
-
+    /* Global Resets */
     * { box-sizing: border-box; }
-    body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
-      color: var(--text-main);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      scroll-behavior: smooth;
-      background: linear-gradient(135deg, var(--bg1), var(--bg2));
-    }
+    body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #ff9a9e, #fad0c4); color: #333; min-height: 100vh; display: flex; flex-direction: column; scroll-behavior: smooth; overflow-x: hidden; }
 
-    /* Reduce motion */
-    @media (prefers-reduced-motion: reduce) {
-      * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition: none !important; }
-    }
-
-    /* NAV */
-    nav {
-      background: #222;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 1rem;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    nav h1 {
-      margin: 0 0 10px 0;
-      font-size: 1.5rem;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      text-align: center;
-    }
-    nav ul {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin: 0;
-      padding: 0;
-      gap: 10px;
-    }
-    nav ul li a {
-      color: var(--yellow);
-      text-decoration: none;
-      font-weight: 700;
-      transition: color .2s, background .2s;
-      font-size: 0.95rem;
-      padding: 8px 12px;
-      border-radius: 8px;
-    }
-    nav ul li a:hover { background: rgba(255,255,255,0.1); color: var(--accent); }
+    /* Responsive Navigation */
+    nav { background: #222; color: #fff; display: flex; flex-direction: column; align-items: center; padding: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,.3); position: sticky; top: 0; z-index: 1000; }
+    nav h1 { margin: 0 0 10px 0; font-size: 1.4rem; letter-spacing: 2px; text-transform: uppercase; text-align: center; }
+    nav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; margin: 0; padding: 0; gap: 8px; }
+    nav ul li a { color: #ffeb3b; text-decoration: none; font-weight: 700; transition: color .3s; font-size: 0.85rem; padding: 5px 10px; border-radius: 4px; }
+    nav ul li a:hover { background: rgba(255,255,255,0.1); color: #00e5ff; }
 
     @media (min-width: 768px) {
       nav { flex-direction: row; justify-content: space-between; padding: 1rem 2rem; }
-      nav h1 { margin: 0; font-size: 1.9rem; }
-      nav ul { gap: 16px; }
-      nav ul li a { font-size: 1rem; padding: 9px 14px; }
+      nav h1 { margin: 0; font-size: 1.8rem; }
+      nav ul { gap: 20px; }
+      nav ul li a { font-size: 1rem; }
     }
 
-    /* HERO */
-    .hero {
-      background: linear-gradient(135deg, var(--hero1), var(--hero2));
-      color: #fff;
-      text-align: center;
-      padding: 3.4rem 1.6rem;
-      border-bottom-left-radius: 18px;
-      border-bottom-right-radius: 18px;
-    }
-    .hero h2 { font-size: 2.2rem; margin-bottom: 0.8rem; line-height: 1.2; }
-    .hero p { font-size: 1.05rem; opacity: 0.95; max-width: 760px; margin: 0 auto; }
+    /* Hero Section */
+    .hero { background: linear-gradient(135deg, #00c6ff, #0072ff); color: #fff; text-align: center; padding: 3rem 1.5rem; }
+    .hero h2 { font-size: 1.8rem; margin-bottom: 1rem; line-height: 1.2; }
+    .hero p { font-size: 1rem; opacity: 0.9; }
 
     @media (min-width: 768px) {
-      .hero { padding: 4.2rem 2rem; }
-      .hero h2 { font-size: 2.8rem; }
-      .hero p { font-size: 1.12rem; }
+      .hero { padding: 5rem 2rem; }
+      .hero h2 { font-size: 3rem; }
     }
 
-    /* Ad Space */
-    .ad-container {
-      width: 100%;
-      text-align: center;
-      margin: 1.5rem 0;
-      padding: 0 1rem;
-    }
+    /* Ad Space Styling */
+    .ad-container { width: 100%; text-align: center; margin: 1.5rem 0; padding: 0 1rem; overflow: hidden; }
 
-    /* Cards */
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      padding: 2.2rem 1rem;
-      gap: 1.2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .card {
-      background: var(--card-bg);
-      padding: 1.8rem 1.4rem;
-      border-radius: 12px;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
-      text-align: center;
-      transition: transform 0.18s ease, box-shadow 0.18s ease;
-    }
-    .card:hover { transform: translateY(-3px); box-shadow: 0 12px 22px rgba(0,0,0,0.12); }
-    .card i { font-size: 2.4rem; color: #0072ff; margin-bottom: 0.8rem; }
-    .card h3 { margin: 0.5rem 0; font-size: 1.25rem; }
-    .card p { font-size: 0.98rem; color: var(--text-sub); margin-bottom: 1.2rem; line-height: 1.55; }
+    /* Cards Grid */
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); padding: 2rem 1rem; gap: 1.5rem; max-width: 1200px; margin: 0 auto; width: 100%; }
+    .card { background: #fff; padding: 2rem 1.5rem; border-radius: 12px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s; }
+    .card i { font-size: 2.5rem; color: #0072ff; margin-bottom: 1rem; }
+    .card h3 { margin: 0.5rem 0; font-size: 1.4rem; }
+    .card p { font-size: 0.95rem; color: #666; margin-bottom: 1.5rem; }
 
-    .button {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--pink1), var(--pink2));
-      color: #fff;
-      padding: 0.8rem 1.6rem;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 700;
-      transition: 0.18s ease;
-      box-shadow: 0 6px 14px rgba(221, 36, 118, 0.3);
-      letter-spacing: 0.2px;
-    }
-    .button:hover { transform: translateY(-2px); filter: brightness(1.05); }
+    .button { display: inline-block; background: linear-gradient(135deg, #ff512f, #dd2476); color: #fff; padding: 0.8rem 1.8rem; border-radius: 30px; text-decoration: none; font-weight: 700; transition: 0.3s; box-shadow: 0 4px 10px rgba(221, 36, 118, 0.3); }
+    .button:hover { transform: scale(1.05); filter: brightness(1.1); }
 
-    /* Q&A */
-    .qa {
-      padding: 2.6rem 1rem;
-      background: rgba(255, 255, 255, 0.92);
-    }
-    .qa h2 { text-align: center; font-size: 1.9rem; margin-bottom: 0.8rem; }
-    .qa-intro { text-align: center; margin-bottom: 1.8rem; color: var(--text-sub); }
-
-    .qa-list {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
+    /* Q&A Section */
+    .qa { padding: 3rem 1rem; background: rgba(255, 255, 255, 0.9); width: 100%; }
+    .qa h2 { text-align: center; font-size: 2rem; margin-bottom: 1rem; }
+    .qa-intro { text-align: center; margin-bottom: 2rem; color: #555; }
+    
+    .qa-list { display: grid; grid-template-columns: 1fr; gap: 12px; max-width: 900px; margin: 0 auto; }
     @media (min-width: 600px) { .qa-list { grid-template-columns: repeat(2, 1fr); } }
 
-    .qa-item {
-      background: #fff;
-      border-radius: 10px;
-      padding: 1rem;
-      text-decoration: none;
-      color: #333;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.07);
-      font-weight: 600;
-      border-left: 4px solid #0072ff;
-      transition: 0.15s ease;
-    }
-    .qa-item:hover { background: #f3f7ff; transform: translateX(4px); }
+    .qa-item { background: #fff; border-radius: 10px; padding: 1.2rem; text-decoration: none; color: #333; box-shadow: 0 3px 10px rgba(0,0,0,0.08); font-weight: 600; border-left: 5px solid #0072ff; transition: 0.2s; }
+    .qa-item:hover { background: #f0f7ff; transform: translateX(5px); }
 
-    .qa-viewer {
-      margin: 1.6rem auto 0;
-      max-width: 900px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.08);
-      padding: 1.6rem;
-      min-height: 140px;
-    }
+    .qa-viewer { margin: 2rem auto; max-width: 900px; background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 2rem; min-height: 150px; }
 
-    footer {
-      background: #222;
-      color: var(--yellow);
-      text-align: center;
-      padding: 1.8rem 1rem;
-      font-size: 0.9rem;
-      margin-top: auto;
-    }
-
-    /* Utility offset for sticky nav */
-    :target::before { content: ""; display: block; height: 70px; margin-top: -70px; visibility: hidden; }
-
-    /* Lighten for low-power devices */
-    @media (max-width: 640px) {
-      nav, footer { box-shadow: none; }
-      .card, .qa-viewer { box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
-      body { background: linear-gradient(135deg, #ffb3ba, #ffe0e6); }
-    }
+    footer { background: #222; color: #ffeb3b; text-align: center; padding: 2rem 1rem; font-size: 0.9rem; }
   </style>
 </head>
 <body>
 
   <nav>
-    <h1>Free Notes of IR by Rana</h1>
+    <h1>IR Notes Hub</h1>
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="opportunities.html">Opportunities</a></li>
@@ -350,20 +183,23 @@
         e.preventDefault();
 
         const slug = link.getAttribute('data-slug');
-        viewer.innerHTML = '<div style="text-align:center; padding: 18px;"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:1.8rem; color:#0072ff;"></i><p>Fetching Answer...</p></div>';
+        viewer.innerHTML = '<div style="text-align:center; padding: 20px;"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:2rem; color:#0072ff;"></i><p>Fetching Answer...</p></div>';
 
         try {
           const res = await fetch(`/questions/${slug}`);
           if (!res.ok) throw new Error();
           viewer.innerHTML = await res.text();
-
-          const offset = 90;
+          
+          const offset = 100;
           const bodyRect = document.body.getBoundingClientRect().top;
           const elementRect = viewer.getBoundingClientRect().top;
           const elementPosition = elementRect - bodyRect;
           const offsetPosition = elementPosition - offset;
 
-          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
         } catch (err) {
           viewer.innerHTML = '<p style="color:#d32f2f; text-align:center; font-weight:bold;">⚠️ Error: The answer file could not be found. Please check your /questions/ folder.</p>';
         }
