@@ -4,40 +4,52 @@
   <meta charset="UTF-8" />
   <title>IR Notes Hub</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
+
   <link rel="icon" href="/assests/img/icon.ico" type="image/x-icon">
   <link rel="shortcut icon" href="/assests/img/icon.ico" type="image/x-icon">
-  
+  <link rel="apple-touch-icon" href="/assests/img/icon.ico">
+
   <meta name="description" content="Get the best study hacks, time management tips, and exclusive student benefits like the GitHub Student Developer Pack for Federal Urdu University students.">
   <meta name="keywords" content="Study Hacks, IR Notes, Federal Urdu University, GitHub Student Pack">
 
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ranausman.me/">
-  <meta property="og:title" content="Study Hacks | IR Notes Hub">
+  <meta property="og:title" content="IR Notes Hub">
   <meta property="og:description" content="Unlock smart tips and exclusive student benefits. Federal Urdu University students can now get the GitHub Developer Program for free!">
   <meta property="og:image" content="https://ranausman.me/assests/img/close-up-of-student-studying.jpg">
 
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://ranausman.me/">
-  <meta property="twitter:title" content="Study Hacks | IR Notes Hub">
+  <meta property="twitter:title" content="IR Notes Hub">
   <meta property="twitter:description" content="Unlock smart tips and exclusive student benefits. Federal Urdu University students can now get the GitHub Developer Program for free!">
   <meta property="twitter:image" content="https://ranausman.me/assests/img/close-up-of-student-studying.jpg">
-  
+
+  <!-- Brand (site name) vs page title:
+       - Page title is IR Notes Hub (title/og:title/twitter:title)
+       - Brand/site name is Notes by Rana Usman (JSON-LD WebSite name + publisher)
+  -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Notes by Rana Usman",
+    "alternateName": "IR Notes Hub",
     "url": "https://ranausman.me/",
+    "publisher": {
+      "@type": "Person",
+      "name": "Rana Usman",
+      "url": "https://ranausman.me/",
+      "image": "https://ranausman.me/assests/img/icon.ico"
+    }
   }
   </script>
-  
+
   <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    { box-sizing: border-box; }
+    * { box-sizing: border-box; }
     body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: #050505; color: #e0e0e0; min-height: 100vh; scroll-behavior: smooth; overflow-x: hidden; }
 
     /* Navigation */
@@ -57,10 +69,10 @@
     .hero h2 { font-size: 2.2rem; margin-bottom: 10px; }
 
     /* About Container */
-    .about-container { 
-      max-width: 1000px; margin: -3rem auto 2rem; padding: 2rem; 
-      background: rgba(22, 22, 22, 0.95); border-radius: 20px; 
-      display: flex; flex-direction: column; align-items: center; gap: 25px; 
+    .about-container {
+      max-width: 1000px; margin: -3rem auto 2rem; padding: 2rem;
+      background: rgba(22, 22, 22, 0.95); border-radius: 20px;
+      display: flex; flex-direction: column; align-items: center; gap: 25px;
       box-shadow: 0 20px 50px rgba(0,0,0,0.9); border: 1px solid #333;
       backdrop-filter: blur(10px);
     }
@@ -69,10 +81,10 @@
     .about-right h3 { color: #fff; font-size: 1.8rem; margin: 0 0 15px 0; }
     .about-right p { color: #bbb; line-height: 1.7; margin-bottom: 25px; }
 
-    .email-box { 
-      display: inline-flex; align-items: center; background: #0072ff; color: #fff; 
-      padding: 12px 25px; border-radius: 10px; text-decoration: none; font-weight: 700; 
-      transition: 0.4s; border: 1px solid transparent; 
+    .email-box {
+      display: inline-flex; align-items: center; background: #0072ff; color: #fff;
+      padding: 12px 25px; border-radius: 10px; text-decoration: none; font-weight: 700;
+      transition: 0.4s; border: 1px solid transparent;
     }
     .email-box:hover { background: #0056b3; box-shadow: 0 0 25px #0072ff; transform: translateY(-3px); border-color: #00e5ff; }
 
@@ -87,9 +99,9 @@
     @media (min-width: 768px) { .cards { grid-template-columns: repeat(3, 1fr); gap: 2.5rem; padding: 3rem 2rem; } }
 
     /* Card Styling with Tilt Support for Both Mobile & Desktop */
-    .card { 
-      padding: 3.5rem 2rem; border-radius: 25px; text-align: center; 
-      transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease; 
+    .card {
+      padding: 3.5rem 2rem; border-radius: 25px; text-align: center;
+      transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
       border: 1px solid rgba(255,255,255,0.1); transform-style: preserve-3d;
       position: relative; overflow: hidden;
     }
@@ -111,7 +123,7 @@
 
     /* Glowing Buttons */
     .button { display: inline-block; padding: 1rem 2.2rem; border-radius: 50px; text-decoration: none; font-weight: 800; text-transform: uppercase; transition: 0.4s; transform: translateZ(40px); }
-    
+
     .btn-notes { background: #4ecca3; color: #1a1a2e; }
     .btn-notes:hover { box-shadow: 0 0 25px #4ecca3, 0 0 50px rgba(78, 204, 163, 0.4); transform: translateZ(60px) scale(1.05); }
 
@@ -130,10 +142,10 @@
     .qa-list { display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 900px; margin: 0 auto; }
     @media (min-width: 768px) { .qa-list { grid-template-columns: repeat(2, 1fr); } }
 
-    .qa-item { 
-      background: #0a0a0a; border: 1px solid #222; border-radius: 12px; padding: 1.2rem; 
-      text-decoration: none; color: #ddd; font-weight: 600; display: block; 
-      border-left: 6px solid #0072ff; transition: 0.3s; 
+    .qa-item {
+      background: #0a0a0a; border: 1px solid #222; border-radius: 12px; padding: 1.2rem;
+      text-decoration: none; color: #ddd; font-weight: 600; display: block;
+      border-left: 6px solid #0072ff; transition: 0.3s;
     }
     .qa-item:hover { background: #111; transform: translateX(10px); color: #00e5ff; border-color: #0072ff; }
 
@@ -199,10 +211,10 @@
   <section id="qa" class="qa">
     <h2>Q&amp;A Hub</h2>
     <div class="qa-list">
-      <a href="#" class="qa-item" data-slug="why-study-ir.html">Why study IR?</a>
-      <a href="#" class="qa-item" data-slug="is-ir-good-for-css.html">Is IR good for CSS?</a>
-      <a href="#" class="qa-item" data-slug="ir-career-opportunities.html">Career opportunities?</a>
-      <a href="#" class="qa-item" data-slug="how-to-take-effective-ir-notes.html">How to take notes?</a>
+      <a href="/questions/why-study-ir.html" class="qa-item" data-slug="why-study-ir.html">Why study IR?</a>
+      <a href="/questions/is-ir-good-for-css.html" class="qa-item" data-slug="is-ir-good-for-css.html">Is IR good for CSS?</a>
+      <a href="/questions/ir-career-opportunities.html" class="qa-item" data-slug="ir-career-opportunities.html">Career opportunities?</a>
+      <a href="/questions/how-to-take-effective-ir-notes.html" class="qa-item" data-slug="how-to-take-effective-ir-notes.html">How to take notes?</a>
     </div>
     <div id="qa-viewer" class="qa-viewer">
       <p style="text-align:center; color: #666;">Select a question above to see the answer.</p>
@@ -217,12 +229,17 @@
     (function () {
       const list = document.querySelector('.qa-list');
       const viewer = document.getElementById('qa-viewer');
+
       list.addEventListener('click', async function (e) {
         const link = e.target.closest('a.qa-item');
         if (!link) return;
+
+        // Keep links crawlable while still using JS fetch
         e.preventDefault();
+
         const slug = link.getAttribute('data-slug');
         viewer.innerHTML = '<div style="text-align:center;"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:2rem; color:#0072ff;"></i><p>Loading...</p></div>';
+
         try {
           const res = await fetch(`/questions/${slug}`);
           if (!res.ok) throw new Error();
@@ -235,4 +252,3 @@
   </script>
 </body>
 </html>
- 
