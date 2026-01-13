@@ -17,13 +17,16 @@ function escapeHtml(str) {
 async function updateAuthUI() {
   const { data: { session } } = await supabase.auth.getSession();
 
+  // Page may not have these elements; don't crash if missing
   if (session) {
-    loginLink.style.display = "none";
-    logoutBtn.style.display = "";
+    if (loginLink) loginLink.style.display = "none";
+    if (logoutBtn) logoutBtn.style.display = "";
   } else {
-    loginLink.style.display = "";
-    logoutBtn.style.display = "none";
-    loginLink.href = `/login.html?next=${encodeURIComponent("/articles/")}`;
+    if (loginLink) {
+      loginLink.style.display = "";
+      loginLink.href = `/login.html?next=${encodeURIComponent("/articles/")}`;
+    }
+    if (logoutBtn) logoutBtn.style.display = "none";
   }
 }
 
@@ -33,26 +36,28 @@ logoutBtn?.addEventListener("click", async () => {
 });
 
 async function loadApprovedArticles() {
-  msg.textContent = "Loading…";
+  if (msg) msg.textContent = "Loading…";
 
   const { data, error } = await supabase
-    .from("pdf_submissions")
+    .from("submissions") // FIX: correct table
     .select("id,title,description,created_at")
     .eq("status", "approved")
     .order("created_at", { ascending: false });
 
   if (error) {
-    msg.textContent = "Failed to load articles.";
+    if (msg) msg.textContent = "Failed to load articles.";
     console.error(error);
     return;
   }
 
   if (!data || data.length === 0) {
-    msg.textContent = "No articles yet.";
+    if (msg) msg.textContent = "No articles yet.";
     return;
   }
 
-  msg.textContent = "";
+  if (msg) msg.textContent = "";
+  if (!list) return;
+
   list.innerHTML = data.map(a => `
     <div class="card">
       <h3>${escapeHtml(a.title)}</h3>
@@ -77,7 +82,6 @@ async function openPdf(id) {
     return;
   }
 
-  // This requires the Pages Function we'll add next: /functions/api/signed-url.js
   const res = await fetch(`/api/signed-url?id=${encodeURIComponent(id)}`, {
     headers: { Authorization: `Bearer ${session.access_token}` }
   });
