@@ -1,4 +1,5 @@
 import { supabase } from "./auth.js";
+window.supabase = supabase;
 
 const navLoggedOut = document.getElementById("navLoggedOut");
 const navLoggedIn = document.getElementById("navLoggedIn");
