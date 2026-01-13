@@ -139,6 +139,21 @@
       border: 0;
     }
 
+    /* Quick action buttons (visible on Articles page) */
+    .quick-actions { display:flex; gap:10px; flex-wrap: wrap; align-items: center; }
+    .quick-actions a {
+      border-radius: 999px; padding: 10px 14px;
+      border: 1px solid #2a2a2a; background: transparent;
+      color: #ffeb3b; font-weight: 900; cursor: pointer; text-decoration:none;
+      transition: 0.25s;
+      display:none; /* only visible when logged in (JS toggles) */
+    }
+    .quick-actions a:hover {
+      color:#00e5ff; border-color:#0072ff;
+      box-shadow:0 0 15px rgba(0,114,255,0.35);
+      transform: translateY(-1px);
+    }
+
     main { max-width: 1100px; margin: 0 auto; padding: 28px 18px 60px; }
     h1 { margin: 0 0 8px 0; font-size: 2rem; }
     p.lead { margin: 0 0 18px 0; color: #aaa; line-height: 1.6; }
@@ -173,17 +188,20 @@
     #msg { color:#888; margin-top: 10px; }
   </style>
 
-  <!-- Supabase env -->
+  <!-- Supabase env must load before JS modules -->
   <script src="/assests/js/env.js"></script>
-
-  <!-- Supabase JS (UMD) -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
 </head>
 <body>
   <header>
     <a href="/">← Home</a>
 
-    <!-- Professional always-visible panel (same as Home) -->
+    <!-- NEW: Quick actions on Articles page -->
+    <div class="quick-actions">
+      <a id="quickSubmit" href="/upload.html"><i class="fa-solid fa-cloud-arrow-up"></i>&nbsp; Submit PDF</a>
+      <a id="quickMySubs" href="/my-submissions.html"><i class="fa-solid fa-folder-open"></i>&nbsp; My Submissions</a>
+    </div>
+
+    <!-- Always-visible Account Panel -->
     <div class="account-panel" id="accountPanel">
       <button class="account-dot" id="accountBtn" type="button" aria-label="Account menu" title="Account">⋮</button>
       <div class="account-meta">
@@ -226,10 +244,9 @@
 
   <script type="module" src="/assests/js/articles.js"></script>
 
-  <!-- Updated: no auto-refresh loop; panel always works -->
+  <!-- Account panel logic: uses window.supabase (no new clients, no refresh loops) -->
   <script>
     (function () {
-      // ----- Account panel open/close -----
       const panel = document.getElementById("accountPanel");
       const btn = document.getElementById("accountBtn");
       const menu = document.getElementById("accountMenu");
@@ -252,41 +269,41 @@
         setOpen(!isOpen);
       });
 
-      // ----- Supabase client -----
-      const ENV = window.__ENV || window.ENV || {};
-      const SUPABASE_URL = ENV.SUPABASE_URL || ENV.supabaseUrl;
-      const SUPABASE_ANON_KEY = ENV.SUPABASE_ANON_KEY || ENV.supabaseAnonKey;
-
-      if (!SUPABASE_URL || !SUPABASE_ANON_KEY || !window.supabase) {
-        console.warn("Supabase env/client missing. Ensure env.js defines SUPABASE_URL and SUPABASE_ANON_KEY.");
-        return;
+      async function waitForClient() {
+        for (let i = 0; i < 100; i++) {
+          if (window.supabase?.auth) return window.supabase;
+          await new Promise(r => setTimeout(r, 50));
+        }
+        return null;
       }
 
-      const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-      // ----- Menu items -----
       const label = document.getElementById("accountLabel");
       const sub = document.getElementById("accountSub");
 
       const menuLogin = document.getElementById("menuLogin");
       const menuSignup = document.getElementById("menuSignup");
-
       const menuSubmit = document.getElementById("menuSubmit");
       const menuMySub = document.getElementById("menuMySub");
       const menuChangePw = document.getElementById("menuChangePw");
       const menuAdmin = document.getElementById("menuAdmin");
       const menuLogout = document.getElementById("menuLogout");
 
+      const quickSubmit = document.getElementById("quickSubmit");
+      const quickMySubs = document.getElementById("quickMySubs");
+
       function show(el, on) {
         if (!el) return;
         el.style.display = on ? "" : "none";
       }
 
-      async function refreshAccountUI() {
+      async function refreshAccountUI(client) {
         const { data } = await client.auth.getSession();
         const session = data.session;
-
         const loggedIn = !!session;
+
+        // Toggle quick buttons
+        show(quickSubmit, loggedIn);
+        show(quickMySubs, loggedIn);
 
         if (!loggedIn) {
           if (label) label.textContent = "Guest";
@@ -318,39 +335,44 @@
         show(menuSubmit, true);
         show(menuMySub, true);
         show(menuChangePw, true);
-
-        // Keep admin hidden by default unless you want role-based logic.
-        show(menuAdmin, false);
-
+        show(menuAdmin, false); // add role-based admin later if you want
         show(menuLogout, true);
       }
 
-      refreshAccountUI();
-      client.auth.onAuthStateChange(() => refreshAccountUI());
+      (async function init() {
+        const client = await waitForClient();
+        if (!client) {
+          console.warn("window.supabase client not found. Ensure /assests/js/articles.js initializes it.");
+          return;
+        }
 
-      menuLogout?.addEventListener("click", async () => {
-        setOpen(false);
-        await client.auth.signOut();
+        await refreshAccountUI(client);
 
-        // small toast (no refresh)
-        const el = document.createElement("div");
-        el.textContent = "Logged out";
-        el.style.position = "fixed";
-        el.style.right = "16px";
-        el.style.bottom = "16px";
-        el.style.zIndex = "99999";
-        el.style.padding = "10px 12px";
-        el.style.borderRadius = "14px";
-        el.style.border = "1px solid #ffeb3b";
-        el.style.background = "rgba(255,235,59,0.12)";
-        el.style.color = "#fff";
-        el.style.backdropFilter = "blur(10px)";
-        el.style.fontWeight = "800";
-        document.body.appendChild(el);
-        setTimeout(() => el.remove(), 1400);
+        client.auth.onAuthStateChange(async () => {
+          await refreshAccountUI(client);
+        });
 
-        refreshAccountUI();
-      });
+        menuLogout?.addEventListener("click", async () => {
+          setOpen(false);
+          await client.auth.signOut();
+
+          const el = document.createElement("div");
+          el.textContent = "Logged out";
+          el.style.position = "fixed";
+          el.style.right = "16px";
+          el.style.bottom = "16px";
+          el.style.zIndex = "99999";
+          el.style.padding = "10px 12px";
+          el.style.borderRadius = "14px";
+          el.style.border = "1px solid #ffeb3b";
+          el.style.background = "rgba(255,235,59,0.12)";
+          el.style.color = "#fff";
+          el.style.backdropFilter = "blur(10px)";
+          el.style.fontWeight = "800";
+          document.body.appendChild(el);
+          setTimeout(() => el.remove(), 1400);
+        });
+      })();
     })();
   </script>
 </body>
