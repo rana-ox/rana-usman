@@ -11,168 +11,110 @@
 
   <style>
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: #050505;
-      color: #e0e0e0;
-      min-height: 100vh;
-    }
+    body { margin:0; font-family:'Poppins',sans-serif; background:#050505; color:#e0e0e0; min-height:100vh; }
+    header { background:#000; border-bottom:1px solid #1a1a1a; padding:18px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+    header a { color:#ffeb3b; text-decoration:none; font-weight:800; }
+    header a:hover { color:#00e5ff; }
 
-    header {
-      background: #000;
-      border-bottom: 1px solid #1a1a1a;
-      padding: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    header a {
-      color: #ffeb3b;
-      text-decoration: none;
-      font-weight: 800;
-    }
-
-    header a:hover { color: #00e5ff; }
-
-    .quick-actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    /* ===== Account panel (same structure as Home) ===== */
     .account-panel {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid #2a2a2a;
-      background: rgba(255,255,255,0.03);
-      position: relative;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid #2a2a2a;
+      background:rgba(255,255,255,0.03);
+      position:relative;
     }
 
     .account-dot {
-      width: 34px;
-      height: 34px;
-      border-radius: 999px;
-      border: 1px solid #2a2a2a;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffeb3b;
-      background: transparent;
-      cursor: pointer;
-      font-size: 18px;
-      font-weight: 900;
+      width:34px;
+      height:34px;
+      border-radius:999px;
+      border:1px solid #2a2a2a;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      color:#ffeb3b;
+      background:transparent;
+      cursor:pointer;
+      font-size:18px;
+      font-weight:900;
     }
 
     .account-meta {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.1;
-      max-width: 240px;
-    }
-
-    .account-meta .label {
-      font-weight: 900;
-      font-size: 0.82rem;
-      color: #fff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .account-meta .sub {
-      font-weight: 700;
-      font-size: 0.72rem;
-      color: #999;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      display:flex;
+      flex-direction:column;
+      line-height:1.1;
+      max-width:240px;
     }
 
     .account-menu {
-      position: absolute;
-      right: 0;
-      top: calc(100% + 10px);
-      width: 290px;
-      background: rgba(10,10,10,0.96);
-      border: 1px solid #2a2a2a;
-      border-radius: 16px;
-      padding: 10px;
-      box-shadow: 0 18px 50px rgba(0,0,0,0.85);
-      display: none;
-      z-index: 99999;
+      position:absolute;
+      right:0;
+      top:calc(100% + 10px);
+      width:290px;
+      background:#0b0b0b;
+      border:1px solid #2a2a2a;
+      border-radius:16px;
+      padding:10px;
+      display:none;
+      z-index:99999;
     }
 
     .account-menu a,
     .account-menu button {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px;
-      border-radius: 12px;
-      border: 0;
-      background: transparent;
-      color: #ffeb3b;
-      font-weight: 900;
-      cursor: pointer;
-      text-decoration: none;
-      font-family: inherit;
-      font-size: 0.9rem;
+      width:100%;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px;
+      border-radius:12px;
+      border:0;
+      background:transparent;
+      color:#ffeb3b;
+      font-weight:900;
+      cursor:pointer;
+      text-decoration:none;
+      font-family:inherit;
     }
 
-    .account-menu a:hover,
-    .account-menu button:hover {
-      background: rgba(0,114,255,0.18);
-      color: #00e5ff;
-    }
-
-    .account-menu .danger { color: #ff4b2b; }
+    .account-menu .danger { color:#ff4b2b; }
 
     main {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 28px 18px 60px;
+      max-width:1100px;
+      margin:0 auto;
+      padding:28px 18px 60px;
     }
 
     .grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:16px;
     }
 
-    @media (min-width: 768px) {
-      .grid { grid-template-columns: repeat(2, 1fr); }
+    @media (min-width:768px) {
+      .grid { grid-template-columns:repeat(2,1fr); }
     }
 
     .card {
-      background: rgba(22,22,22,0.95);
-      border: 1px solid #333;
-      border-radius: 16px;
-      padding: 18px;
+      background:#161616;
+      border:1px solid #333;
+      border-radius:16px;
+      padding:18px;
     }
 
     .actions button {
-      border-radius: 999px;
-      padding: 10px 14px;
-      border: 1px solid #2a2a2a;
-      background: transparent;
-      color: #ffeb3b;
-      font-weight: 800;
-      cursor: pointer;
+      border-radius:999px;
+      padding:10px 14px;
+      border:1px solid #2a2a2a;
+      background:transparent;
+      color:#ffeb3b;
+      font-weight:800;
+      cursor:pointer;
     }
-
-    .actions button:hover { color: #00e5ff; }
   </style>
 
-  <!-- Supabase client -->
   <script src="/assests/js/env.js"></script>
 </head>
 
@@ -182,12 +124,11 @@
   <a href="/">← Home</a>
 
   <div class="quick-actions">
-    <a href="/upload.html"><i class="fa-solid fa-cloud-arrow-up"></i> Submit PDF</a>
-    <a href="/my-submissions.html"><i class="fa-solid fa-folder-open"></i> My Submissions</a>
+    <a href="/upload.html">Submit PDF</a>
+    <a href="/my-submissions.html">My Submissions</a>
   </div>
 
-  <!-- Account panel -->
-  <div class="account-panel" id="accountPanel">
+  <div class="account-panel">
     <button class="account-dot" id="accountBtn">⋮</button>
     <div class="account-meta">
       <div class="label" id="accountLabel">Guest</div>
@@ -199,79 +140,118 @@
       <a id="menuSignup" href="/signup.html">Sign up</a>
       <a id="menuSubmit" href="/upload.html" style="display:none;">Submit PDF</a>
       <a id="menuMySub" href="/my-submissions.html" style="display:none;">My submissions</a>
-      <button id="menuLogout" style="display:none;" class="danger">Logout</button>
+      <button id="menuLogout" class="danger" style="display:none;">Logout</button>
     </div>
   </div>
 </header>
 
 <main>
   <h1>Articles</h1>
-  <p class="lead">Browse approved articles. Login is required only to read the PDF.</p>
   <p id="msg">Loading…</p>
   <div id="list" class="grid"></div>
 </main>
 
-<!-- Articles logic -->
 <script type="module">
   const supabase = window.supabase;
+
   const msg = document.getElementById("msg");
   const list = document.getElementById("list");
 
-  async function openPdf(file_path) {
-    const { data, error } = await supabase
-      .storage
-      .from("pdfs")
-      .createSignedUrl(file_path, 600);
+  const accountBtn = document.getElementById("accountBtn");
+  const accountMenu = document.getElementById("accountMenu");
+  const accountLabel = document.getElementById("accountLabel");
+  const accountSub = document.getElementById("accountSub");
 
-    if (error) return;
-    window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+  const menuLogin = document.getElementById("menuLogin");
+  const menuSignup = document.getElementById("menuSignup");
+  const menuSubmit = document.getElementById("menuSubmit");
+  const menuMySub = document.getElementById("menuMySub");
+  const menuLogout = document.getElementById("menuLogout");
+
+  accountBtn.onclick = () => {
+    accountMenu.style.display =
+      accountMenu.style.display === "block" ? "none" : "block";
+  };
+
+  async function syncAccount() {
+    const { data } = await supabase.auth.getSession();
+    const session = data.session;
+
+    if (!session) {
+      accountLabel.textContent = "Guest";
+      accountSub.textContent = "Not logged in";
+      menuLogin.style.display = "";
+      menuSignup.style.display = "";
+      menuSubmit.style.display = "none";
+      menuMySub.style.display = "none";
+      menuLogout.style.display = "none";
+      return false;
+    }
+
+    accountLabel.textContent = session.user.email;
+    accountSub.textContent = "Logged in";
+    menuLogin.style.display = "none";
+    menuSignup.style.display = "none";
+    menuSubmit.style.display = "";
+    menuMySub.style.display = "";
+    menuLogout.style.display = "";
+    return true;
   }
 
-  async function load() {
+  menuLogout.onclick = async () => {
+    await supabase.auth.signOut();
+    location.reload();
+  };
+
+  async function openPdf(path) {
+    const { data } = await supabase
+      .storage
+      .from("pdfs")
+      .createSignedUrl(path, 600);
+
+    if (data?.signedUrl) {
+      window.open(data.signedUrl, "_blank", "noopener");
+    }
+  }
+
+  async function loadArticles() {
+    const loggedIn = await syncAccount();
+    if (!loggedIn) {
+      msg.textContent = "Please login to view articles.";
+      return;
+    }
+
     const { data, error } = await supabase
       .from("submissions")
-      .select("id,title,description,status,file_path,created_at")
+      .select("title,description,file_path,status")
+      .eq("status", "approved")
       .order("created_at", { ascending: false });
 
-    if (error) {
-      msg.textContent = "Failed to load articles.";
+    if (error || !data.length) {
+      msg.textContent = "No approved articles available.";
       return;
     }
 
     msg.textContent = "";
     list.innerHTML = "";
 
-    for (const row of data) {
-      if (row.status !== "approved") continue;
-
+    data.forEach(row => {
       const card = document.createElement("div");
       card.className = "card";
       card.innerHTML = `
         <h3>${row.title}</h3>
         <p>${row.description || ""}</p>
         <div class="actions">
-          <button>Read PDF</button>
+          <button>Open PDF</button>
         </div>
       `;
-
-      card.querySelector("button").onclick = async () => {
-        const { data: sessionData } = await supabase.auth.getSession();
-        if (!sessionData.session) {
-          location.href = "/login.html?redirect=/articles/";
-          return;
-        }
-        openPdf(row.file_path);
-      };
-
+      card.querySelector("button").onclick = () => openPdf(row.file_path);
       list.appendChild(card);
-    }
+    });
   }
 
-  load();
+  loadArticles();
 </script>
-
-<!-- Shared account UI logic -->
-<script src="/assests/js/account-panel.js"></script>
 
 </body>
 </html>
