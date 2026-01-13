@@ -1,8 +1,6 @@
-export async function onRequest(context) {
-  const { request, env } = context;
+export async function onRequest({ request, env }) {
   const url = new URL(request.url);
 
-  // Only allow GET
   if (request.method !== "GET") {
     return new Response("Method not allowed", { status: 405 });
   }
@@ -14,7 +12,7 @@ export async function onRequest(context) {
     return new Response("Missing SUPABASE env vars", { status: 500 });
   }
 
-  // Expect Authorization: Bearer <access_token>
+  // Expect: Authorization: Bearer <access_token>
   const authHeader = request.headers.get("Authorization") || "";
   const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : null;
   if (!token) return new Response("Unauthorized", { status: 401 });
@@ -22,7 +20,7 @@ export async function onRequest(context) {
   const id = url.searchParams.get("id");
   if (!id) return new Response("Missing id", { status: 400 });
 
-  // 1) Validate user token (so random people can’t generate signed URLs)
+  // 1) Validate user token
   const userRes = await fetch(`${supabaseUrl}/auth/v1/user`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -31,7 +29,7 @@ export async function onRequest(context) {
   });
   if (!userRes.ok) return new Response("Unauthorized", { status: 401 });
 
-  // 2) Load the submission row and ensure it's approved
+  // 2) Load submission and ensure approved
   const subRes = await fetch(
     `${supabaseUrl}/rest/v1/pdf_submissions?id=eq.${encodeURIComponent(id)}&select=storage_path,status`,
     {
@@ -50,7 +48,7 @@ export async function onRequest(context) {
   if (!submission) return new Response("Not found", { status: 404 });
   if (submission.status !== "approved") return new Response("Forbidden", { status: 403 });
 
-  // 3) Create signed URL (bucket name assumed: "pdfs")
+  // 3) Create signed URL (bucket: pdfs)
   const signRes = await fetch(
     `${supabaseUrl}/storage/v1/object/sign/pdfs/${submission.storage_path}`,
     {
