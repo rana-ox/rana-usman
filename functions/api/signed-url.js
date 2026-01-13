@@ -29,27 +29,28 @@ export async function onRequestGet(context) {
 
   const { data: sub, error: subErr } = await admin
     .from("submissions")
-    .select("id,status,user_id")
+    .select("id,status,user_id,file_path")
     .eq("id", id)
     .single();
 
   if (subErr || !sub) return json({ error: "Submission not found" }, 404);
+  if (!sub.file_path) return json({ error: "No file_path for this submission" }, 404);
 
-  const { data: adminRow } = await admin
+  // Optional admin table; if it doesn't exist, treat as not admin
+  let isAdmin = false;
+  const { data: adminRow, error: adminErr } = await admin
     .from("admins")
     .select("user_id")
     .eq("user_id", userId)
     .maybeSingle();
+  if (!adminErr && adminRow) isAdmin = true;
 
-  const isAdmin = !!adminRow;
   const canRead = sub.status === "approved" || isAdmin || sub.user_id === userId;
   if (!canRead) return json({ error: "Forbidden" }, 403);
 
-  const objectPath = `articles/${id}.pdf`;
-
   const { data: signed, error: signErr } = await admin.storage
     .from("pdfs")
-    .createSignedUrl(objectPath, 60 * 5);
+    .createSignedUrl(sub.file_path, 60 * 5);
 
   if (signErr || !signed?.signedUrl) {
     return json({ error: "Could not create signed URL" }, 500);
