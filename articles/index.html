@@ -6,60 +6,86 @@
   <title>Articles | IR Notes Hub</title>
 
   <link rel="icon" href="/assests/img/icon.png" type="image/png">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
     * { box-sizing: border-box; }
     body { margin:0; font-family:'Poppins',sans-serif; background:#050505; color:#e0e0e0; min-height:100vh; }
-    header { background:#000; border-bottom:1px solid #1a1a1a; padding:18px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
-    header a { color:#ffeb3b; text-decoration:none; font-weight:800; }
+    
+    /* --- HEADER LAYOUT --- */
+    header { 
+      background:#000; 
+      border-bottom:1px solid #1a1a1a; 
+      padding:12px 24px; 
+      display:flex; 
+      align-items:center; 
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      flex-grow: 1; /* Pushes the account panel to the right */
+    }
+
+    header a { color:#ffeb3b; text-decoration:none; font-weight:800; transition: 0.2s; }
     header a:hover { color:#00e5ff; }
 
+    .quick-actions {
+      display: flex;
+      gap: 20px;
+    }
+
+    .quick-actions a {
+      color: #bbb;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* --- ACCOUNT PANEL --- */
     .account-panel {
       display:inline-flex;
       align-items:center;
-      gap:10px;
-      padding:8px 10px;
+      gap:12px;
+      padding:6px 14px;
       border-radius:999px;
       border:1px solid #2a2a2a;
       background:rgba(255,255,255,0.03);
       position:relative;
+      cursor: pointer;
     }
 
     .account-dot {
-      width:34px;
-      height:34px;
+      width:32px;
+      height:32px;
       border-radius:999px;
-      border:1px solid #2a2a2a;
+      border:1px solid #333;
       display:inline-flex;
       align-items:center;
       justify-content:center;
       color:#ffeb3b;
-      background:transparent;
-      cursor:pointer;
-      transition:0.25s;
-      font-size:18px;
+      background:#111;
+      font-size:16px;
       font-weight:900;
-    }
-
-    .account-dot:hover {
-      color:#00e5ff;
-      border-color:#0072ff;
-      box-shadow:0 0 15px rgba(0,114,255,0.35);
-      transform:translateY(-1px);
     }
 
     .account-meta {
       display:flex;
       flex-direction:column;
-      line-height:1.1;
-      max-width:240px;
+      line-height:1.2;
+      max-width:180px;
     }
 
     .account-meta .label {
-      font-weight:900;
-      font-size:0.82rem;
+      font-weight:700;
+      font-size:0.85rem;
       color:#fff;
       white-space:nowrap;
       overflow:hidden;
@@ -67,25 +93,25 @@
     }
 
     .account-meta .sub {
-      font-weight:700;
-      font-size:0.72rem;
-      color:#999;
+      font-size:0.7rem;
+      color:#777;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
     }
 
+    /* --- DROPDOWN MENU --- */
     .account-menu {
       position:absolute;
       right:0;
-      top:calc(100% + 10px);
-      width:290px;
-      background:rgba(10,10,10,0.96);
+      top:calc(100% + 12px);
+      width:240px;
+      background:#0a0a0a;
       border:1px solid #2a2a2a;
-      border-radius:16px;
-      padding:10px;
-      box-shadow:0 18px 50px rgba(0,0,0,0.85);
-      display:none;
+      border-radius:12px;
+      padding:8px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.8);
+      display:none; /* Hidden by default */
       z-index:99999;
     }
 
@@ -95,152 +121,204 @@
       display:flex;
       align-items:center;
       gap:10px;
-      padding:10px;
-      border-radius:12px;
+      padding:10px 12px;
+      border-radius:8px;
       border:0;
       background:transparent;
-      color:#ffeb3b;
-      font-weight:900;
+      color:#e0e0e0;
+      font-weight:600;
       cursor:pointer;
       text-decoration:none;
       font-family:inherit;
-      font-size:0.9rem;
+      font-size:0.85rem;
+      text-align: left;
     }
 
     .account-menu a:hover,
     .account-menu button:hover {
-      background:rgba(0,114,255,0.18);
-      color:#00e5ff;
+      background:rgba(255,235,59,0.1);
+      color:#ffeb3b;
     }
 
-    .account-menu .danger {
-      color:#ff4b2b;
-    }
+    .account-menu .danger { color:#ff4b2b; border-top: 1px solid #222; margin-top: 5px; border-radius: 0 0 8px 8px; }
+    .account-menu .danger:hover { background: rgba(255, 75, 43, 0.1); }
 
-    main {
-      max-width:1100px;
-      margin:0 auto;
-      padding:28px 18px 60px;
-    }
-
-    .grid {
-      display:grid;
-      grid-template-columns:1fr;
-      gap:16px;
-    }
-
-    @media (min-width:768px) {
-      .grid { grid-template-columns:repeat(2,1fr); }
-    }
-
+    /* --- MAIN CONTENT --- */
+    main { max-width:1100px; margin:0 auto; padding:40px 20px; }
+    .grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap:20px; margin-top: 30px;}
     .card {
-      background:rgba(22,22,22,0.95);
-      border:1px solid #333;
-      border-radius:16px;
-      padding:18px;
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 20px;
+      transition: 0.3s;
     }
+    .card:hover { border-color: #444; transform: translateY(-3px); }
+    .card h3 { margin: 0 0 10px 0; color: #ffeb3b; font-size: 1.1rem; }
+    .card p { font-size: 0.85rem; color: #aaa; line-height: 1.5; }
 
     .actions button {
-      border-radius:999px;
-      padding:10px 14px;
-      border:1px solid #2a2a2a;
-      background:transparent;
-      color:#ffeb3b;
-      font-weight:800;
-      cursor:pointer;
+      margin-top: 15px;
+      border-radius: 6px;
+      padding: 8px 16px;
+      border: 1px solid #ffeb3b;
+      background: transparent;
+      color: #ffeb3b;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: 0.2s;
     }
+    .actions button:hover { background: #ffeb3b; color: #000; }
+
+    #msg { color: #777; font-style: italic; }
   </style>
 
   <script src="/assests/js/env.js"></script>
-  <script type="module" src="/assests/js/articles.js"></script>
 </head>
 
 <body>
 
 <header>
-  <a href="/">← Home</a>
-
-  <div class="quick-actions">
-    <a id="quickSubmit" href="/upload.html"><i class="fa-solid fa-cloud-arrow-up"></i> Submit PDF</a>
-    <a id="quickMySubs" href="/my-submissions.html"><i class="fa-solid fa-folder-open"></i> My Submissions</a>
+  <div class="nav-left">
+    <a href="/">← Home</a>
+    <div class="quick-actions">
+      <a id="quickSubmit" href="/upload.html"><i class="fa-solid fa-cloud-arrow-up"></i> Submit PDF</a>
+      <a id="quickMySubs" href="/my-submissions.html"><i class="fa-solid fa-folder-open"></i> My Submissions</a>
+    </div>
   </div>
 
   <div class="account-panel" id="accountPanel">
-    <button class="account-dot" id="accountBtn">⋮</button>
+    <div class="account-dot">👤</div>
     <div class="account-meta">
       <div class="label" id="accountLabel">Guest</div>
-      <div class="sub" id="accountSub">Not logged in</div>
+      <div class="sub" id="accountSub">Click to login</div>
     </div>
 
     <div class="account-menu" id="accountMenu">
-      <a id="menuLogin" href="/login.html">Login</a>
-      <a id="menuSignup" href="/signup.html">Sign up</a>
-      <a id="menuSubmit" href="/upload.html" style="display:none;">Submit PDF</a>
-      <a id="menuMySub" href="/my-submissions.html" style="display:none;">My submissions</a>
-      <button id="menuLogout" style="display:none;" class="danger">Logout</button>
+      <a id="menuLogin" href="/login.html"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+      <a id="menuSignup" href="/signup.html"><i class="fa-solid fa-user-plus"></i> Sign up</a>
+      <a id="menuSubmit" href="/upload.html" style="display:none;"><i class="fa-solid fa-upload"></i> Submit PDF</a>
+      <a id="menuMySub" href="/my-submissions.html" style="display:none;"><i class="fa-solid fa-file-lines"></i> My submissions</a>
+      <button id="menuLogout" style="display:none;" class="danger"><i class="fa-solid fa-power-off"></i> Logout</button>
     </div>
   </div>
 </header>
 
 <main>
   <h1>Articles</h1>
-  <p class="lead">Approved PDFs appear here automatically. You must login to read/view.</p>
-  <p id="msg">Loading…</p>
+  <p class="lead">Approved research and notes appear here. Login required to view files.</p>
+  <p id="msg">Checking session...</p>
   <div id="list" class="grid"></div>
 </main>
 
-<!-- ARTICLES LOGIC -->
 <script type="module">
   const supabase = window.supabase;
   const msg = document.getElementById("msg");
   const list = document.getElementById("list");
+  
+  // Menu Elements
+  const accountPanel = document.getElementById("accountPanel");
+  const accountMenu = document.getElementById("accountMenu");
+  const accountLabel = document.getElementById("accountLabel");
+  const accountSub = document.getElementById("accountSub");
+  
+  const menuLogin = document.getElementById("menuLogin");
+  const menuSignup = document.getElementById("menuSignup");
+  const menuSubmit = document.getElementById("menuSubmit");
+  const menuMySub = document.getElementById("menuMySub");
+  const menuLogout = document.getElementById("menuLogout");
 
+  // --- 1. HANDLE DROPDOWN TOGGLE ---
+  accountPanel.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const isOpen = accountMenu.style.display === "block";
+    accountMenu.style.display = isOpen ? "none" : "block";
+  });
+
+  document.addEventListener("click", () => {
+    accountMenu.style.display = "none";
+  });
+
+  // --- 2. AUTH UI LOGIC ---
+  async function updateAuthUI() {
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (session) {
+      const user = session.user;
+      accountLabel.textContent = user.user_metadata.full_name || "User";
+      accountSub.textContent = user.email;
+
+      // Swap Menu items
+      menuLogin.style.display = "none";
+      menuSignup.style.display = "none";
+      menuSubmit.style.display = "flex";
+      menuMySub.style.display = "flex";
+      menuLogout.style.display = "flex";
+    } else {
+      accountLabel.textContent = "Guest";
+      accountSub.textContent = "Not logged in";
+    }
+  }
+
+  // --- 3. LOAD DATA ---
   async function openPdf(file_path) {
-    const { data, error } = await supabase
-      .storage
-      .from("pdfs")
-      .createSignedUrl(file_path, 600);
-
-    if (error) return;
-    window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+    const { data, error } = await supabase.storage.from("pdfs").createSignedUrl(file_path, 600);
+    if (error) {
+      alert("Error generating link: " + error.message);
+      return;
+    }
+    window.open(data.signedUrl, "_blank");
   }
 
   async function load() {
+    await updateAuthUI();
+    
     const { data: sessionData } = await supabase.auth.getSession();
     if (!sessionData.session) {
-      msg.textContent = "Please login to view articles.";
+      msg.innerHTML = '<a href="/login.html" style="color:#ffeb3b">Login</a> to view the document library.';
       return;
     }
 
     const { data, error } = await supabase
       .from("submissions")
-      .select("id,writer_name,title,description,status,created_at,file_path")
-      .order("created_at", { ascending:false });
+      .select("*")
+      .eq("status", "approved")
+      .order("created_at", { ascending: false });
 
     if (error) {
-      msg.textContent = "Failed to load submissions.";
+      msg.textContent = "Error loading articles.";
+      return;
+    }
+
+    if (data.length === 0) {
+      msg.textContent = "No approved articles found.";
       return;
     }
 
     msg.textContent = "";
     list.innerHTML = "";
 
-    for (const row of data) {
-      if (row.status !== "approved") continue;
-
+    data.forEach(row => {
       const card = document.createElement("div");
       card.className = "card";
       card.innerHTML = `
         <h3>${row.title}</h3>
-        <p>${row.description || ""}</p>
+        <p>${row.description || "No description provided."}</p>
         <div class="actions">
-          <button>Open PDF</button>
+          <button class="open-btn">View PDF</button>
         </div>
       `;
-      card.querySelector("button").onclick = () => openPdf(row.file_path);
+      card.querySelector(".open-btn").onclick = () => openPdf(row.file_path);
       list.appendChild(card);
-    }
+    });
   }
+
+  // Logout functionality
+  menuLogout.addEventListener("click", async () => {
+    await supabase.auth.signOut();
+    window.location.reload();
+  });
 
   load();
 </script>
