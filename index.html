@@ -162,6 +162,7 @@
       font-family: inherit;
       font-size: 0.9rem;
       transition: 0.2s;
+      text-align: left;
     }
 
     .account-menu a:hover,
@@ -269,11 +270,8 @@
     footer { background: #000; color: #ffeb3b; text-align: center; padding: 3rem 1.5rem; border-top: 1px solid #1a1a1a; }
   </style>
 
-  <!-- Supabase env -->
+  <!-- Supabase env (public) -->
   <script src="/assests/js/env.js"></script>
-
-  <!-- Supabase JS (UMD) -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 
@@ -409,9 +407,12 @@ data-version="v1">
     })();
   </script>
 
+  <!-- Your existing app logic (creates window.supabase) -->
+  <script type="module" src="/assests/js/index.js"></script>
+
+  <!-- Account panel logic: uses window.supabase (no new clients) -->
   <script>
     (function () {
-      // ----- Account panel open/close -----
       const panel = document.getElementById("accountPanel");
       const btn = document.getElementById("accountBtn");
       const menu = document.getElementById("accountMenu");
@@ -434,25 +435,19 @@ data-version="v1">
         setOpen(!isOpen);
       });
 
-      // ----- Supabase client -----
-      const ENV = window.__ENV || window.ENV || {};
-      const SUPABASE_URL = ENV.SUPABASE_URL || ENV.supabaseUrl;
-      const SUPABASE_ANON_KEY = ENV.SUPABASE_ANON_KEY || ENV.supabaseAnonKey;
-
-      if (!SUPABASE_URL || !SUPABASE_ANON_KEY || !window.supabase) {
-        console.warn("Supabase env/client missing. Ensure env.js defines SUPABASE_URL and SUPABASE_ANON_KEY.");
-        return;
+      async function waitForClient() {
+        for (let i = 0; i < 100; i++) {
+          if (window.supabase?.auth) return window.supabase;
+          await new Promise(r => setTimeout(r, 50));
+        }
+        return null;
       }
 
-      const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-      // ----- Menu items -----
       const label = document.getElementById("accountLabel");
       const sub = document.getElementById("accountSub");
 
       const menuLogin = document.getElementById("menuLogin");
       const menuSignup = document.getElementById("menuSignup");
-
       const menuSubmit = document.getElementById("menuSubmit");
       const menuMySub = document.getElementById("menuMySub");
       const menuChangePw = document.getElementById("menuChangePw");
@@ -464,10 +459,9 @@ data-version="v1">
         el.style.display = on ? "" : "none";
       }
 
-      async function refreshAccountUI() {
+      async function refreshAccountUI(client) {
         const { data } = await client.auth.getSession();
         const session = data.session;
-
         const loggedIn = !!session;
 
         if (!loggedIn) {
@@ -500,39 +494,44 @@ data-version="v1">
         show(menuSubmit, true);
         show(menuMySub, true);
         show(menuChangePw, true);
-
-        // Admin link visibility depends on your existing role logic; keep hidden by default.
-        // If you want it based on profiles.role, tell me and I’ll add it here.
-        show(menuAdmin, false);
-
+        show(menuAdmin, false); // add role-based admin later if you want
         show(menuLogout, true);
       }
 
-      refreshAccountUI();
-      client.auth.onAuthStateChange(() => refreshAccountUI());
+      (async function init() {
+        const client = await waitForClient();
+        if (!client) {
+          console.warn("window.supabase client not found. Ensure /assests/js/index.js initializes it.");
+          return;
+        }
 
-      menuLogout?.addEventListener("click", async () => {
-        setOpen(false);
-        await client.auth.signOut();
-        // No popups on login; only a simple "Logged out" toast
-        const el = document.createElement("div");
-        el.textContent = "Logged out";
-        el.style.position = "fixed";
-        el.style.right = "16px";
-        el.style.bottom = "16px";
-        el.style.zIndex = "99999";
-        el.style.padding = "10px 12px";
-        el.style.borderRadius = "14px";
-        el.style.border = "1px solid #ffeb3b";
-        el.style.background = "rgba(255,235,59,0.12)";
-        el.style.color = "#fff";
-        el.style.backdropFilter = "blur(10px)";
-        el.style.fontWeight = "800";
-        document.body.appendChild(el);
-        setTimeout(() => el.remove(), 1400);
-        // Keep user on home
-        refreshAccountUI();
-      });
+        await refreshAccountUI(client);
+
+        client.auth.onAuthStateChange(async () => {
+          await refreshAccountUI(client);
+        });
+
+        menuLogout?.addEventListener("click", async () => {
+          setOpen(false);
+          await client.auth.signOut();
+
+          const el = document.createElement("div");
+          el.textContent = "Logged out";
+          el.style.position = "fixed";
+          el.style.right = "16px";
+          el.style.bottom = "16px";
+          el.style.zIndex = "99999";
+          el.style.padding = "10px 12px";
+          el.style.borderRadius = "14px";
+          el.style.border = "1px solid #ffeb3b";
+          el.style.background = "rgba(255,235,59,0.12)";
+          el.style.color = "#fff";
+          el.style.backdropFilter = "blur(10px)";
+          el.style.fontWeight = "800";
+          document.body.appendChild(el);
+          setTimeout(() => el.remove(), 1400);
+        });
+      })();
     })();
   </script>
 </body>
