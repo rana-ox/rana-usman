@@ -54,120 +54,135 @@
     /* Navigation */
     nav { background: #000; color: #fff; display: flex; flex-direction: column; align-items: center; padding: 1.5rem; border-bottom: 1px solid #1a1a1a; }
     nav h1 { font-size: 1.5rem; letter-spacing: 2px; text-transform: uppercase; margin: 0; }
-    nav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; margin: 15px 0 0; padding: 0; gap: 20px; }
+    nav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; margin: 15px 0 0; padding: 0; gap: 18px; }
     nav ul li a { color: #ffeb3b; text-decoration: none; font-weight: 700; font-size: 0.9rem; transition: 0.3s; }
     nav ul li a:hover { color: #00e5ff; text-shadow: 0 0 10px #00e5ff; }
 
-    /* Auth buttons */
-    .nav-auth { display: inline-flex; gap: 12px; align-items: center; }
+    @media (min-width: 768px) {
+      nav { flex-direction: row; justify-content: space-between; padding: 1.2rem 3rem; }
+      nav ul { margin: 0; align-items: center; }
+    }
 
-    .nav-auth a, .nav-auth button {
-      font-family: inherit;
-      font-weight: 800;
-      font-size: 0.85rem;
+    /* ===== Account Panel (always visible) ===== */
+    .account-panel {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
       border-radius: 999px;
-      padding: 10px 14px;
       border: 1px solid #2a2a2a;
-      background: transparent;
+      background: rgba(255,255,255,0.03);
+      position: relative;
+    }
+    .account-dot {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1px solid #2a2a2a;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       color: #ffeb3b;
-      text-decoration: none;
+      background: transparent;
       cursor: pointer;
       transition: 0.25s;
+      font-size: 18px;
+      line-height: 1;
+      font-weight: 900;
     }
-    .nav-auth a:hover, .nav-auth button:hover {
+    .account-dot:hover {
       color: #00e5ff;
       border-color: #0072ff;
       box-shadow: 0 0 15px rgba(0,114,255,0.35);
       transform: translateY(-1px);
     }
 
-    /* Logged-in user label */
-    .user-pill {
-      display: none; /* enabled by JS when logged in */
-      align-items: center;
-      gap: 10px;
-      border: 1px solid #2a2a2a;
-      border-radius: 999px;
-      padding: 8px 12px;
-      color: #e0e0e0;
-      background: rgba(255,255,255,0.03);
-      max-width: 260px;
+    .account-meta {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+      max-width: 240px;
     }
-    .user-pill span {
-      font-weight: 800;
-      font-size: 0.85rem;
+    .account-meta .label {
+      font-weight: 900;
+      font-size: 0.82rem;
+      color: #fff;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      max-width: 220px;
-      display: inline-block;
+      max-width: 240px;
+    }
+    .account-meta .sub {
+      font-weight: 700;
+      font-size: 0.72rem;
+      color: #999;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 240px;
     }
 
-    /* 3-dot menu */
-    .menu { position: relative; display: none; }
-    .menu-btn {
-      width: 40px;
-      height: 40px;
-      padding: 0;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      line-height: 1;
-    }
-    .menu-pop {
+    .account-menu {
       position: absolute;
       right: 0;
       top: calc(100% + 10px);
-      width: 260px;
+      width: 290px;
       background: rgba(10,10,10,0.96);
       border: 1px solid #2a2a2a;
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 10px;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.8);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.85);
       display: none;
-      z-index: 9999;
+      z-index: 99999;
     }
-    .menu-pop .row {
-      padding: 10px 10px;
-      border-radius: 10px;
-      color: #ddd;
-      font-weight: 700;
-      font-size: 0.9rem;
-      display: flex;
-      gap: 10px;
-      align-items: center;
+
+    .account-menu .group-title {
+      color: #777;
+      font-weight: 900;
+      font-size: 0.72rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 10px 10px 6px;
     }
-    .menu-pop .row.muted {
-      color: #aaa;
-      font-weight: 600;
-      font-size: 0.85rem;
-      word-break: break-word;
-    }
-    .menu-pop a, .menu-pop button {
+
+    .account-menu a,
+    .account-menu button {
       width: 100%;
-      text-align: left;
-      background: transparent;
-      border: 0;
-      color: #ffeb3b;
-      cursor: pointer;
-      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
       padding: 10px 10px;
-      border-radius: 10px;
+      border-radius: 12px;
+      border: 0;
+      background: transparent;
+      color: #ffeb3b;
       text-decoration: none;
-      display: block;
+      cursor: pointer;
+      font-weight: 900;
       font-family: inherit;
       font-size: 0.9rem;
+      transition: 0.2s;
     }
-    .menu-pop a:hover, .menu-pop button:hover {
+
+    .account-menu a:hover,
+    .account-menu button:hover {
       background: rgba(0,114,255,0.18);
       color: #00e5ff;
     }
 
-    @media (min-width: 768px) {
-      nav { flex-direction: row; justify-content: space-between; padding: 1.2rem 3rem; }
-      nav ul { margin: 0; }
+    .account-menu .danger {
+      color: #ff4b2b;
+    }
+    .account-menu .danger:hover {
+      background: rgba(255,75,43,0.12);
+      color: #ff7b64;
+    }
+
+    .account-divider {
+      height: 1px;
+      background: #222;
+      margin: 6px 0;
+      border: 0;
     }
 
     /* Hero Section */
@@ -204,7 +219,6 @@
     .cards { display: grid; grid-template-columns: 1fr; padding: 2rem 1.5rem; gap: 2rem; max-width: 1200px; margin: 0 auto; perspective: 1000px; }
     @media (min-width: 768px) { .cards { grid-template-columns: repeat(3, 1fr); gap: 2.5rem; padding: 3rem 2rem; } }
 
-    /* Card Styling */
     .card {
       padding: 3.5rem 2rem; border-radius: 25px; text-align: center;
       transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
@@ -227,13 +241,10 @@
     .card-hacks i { color: #3282b8; }
 
     .button { display: inline-block; padding: 1rem 2.2rem; border-radius: 50px; text-decoration: none; font-weight: 800; text-transform: uppercase; transition: 0.4s; transform: translateZ(40px); }
-
     .btn-notes { background: #4ecca3; color: #1a1a2e; }
     .btn-notes:hover { box-shadow: 0 0 25px #4ecca3, 0 0 50px rgba(78, 204, 163, 0.4); transform: translateZ(60px) scale(1.05); }
-
     .btn-opps { background: #ff4b2b; color: #fff; }
     .btn-opps:hover { box-shadow: 0 0 25px #ff4b2b, 0 0 50px rgba(255, 75, 43, 0.4); transform: translateZ(60px) scale(1.05); }
-
     .btn-hacks { background: #3282b8; color: #fff; }
     .btn-hacks:hover { box-shadow: 0 0 25px #3282b8, 0 0 50px rgba(50, 130, 184, 0.4); transform: translateZ(60px) scale(1.05); }
 
@@ -260,11 +271,15 @@
 
   <!-- Supabase env -->
   <script src="/assests/js/env.js"></script>
+
+  <!-- Supabase JS (UMD) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 
   <nav>
     <h1>IR Notes Hub</h1>
+
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="opportunities.html">Opportunities</a></li>
@@ -273,25 +288,36 @@
       <li><a href="/articles/">Articles</a></li>
       <li><a href="#qa">Q&amp;A</a></li>
 
-      <!-- Logged out -->
-      <li class="nav-auth" id="navLoggedOut">
-        <a id="loginLink" href="/login.html">Login</a>
-        <a href="/signup.html">Sign up</a>
-      </li>
+      <!-- Always-visible Account Panel -->
+      <li>
+        <div class="account-panel" id="accountPanel">
+          <button class="account-dot" id="accountBtn" type="button" aria-label="Account menu" title="Account">⋮</button>
+          <div class="account-meta">
+            <div class="label" id="accountLabel">Guest</div>
+            <div class="sub" id="accountSub">Not logged in</div>
+          </div>
 
-      <!-- Logged in (3-dot menu) -->
-      <li class="nav-auth" id="navLoggedIn" style="display:none;">
-        <div class="user-pill" id="userPill">
-          <span id="userLabel">Account</span>
-        </div>
+          <div class="account-menu" id="accountMenu" role="menu" aria-hidden="true">
+            <div class="group-title">Account</div>
 
-        <div class="menu" id="userMenu">
-          <button class="menu-btn" id="menuBtn" type="button" aria-label="Account menu" title="Account">⋮</button>
-          <div class="menu-pop" id="menuPop" role="menu" aria-hidden="true">
-            <div class="row muted" id="menuEmail">—</div>
-            <a href="/change-password.html" role="menuitem">Change password</a>
-            <a href="/admin.html" id="adminLink" style="display:none;" role="menuitem">Admin</a>
-            <button id="logoutBtn" type="button" role="menuitem">Logout</button>
+            <!-- Logged OUT options -->
+            <a id="menuLogin" href="/login.html" role="menuitem"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+            <a id="menuSignup" href="/signup.html" role="menuitem"><i class="fa-solid fa-user-plus"></i> Sign up</a>
+
+            <hr class="account-divider" />
+
+            <div class="group-title">Articles</div>
+            <a href="/articles/" role="menuitem"><i class="fa-regular fa-file-lines"></i> Browse articles</a>
+
+            <!-- Logged IN options -->
+            <a id="menuSubmit" href="/upload.html" role="menuitem" style="display:none;"><i class="fa-solid fa-cloud-arrow-up"></i> Submit PDF</a>
+            <a id="menuMySub" href="/my-submissions.html" role="menuitem" style="display:none;"><i class="fa-solid fa-folder-open"></i> My submissions</a>
+            <a id="menuChangePw" href="/change-password.html" role="menuitem" style="display:none;"><i class="fa-solid fa-key"></i> Change password</a>
+            <a id="menuAdmin" href="/admin.html" role="menuitem" style="display:none;"><i class="fa-solid fa-shield-halved"></i> Admin</a>
+
+            <button id="menuLogout" type="button" role="menuitem" class="danger" style="display:none;">
+              <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </button>
           </div>
         </div>
       </li>
@@ -341,8 +367,6 @@ data-version="v1">
     </div>
   </section>
 
-  <!-- Removed: homepage Articles "moved" section as requested -->
-
   <section id="qa" class="qa">
     <h2>Q&amp;A Hub</h2>
     <div class="qa-list">
@@ -385,115 +409,131 @@ data-version="v1">
     })();
   </script>
 
-  <script type="module" src="/assests/js/index.js"></script>
+  <script>
+    (function () {
+      // ----- Account panel open/close -----
+      const panel = document.getElementById("accountPanel");
+      const btn = document.getElementById("accountBtn");
+      const menu = document.getElementById("accountMenu");
 
-  <!-- Auth nav toggle + 3-dot menu logic (no "logged in" popup on refresh) -->
-  <script type="module">
-    const waitForSupabase = async () => {
-      for (let i = 0; i < 80; i++) {
-        if (window.supabase?.auth) return window.supabase;
-        await new Promise(r => setTimeout(r, 50));
+      function setOpen(open) {
+        if (!menu) return;
+        menu.style.display = open ? "block" : "none";
+        menu.setAttribute("aria-hidden", open ? "false" : "true");
       }
-      return null;
-    };
 
-    const supabase = await waitForSupabase();
-    if (!supabase) {
-      console.warn("Supabase client not found on window.supabase");
-      return;
-    }
+      document.addEventListener("click", (e) => {
+        if (!panel) return;
+        if (!panel.contains(e.target)) setOpen(false);
+      });
 
-    const navLoggedOut = document.getElementById("navLoggedOut");
-    const navLoggedIn = document.getElementById("navLoggedIn");
+      btn?.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const isOpen = menu?.style.display === "block";
+        setOpen(!isOpen);
+      });
 
-    const userPill = document.getElementById("userPill");
-    const userLabel = document.getElementById("userLabel");
+      // ----- Supabase client -----
+      const ENV = window.__ENV || window.ENV || {};
+      const SUPABASE_URL = ENV.SUPABASE_URL || ENV.supabaseUrl;
+      const SUPABASE_ANON_KEY = ENV.SUPABASE_ANON_KEY || ENV.supabaseAnonKey;
 
-    const userMenu = document.getElementById("userMenu");
-    const menuBtn = document.getElementById("menuBtn");
-    const menuPop = document.getElementById("menuPop");
-    const menuEmail = document.getElementById("menuEmail");
-    const logoutBtn = document.getElementById("logoutBtn");
+      if (!SUPABASE_URL || !SUPABASE_ANON_KEY || !window.supabase) {
+        console.warn("Supabase env/client missing. Ensure env.js defines SUPABASE_URL and SUPABASE_ANON_KEY.");
+        return;
+      }
 
-    function openMenu(open) {
-      if (!menuPop) return;
-      menuPop.style.display = open ? "block" : "none";
-      menuPop.setAttribute("aria-hidden", open ? "false" : "true");
-    }
+      const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    document.addEventListener("click", (e) => {
-      if (!userMenu) return;
-      if (!userMenu.contains(e.target)) openMenu(false);
-    });
+      // ----- Menu items -----
+      const label = document.getElementById("accountLabel");
+      const sub = document.getElementById("accountSub");
 
-    menuBtn?.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const isOpen = menuPop?.style.display === "block";
-      openMenu(!isOpen);
-    });
+      const menuLogin = document.getElementById("menuLogin");
+      const menuSignup = document.getElementById("menuSignup");
 
-    async function refreshNav() {
-      const { data } = await supabase.auth.getSession();
-      const session = data.session;
+      const menuSubmit = document.getElementById("menuSubmit");
+      const menuMySub = document.getElementById("menuMySub");
+      const menuChangePw = document.getElementById("menuChangePw");
+      const menuAdmin = document.getElementById("menuAdmin");
+      const menuLogout = document.getElementById("menuLogout");
 
-      const loggedIn = !!session;
+      function show(el, on) {
+        if (!el) return;
+        el.style.display = on ? "" : "none";
+      }
 
-      if (navLoggedOut) navLoggedOut.style.display = loggedIn ? "none" : "";
-      if (navLoggedIn) navLoggedIn.style.display = loggedIn ? "" : "none";
+      async function refreshAccountUI() {
+        const { data } = await client.auth.getSession();
+        const session = data.session;
 
-      if (userPill) userPill.style.display = loggedIn ? "inline-flex" : "none";
-      if (userMenu) userMenu.style.display = loggedIn ? "block" : "none";
+        const loggedIn = !!session;
 
-      if (loggedIn) {
+        if (!loggedIn) {
+          if (label) label.textContent = "Guest";
+          if (sub) sub.textContent = "Not logged in";
+
+          show(menuLogin, true);
+          show(menuSignup, true);
+
+          show(menuSubmit, false);
+          show(menuMySub, false);
+          show(menuChangePw, false);
+          show(menuAdmin, false);
+          show(menuLogout, false);
+          return;
+        }
+
         const email = session.user?.email || "Account";
         const name =
           session.user?.user_metadata?.full_name ||
           session.user?.user_metadata?.name ||
           "";
 
-        if (menuEmail) menuEmail.textContent = email;
-        if (userLabel) userLabel.textContent = name ? name : email;
-      } else {
-        openMenu(false);
+        if (label) label.textContent = name ? name : "Logged in";
+        if (sub) sub.textContent = email;
+
+        show(menuLogin, false);
+        show(menuSignup, false);
+
+        show(menuSubmit, true);
+        show(menuMySub, true);
+        show(menuChangePw, true);
+
+        // Admin link visibility depends on your existing role logic; keep hidden by default.
+        // If you want it based on profiles.role, tell me and I’ll add it here.
+        show(menuAdmin, false);
+
+        show(menuLogout, true);
       }
-    }
 
-    await refreshNav();
+      refreshAccountUI();
+      client.auth.onAuthStateChange(() => refreshAccountUI());
 
-    // Keep UI updated without refresh loops
-    supabase.auth.onAuthStateChange(async () => {
-      await refreshNav();
-    });
-
-    // Logout button
-    logoutBtn?.addEventListener("click", async () => {
-      openMenu(false);
-      await supabase.auth.signOut();
-      // show a tiny "Logged out" toast ONCE
-      sessionStorage.setItem("__flash_loggedout", "1");
-      location.href = "/";
-    });
-
-    // Logged out toast once (no effect on decor)
-    if (sessionStorage.getItem("__flash_loggedout") === "1") {
-      sessionStorage.removeItem("__flash_loggedout");
-      const el = document.createElement("div");
-      el.textContent = "Logged out";
-      el.style.position = "fixed";
-      el.style.right = "16px";
-      el.style.bottom = "16px";
-      el.style.zIndex = "99999";
-      el.style.padding = "10px 12px";
-      el.style.borderRadius = "14px";
-      el.style.border = "1px solid #ffeb3b";
-      el.style.background = "rgba(255,235,59,0.12)";
-      el.style.color = "#fff";
-      el.style.backdropFilter = "blur(10px)";
-      el.style.fontWeight = "800";
-      document.body.appendChild(el);
-      setTimeout(() => el.remove(), 1400);
-    }
+      menuLogout?.addEventListener("click", async () => {
+        setOpen(false);
+        await client.auth.signOut();
+        // No popups on login; only a simple "Logged out" toast
+        const el = document.createElement("div");
+        el.textContent = "Logged out";
+        el.style.position = "fixed";
+        el.style.right = "16px";
+        el.style.bottom = "16px";
+        el.style.zIndex = "99999";
+        el.style.padding = "10px 12px";
+        el.style.borderRadius = "14px";
+        el.style.border = "1px solid #ffeb3b";
+        el.style.background = "rgba(255,235,59,0.12)";
+        el.style.color = "#fff";
+        el.style.backdropFilter = "blur(10px)";
+        el.style.fontWeight = "800";
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 1400);
+        // Keep user on home
+        refreshAccountUI();
+      });
+    })();
   </script>
 </body>
 </html>
