@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Submissions | IR Notes Hub</title>
+
+  <link rel="icon" href="/assests/img/icon.png" type="image/png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    * { box-sizing: border-box; }
+    body { margin:0; font-family:'Poppins',sans-serif; background:#050505; color:#e0e0e0; min-height:100vh; }
+
+    header {
+      background:#000; border-bottom:1px solid #1a1a1a;
+      padding: 18px 18px; display:flex; align-items:center; justify-content:space-between;
+      gap: 12px; flex-wrap: wrap;
+    }
+    header a { color:#ffeb3b; text-decoration:none; font-weight:800; }
+    header a:hover { color:#00e5ff; }
+
+    /* Account panel (same UI) */
+    .account-panel { display:inline-flex; align-items:center; gap:10px; padding:8px 10px; border-radius:999px; border:1px solid #2a2a2a; background:rgba(255,255,255,0.03); position:relative; }
+    .account-dot { width:34px; height:34px; border-radius:999px; border:1px solid #2a2a2a; display:inline-flex; align-items:center; justify-content:center; color:#ffeb3b; background:transparent; cursor:pointer; transition:0.25s; font-size:18px; line-height:1; font-weight:900; }
+    .account-dot:hover { color:#00e5ff; border-color:#0072ff; box-shadow:0 0 15px rgba(0,114,255,0.35); transform: translateY(-1px); }
+    .account-meta { display:flex; flex-direction:column; line-height:1.1; max-width:240px; }
+    .account-meta .label { font-weight:900; font-size:0.82rem; color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:240px; }
+    .account-meta .sub { font-weight:700; font-size:0.72rem; color:#999; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:240px; }
+    .account-menu { position:absolute; right:0; top: calc(100% + 10px); width:290px; background:rgba(10,10,10,0.96); border:1px solid #2a2a2a; border-radius:16px; padding:10px; box-shadow:0 18px 50px rgba(0,0,0,0.85); display:none; z-index:99999; }
+    .account-menu .group-title { color:#777; font-weight:900; font-size:0.72rem; letter-spacing:1px; text-transform:uppercase; padding:10px 10px 6px; }
+    .account-menu a, .account-menu button { width:100%; display:flex; align-items:center; gap:10px; padding:10px 10px; border-radius:12px; border:0; background:transparent; color:#ffeb3b; text-decoration:none; cursor:pointer; font-weight:900; font-family:inherit; font-size:0.9rem; transition:0.2s; text-align:left; }
+    .account-menu a:hover, .account-menu button:hover { background: rgba(0,114,255,0.18); color:#00e5ff; }
+    .account-divider { height:1px; background:#222; margin:6px 0; border:0; }
+    .account-menu .danger { color:#ff4b2b; }
+    .account-menu .danger:hover { background: rgba(255,75,43,0.12); color:#ff7b64; }
+
+    main { max-width: 1100px; margin: 0 auto; padding: 28px 18px 60px; }
+    h1 { margin: 0 0 8px 0; font-size: 2rem; }
+    p.lead { margin: 0 0 18px 0; color: #aaa; line-height: 1.6; }
+
+    .top-actions { display:flex; gap:10px; flex-wrap:wrap; margin: 12px 0 18px; }
+    .pill {
+      display:inline-flex; align-items:center; gap:10px;
+      border-radius:999px; padding:10px 14px;
+      border:1px solid #2a2a2a; background:transparent;
+      color:#ffeb3b; font-weight:900; cursor:pointer; text-decoration:none;
+      transition:0.25s;
+    }
+    .pill:hover { color:#00e5ff; border-color:#0072ff; box-shadow:0 0 15px rgba(0,114,255,0.35); transform: translateY(-1px); }
+
+    .grid { display:grid; grid-template-columns: 1fr; gap: 16px; margin-top: 16px; }
+    @media (min-width: 768px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+
+    .card {
+      background: rgba(22,22,22,0.95);
+      border: 1px solid #333;
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.65);
+    }
+    .card h3 { margin: 0 0 6px 0; font-size: 1.15rem; color: #fff; }
+    .meta { color:#777; font-size:0.85rem; margin-bottom: 10px; line-height: 1.4; }
+    .meta b { color:#aaa; }
+    .card p { margin: 0 0 12px 0; color: #bbb; line-height: 1.6; }
+
+    .badge {
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #2a2a2a;
+      font-weight: 900;
+      font-size: 0.8rem;
+      margin-bottom: 10px;
+      width: fit-content;
+    }
+    .badge.pending { color:#ffeb3b; background: rgba(255,235,59,0.10); border-color: rgba(255,235,59,0.35); }
+    .badge.approved { color:#7CFC98; background: rgba(0,230,118,0.10); border-color: rgba(0,230,118,0.35); }
+    .badge.rejected { color:#ff7b64; background: rgba(255,75,43,0.10); border-color: rgba(255,75,43,0.35); }
+
+    .actions { display:flex; gap:10px; flex-wrap: wrap; }
+    .actions button, .actions a {
+      border-radius: 999px; padding: 10px 14px;
+      border: 1px solid #2a2a2a; background: transparent;
+      color: #ffeb3b; font-weight: 900; cursor: pointer; text-decoration:none;
+      transition: 0.25s;
+      display:inline-flex; align-items:center; gap:10px;
+    }
+    .actions button:hover, .actions a:hover {
+      color:#00e5ff; border-color:#0072ff;
+      box-shadow:0 0 15px rgba(0,114,255,0.35);
+      transform: translateY(-1px);
+    }
+
+    #msg { color:#888; margin-top: 10px; }
+  </style>
+
+  <script src="/assests/js/env.js"></script>
+</head>
+<body>
+  <header>
+    <a href="/articles/">← Articles</a>
+
+    <div class="account-panel" id="accountPanel">
+      <button class="account-dot" id="accountBtn" type="button" aria-label="Account menu" title="Account">⋮</button>
+      <div class="account-meta">
+        <div class="label" id="accountLabel">Guest</div>
+        <div class="sub" id="accountSub">Not logged in</div>
+      </div>
+
+      <div class="account-menu" id="accountMenu" role="menu" aria-hidden="true">
+        <div class="group-title">Account</div>
+        <a id="menuLogin" href="/login.html" role="menuitem"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+        <a id="menuSignup" href="/signup.html" role="menuitem"><i class="fa-solid fa-user-plus"></i> Sign up</a>
+
+        <hr class="account-divider" />
+
+        <div class="group-title">Articles</div>
+        <a href="/articles/" role="menuitem"><i class="fa-regular fa-file-lines"></i> Browse articles</a>
+        <a href="/upload.html" id="menuSubmit" role="menuitem" style="display:none;"><i class="fa-solid fa-cloud-arrow-up"></i> Submit PDF</a>
+
+        <hr class="account-divider" />
+
+        <a id="menuChangePw" href="/change-password.html" role="menuitem" style="display:none;"><i class="fa-solid fa-key"></i> Change password</a>
+        <a id="menuAdmin" href="/admin.html" role="menuitem" style="display:none;"><i class="fa-solid fa-shield-halved"></i> Admin</a>
+
+        <button id="menuLogout" type="button" role="menuitem" class="danger" style="display:none;">
+          <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <h1>My Submissions</h1>
+    <p class="lead">Track your uploaded PDFs. Only <b>Approved</b> submissions can be viewed.</p>
+
+    <div class="top-actions">
+      <a class="pill" href="/upload.html"><i class="fa-solid fa-cloud-arrow-up"></i> Submit new PDF</a>
+      <a class="pill" href="/articles/"><i class="fa-regular fa-file-lines"></i> View approved articles</a>
+    </div>
+
+    <p id="msg">Loading…</p>
+    <div id="list" class="grid"></div>
+  </main>
+
+  <script type="module">
+    async function waitForClient() {
+      for (let i = 0; i < 120; i++) {
+        if (window.supabase?.auth) return window.supabase;
+        await new Promise(r => setTimeout(r, 50));
+      }
+      return null;
+    }
+
+    // Account panel open/close
+    const panel = document.getElementById("accountPanel");
+    const btn = document.getElementById("accountBtn");
+    const menu = document.getElementById("accountMenu");
+    function setOpen(open) {
+      if (!menu) return;
+      menu.style.display = open ? "block" : "none";
+      menu.setAttribute("aria-hidden", open ? "false" : "true");
+    }
+    document.addEventListener("click", (e) => {
+      if (!panel) return;
+      if (!panel.contains(e.target)) setOpen(false);
+    });
+    btn?.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const isOpen = menu?.style.display === "block";
+      setOpen(!isOpen);
+    });
+
+    const supabase = await waitForClient();
+    if (!supabase) {
+      console.warn("window.supabase not found.");
+      document.getElementById("msg").textContent = "Error: Supabase client not initialized.";
+      throw new Error("Supabase client missing");
+    }
+
+    // Auth UI + require login
+    const accountLabel = document.getElementById("accountLabel");
+    const accountSub = document.getElementById("accountSub");
+    const menuLogin = document.getElementById("menuLogin");
+    const menuSignup = document.getElementById("menuSignup");
+    const menuSubmit = document.getElementById("menuSubmit");
+    const menuChangePw = document.getElementById("menuChangePw");
+    const menuAdmin = document.getElementById("menuAdmin");
+    const menuLogout = document.getElementById("menuLogout");
+    function show(el, on) { if (el) el.style.display = on ? "" : "none"; }
+
+    async function requireLoginAndRefreshMenu() {
+      const { data } = await supabase.auth.getSession();
+      const session = data.session;
+
+      if (!session) {
+        // redirect to login for this page
+        location.href = "/login.html?next=/my-submissions.html";
+        return null;
+      }
+
+      const email = session.user?.email || "Account";
+      const name =
+        session.user?.user_metadata?.full_name ||
+        session.user?.user_metadata?.name ||
+        "";
+
+      if (accountLabel) accountLabel.textContent = name ? name : "Logged in";
+      if (accountSub) accountSub.textContent = email;
+
+      show(menuLogin, false);
+      show(menuSignup, false);
+      show(menuSubmit, true);
+      show(menuChangePw, true);
+      show(menuAdmin, false); // keep hidden unless you add role check
+      show(menuLogout, true);
+
+      return session;
+    }
+
+    menuLogout?.addEventListener("click", async () => {
+      setOpen(false);
+      await supabase.auth.signOut();
+      location.href = "/login.html";
+    });
+
+    const session = await requireLoginAndRefreshMenu();
+    supabase.auth.onAuthStateChange(() => requireLoginAndRefreshMenu());
+
+    const msg = document.getElementById("msg");
+    const list = document.getElementById("list");
+
+    function esc(s) {
+      return (s ?? "").toString()
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function badge(status) {
+      const st = (status || "").toLowerCase();
+      if (st === "approved") return `<div class="badge approved"><i class="fa-solid fa-circle-check"></i> Approved</div>`;
+      if (st === "rejected") return `<div class="badge rejected"><i class="fa-solid fa-circle-xmark"></i> Rejected</div>`;
+      return `<div class="badge pending"><i class="fa-solid fa-clock"></i> Pending</div>`;
+    }
+
+    async function openPdf(file_path) {
+      // Only logged-in users can read Storage per your policy
+      const { data, error } = await supabase.storage.from("pdfs").createSignedUrl(file_path, 60 * 10);
+      if (error) throw error;
+      window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+    }
+
+    async function load() {
+      if (!session) return;
+
+      msg.textContent = "Loading…";
+      list.innerHTML = "";
+
+      const { data, error } = await supabase
+        .from("submissions")
+        .select("id,writer_name,title,topic,description,status,created_at,file_path")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error(error);
+        msg.textContent = "Failed to load submissions.";
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        msg.textContent = "No submissions yet.";
+        return;
+      }
+
+      msg.textContent = "";
+      for (const row of data) {
+        const created = row.created_at ? new Date(row.created_at).toLocaleString() : "";
+        const canView = row.status === "approved" && row.file_path;
+
+        const el = document.createElement("div");
+        el.className = "card";
+        el.innerHTML = `
+          ${badge(row.status)}
+          <h3>${esc(row.title)}</h3>
+          <div class="meta">
+            <div><b>Writer:</b> ${esc(row.writer_name)}</div>
+            <div><b>Topic:</b> ${esc(row.topic)}</div>
+            <div><b>Submitted:</b> ${esc(created)}</div>
+          </div>
+          ${row.description ? `<p>${esc(row.description)}</p>` : ""}
+          <div class="actions">
+            ${canView ? `<button type="button" data-open="${esc(row.file_path)}"><i class="fa-regular fa-file-pdf"></i> View PDF</button>` : ""}
+          </div>
+        `;
+
+        const btn = el.querySelector("button[data-open]");
+        if (btn) {
+          btn.addEventListener("click", async () => {
+            try {
+              btn.disabled = true;
+              btn.textContent = "Opening…";
+              await openPdf(btn.getAttribute("data-open"));
+            } catch (e) {
+              console.error(e);
+              alert("Could not open PDF. Please try again.");
+            } finally {
+              btn.disabled = false;
+              btn.innerHTML = `<i class="fa-regular fa-file-pdf"></i> View PDF`;
+            }
+          });
+        }
+
+        list.appendChild(el);
+      }
+    }
+
+    await load();
+  </script>
+</body>
+</html>
