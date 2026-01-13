@@ -68,7 +68,14 @@
     <a href="/">← Home</a>
 
     <div class="auth">
+      <!-- Logged out -->
       <a id="loginLink" href="/login.html">Login</a>
+
+      <!-- Logged in actions (moved here from home) -->
+      <a id="submitPdfLink" href="/upload.html" style="display:none;">Submit PDF</a>
+      <a id="mySubmissionsLink" href="/my-submissions.html" style="display:none;">My Submissions</a>
+
+      <a href="/admin.html" id="adminLink" style="display:none;">Admin</a>
       <button id="logoutBtn" type="button" style="display:none;">Logout</button>
     </div>
   </header>
@@ -82,5 +89,100 @@
   </main>
 
   <script type="module" src="/assests/js/articles.js"></script>
+
+  <!-- NEW: popup + auto refresh on login/logout -->
+  <script type="module">
+    function toast(message, type = "info") {
+      const el = document.createElement("div");
+      el.textContent = message;
+
+      const colors = {
+        info:  { bg: "rgba(0,114,255,0.20)", border: "#0072ff" },
+        ok:    { bg: "rgba(0,230,118,0.18)", border: "#00e676" },
+        warn:  { bg: "rgba(255,235,59,0.14)", border: "#ffeb3b" },
+        bad:   { bg: "rgba(255,75,43,0.18)", border: "#ff4b2b" },
+      };
+
+      const c = colors[type] || colors.info;
+
+      el.style.position = "fixed";
+      el.style.right = "16px";
+      el.style.bottom = "16px";
+      el.style.zIndex = "99999";
+      el.style.padding = "12px 14px";
+      el.style.borderRadius = "14px";
+      el.style.border = `1px solid ${c.border}`;
+      el.style.background = c.bg;
+      el.style.color = "#fff";
+      el.style.backdropFilter = "blur(10px)";
+      el.style.boxShadow = "0 12px 30px rgba(0,0,0,0.55)";
+      el.style.fontWeight = "800";
+
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 2200);
+    }
+
+    const flash = sessionStorage.getItem("__flash");
+    if (flash) {
+      try {
+        const { msg, type } = JSON.parse(flash);
+        toast(msg, type);
+      } catch {}
+      sessionStorage.removeItem("__flash");
+    }
+
+    function setFlash(msg, type) {
+      sessionStorage.setItem("__flash", JSON.stringify({ msg, type }));
+    }
+
+    const waitForSupabase = async () => {
+      for (let i = 0; i < 50; i++) {
+        if (window.supabase?.auth) return window.supabase;
+        await new Promise(r => setTimeout(r, 50));
+      }
+      return null;
+    };
+
+    const supabase = await waitForSupabase();
+    if (!supabase) {
+      console.warn("Supabase client not found on window.supabase");
+    } else {
+      supabase.auth.onAuthStateChange((event) => {
+        if (event === "SIGNED_IN") {
+          setFlash("Logged in", "ok");
+          location.reload();
+        }
+        if (event === "SIGNED_OUT") {
+          setFlash("Logged out", "warn");
+          location.reload();
+        }
+      });
+    }
+  </script>
+
+  <!-- NEW: toggle auth buttons on this page -->
+  <script>
+    (async function () {
+      // Wait a moment for /assests/js/articles.js to create window.supabase (if it does)
+      for (let i = 0; i < 50; i++) {
+        if (window.supabase?.auth) break;
+        await new Promise(r => setTimeout(r, 50));
+      }
+      if (!window.supabase?.auth) return;
+
+      const loginLink = document.getElementById("loginLink");
+      const logoutBtn = document.getElementById("logoutBtn");
+      const submitPdfLink = document.getElementById("submitPdfLink");
+      const mySubmissionsLink = document.getElementById("mySubmissionsLink");
+
+      const { data } = await window.supabase.auth.getSession();
+      const loggedIn = !!data.session;
+
+      if (loginLink) loginLink.style.display = loggedIn ? "none" : "";
+      if (logoutBtn) logoutBtn.style.display = loggedIn ? "" : "none";
+      if (submitPdfLink) submitPdfLink.style.display = loggedIn ? "" : "none";
+      if (mySubmissionsLink) mySubmissionsLink.style.display = loggedIn ? "" : "none";
+    })();
+  </script>
 </body>
 </html>
