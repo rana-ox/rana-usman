@@ -211,6 +211,7 @@
     footer { background: #000; color: #ffeb3b; text-align: center; padding: 3rem 1.5rem; border-top: 1px solid #1a1a1a; }
   </style>
 
+  <!-- NEW: Supabase env (public) -->
   <script src="/assests/js/env.js"></script>
 </head>
 <body>
@@ -223,6 +224,7 @@
       <li><a href="hacks.html">Study Hacks</a></li>
       <li><a href="https://notes.ranausman.me">Notes</a></li>
 
+      <!-- Articles goes to dedicated page -->
       <li><a href="/articles/">Articles</a></li>
 
       <li><a href="#qa">Q&amp;A</a></li>
@@ -283,6 +285,7 @@ data-version="v1">
     </div>
   </section>
 
+  <!-- Articles section on homepage is now just a link -->
   <section class="articles">
     <h2>Articles</h2>
     <p class="lead">Articles have been moved to a dedicated page.</p>
@@ -335,7 +338,7 @@ data-version="v1">
 
   <script type="module" src="/assests/js/index.js"></script>
 
-  <!-- NEW: popup + auto refresh on login/logout -->
+  <!-- FIXED: popups only, and refresh ONLY on logout -->
   <script type="module">
     function toast(message, type = "info") {
       const el = document.createElement("div");
@@ -367,6 +370,7 @@ data-version="v1">
       setTimeout(() => el.remove(), 2200);
     }
 
+    // Show toast once AFTER redirect/reload
     const flash = sessionStorage.getItem("__flash");
     if (flash) {
       try {
@@ -378,6 +382,12 @@ data-version="v1">
 
     function setFlash(msg, type) {
       sessionStorage.setItem("__flash", JSON.stringify({ msg, type }));
+    }
+
+    // Prevent infinite refresh loop: only refresh once after logout
+    const didRefreshAfterLogout = sessionStorage.getItem("__refreshed_after_logout") === "1";
+    if (didRefreshAfterLogout) {
+      sessionStorage.removeItem("__refreshed_after_logout");
     }
 
     const waitForSupabase = async () => {
@@ -394,12 +404,17 @@ data-version="v1">
     } else {
       supabase.auth.onAuthStateChange((event) => {
         if (event === "SIGNED_IN") {
+          // popup only (NO refresh)
           setFlash("Logged in", "ok");
-          location.reload();
         }
+
         if (event === "SIGNED_OUT") {
+          // popup + refresh ONCE
           setFlash("Logged out", "warn");
-          location.reload();
+          if (!didRefreshAfterLogout) {
+            sessionStorage.setItem("__refreshed_after_logout", "1");
+            location.reload();
+          }
         }
       });
     }
