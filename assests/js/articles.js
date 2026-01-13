@@ -17,7 +17,7 @@ function escapeHtml(str) {
 async function updateAuthUI() {
   const { data: { session } } = await supabase.auth.getSession();
 
-  // Page may not have these elements; don't crash if missing
+  // This page doesn't have login/logout elements, so guard them.
   if (session) {
     if (loginLink) loginLink.style.display = "none";
     if (logoutBtn) logoutBtn.style.display = "";
@@ -39,7 +39,7 @@ async function loadApprovedArticles() {
   if (msg) msg.textContent = "Loading…";
 
   const { data, error } = await supabase
-    .from("submissions") // FIX: correct table
+    .from("submissions") // IMPORTANT: correct table
     .select("id,title,description,created_at")
     .eq("status", "approved")
     .order("created_at", { ascending: false });
