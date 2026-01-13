@@ -190,6 +190,7 @@
 
   <!-- Supabase env must load before JS modules -->
   <script src="/assests/js/env.js"></script>
+  <script type="module" src="/assests/js/articles.js"></script>
 </head>
 <body>
   <header>
@@ -242,7 +243,8 @@
     <div id="list" class="grid"></div>
   </main>
 
-  <script type="module" src="/assests/js/articles.js"></script>
+  
+  
 
   <!-- Account panel logic: uses window.supabase (no new clients, no refresh loops) -->
   <script>
