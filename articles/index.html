@@ -7,6 +7,7 @@
 
   <link rel="icon" href="/assests/img/icon.png" type="image/png">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
     * { box-sizing: border-box; }
@@ -14,18 +15,130 @@
     header { background:#000; border-bottom:1px solid #1a1a1a; padding: 18px 18px; display:flex; align-items:center; justify-content:space-between; gap: 12px; flex-wrap: wrap; }
     header a { color:#ffeb3b; text-decoration:none; font-weight:800; }
     header a:hover { color:#00e5ff; }
-    .auth { display:flex; gap: 10px; align-items:center; flex-wrap: wrap; }
-    .auth a, .auth button {
-      border-radius: 999px; padding: 10px 14px;
-      border: 1px solid #2a2a2a; background: transparent;
-      color: #ffeb3b; font-weight: 800; cursor: pointer; text-decoration:none;
-      transition: 0.25s;
+
+    /* ===== Account Panel (always visible) ===== */
+    .account-panel {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid #2a2a2a;
+      background: rgba(255,255,255,0.03);
+      position: relative;
     }
-    .auth a:hover, .auth button:hover {
-      color:#00e5ff; border-color:#0072ff;
-      box-shadow:0 0 15px rgba(0,114,255,0.35);
+    .account-dot {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1px solid #2a2a2a;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffeb3b;
+      background: transparent;
+      cursor: pointer;
+      transition: 0.25s;
+      font-size: 18px;
+      line-height: 1;
+      font-weight: 900;
+    }
+    .account-dot:hover {
+      color: #00e5ff;
+      border-color: #0072ff;
+      box-shadow: 0 0 15px rgba(0,114,255,0.35);
       transform: translateY(-1px);
     }
+
+    .account-meta {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+      max-width: 240px;
+    }
+    .account-meta .label {
+      font-weight: 900;
+      font-size: 0.82rem;
+      color: #fff;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 240px;
+    }
+    .account-meta .sub {
+      font-weight: 700;
+      font-size: 0.72rem;
+      color: #999;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 240px;
+    }
+
+    .account-menu {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 10px);
+      width: 290px;
+      background: rgba(10,10,10,0.96);
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      padding: 10px;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.85);
+      display: none;
+      z-index: 99999;
+    }
+
+    .account-menu .group-title {
+      color: #777;
+      font-weight: 900;
+      font-size: 0.72rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 10px 10px 6px;
+    }
+
+    .account-menu a,
+    .account-menu button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 10px;
+      border-radius: 12px;
+      border: 0;
+      background: transparent;
+      color: #ffeb3b;
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: 900;
+      font-family: inherit;
+      font-size: 0.9rem;
+      transition: 0.2s;
+      text-align: left;
+    }
+
+    .account-menu a:hover,
+    .account-menu button:hover {
+      background: rgba(0,114,255,0.18);
+      color: #00e5ff;
+    }
+
+    .account-menu .danger {
+      color: #ff4b2b;
+    }
+    .account-menu .danger:hover {
+      background: rgba(255,75,43,0.12);
+      color: #ff7b64;
+    }
+
+    .account-divider {
+      height: 1px;
+      background: #222;
+      margin: 6px 0;
+      border: 0;
+    }
+
     main { max-width: 1100px; margin: 0 auto; padding: 28px 18px 60px; }
     h1 { margin: 0 0 8px 0; font-size: 2rem; }
     p.lead { margin: 0 0 18px 0; color: #aaa; line-height: 1.6; }
@@ -60,23 +173,46 @@
     #msg { color:#888; margin-top: 10px; }
   </style>
 
-  <!-- Supabase env must load before JS modules -->
+  <!-- Supabase env -->
   <script src="/assests/js/env.js"></script>
+
+  <!-- Supabase JS (UMD) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
 </head>
 <body>
   <header>
     <a href="/">← Home</a>
 
-    <div class="auth">
-      <!-- Logged out -->
-      <a id="loginLink" href="/login.html">Login</a>
+    <!-- Professional always-visible panel (same as Home) -->
+    <div class="account-panel" id="accountPanel">
+      <button class="account-dot" id="accountBtn" type="button" aria-label="Account menu" title="Account">⋮</button>
+      <div class="account-meta">
+        <div class="label" id="accountLabel">Guest</div>
+        <div class="sub" id="accountSub">Not logged in</div>
+      </div>
 
-      <!-- Logged in actions (moved here from home) -->
-      <a id="submitPdfLink" href="/upload.html" style="display:none;">Submit PDF</a>
-      <a id="mySubmissionsLink" href="/my-submissions.html" style="display:none;">My Submissions</a>
+      <div class="account-menu" id="accountMenu" role="menu" aria-hidden="true">
+        <div class="group-title">Account</div>
 
-      <a href="/admin.html" id="adminLink" style="display:none;">Admin</a>
-      <button id="logoutBtn" type="button" style="display:none;">Logout</button>
+        <!-- Logged OUT options -->
+        <a id="menuLogin" href="/login.html" role="menuitem"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+        <a id="menuSignup" href="/signup.html" role="menuitem"><i class="fa-solid fa-user-plus"></i> Sign up</a>
+
+        <hr class="account-divider" />
+
+        <div class="group-title">Articles</div>
+        <a href="/articles/" role="menuitem"><i class="fa-regular fa-file-lines"></i> Browse articles</a>
+
+        <!-- Logged IN options -->
+        <a id="menuSubmit" href="/upload.html" role="menuitem" style="display:none;"><i class="fa-solid fa-cloud-arrow-up"></i> Submit PDF</a>
+        <a id="menuMySub" href="/my-submissions.html" role="menuitem" style="display:none;"><i class="fa-solid fa-folder-open"></i> My submissions</a>
+        <a id="menuChangePw" href="/change-password.html" role="menuitem" style="display:none;"><i class="fa-solid fa-key"></i> Change password</a>
+        <a id="menuAdmin" href="/admin.html" role="menuitem" style="display:none;"><i class="fa-solid fa-shield-halved"></i> Admin</a>
+
+        <button id="menuLogout" type="button" role="menuitem" class="danger" style="display:none;">
+          <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </button>
+      </div>
     </div>
   </header>
 
@@ -90,98 +226,131 @@
 
   <script type="module" src="/assests/js/articles.js"></script>
 
-  <!-- NEW: popup + auto refresh on login/logout -->
-  <script type="module">
-    function toast(message, type = "info") {
-      const el = document.createElement("div");
-      el.textContent = message;
-
-      const colors = {
-        info:  { bg: "rgba(0,114,255,0.20)", border: "#0072ff" },
-        ok:    { bg: "rgba(0,230,118,0.18)", border: "#00e676" },
-        warn:  { bg: "rgba(255,235,59,0.14)", border: "#ffeb3b" },
-        bad:   { bg: "rgba(255,75,43,0.18)", border: "#ff4b2b" },
-      };
-
-      const c = colors[type] || colors.info;
-
-      el.style.position = "fixed";
-      el.style.right = "16px";
-      el.style.bottom = "16px";
-      el.style.zIndex = "99999";
-      el.style.padding = "12px 14px";
-      el.style.borderRadius = "14px";
-      el.style.border = `1px solid ${c.border}`;
-      el.style.background = c.bg;
-      el.style.color = "#fff";
-      el.style.backdropFilter = "blur(10px)";
-      el.style.boxShadow = "0 12px 30px rgba(0,0,0,0.55)";
-      el.style.fontWeight = "800";
-
-      document.body.appendChild(el);
-      setTimeout(() => el.remove(), 2200);
-    }
-
-    const flash = sessionStorage.getItem("__flash");
-    if (flash) {
-      try {
-        const { msg, type } = JSON.parse(flash);
-        toast(msg, type);
-      } catch {}
-      sessionStorage.removeItem("__flash");
-    }
-
-    function setFlash(msg, type) {
-      sessionStorage.setItem("__flash", JSON.stringify({ msg, type }));
-    }
-
-    const waitForSupabase = async () => {
-      for (let i = 0; i < 50; i++) {
-        if (window.supabase?.auth) return window.supabase;
-        await new Promise(r => setTimeout(r, 50));
-      }
-      return null;
-    };
-
-    const supabase = await waitForSupabase();
-    if (!supabase) {
-      console.warn("Supabase client not found on window.supabase");
-    } else {
-      supabase.auth.onAuthStateChange((event) => {
-        if (event === "SIGNED_IN") {
-          setFlash("Logged in", "ok");
-          location.reload();
-        }
-        if (event === "SIGNED_OUT") {
-          setFlash("Logged out", "warn");
-          location.reload();
-        }
-      });
-    }
-  </script>
-
-  <!-- NEW: toggle auth buttons on this page -->
+  <!-- Updated: no auto-refresh loop; panel always works -->
   <script>
-    (async function () {
-      // Wait a moment for /assests/js/articles.js to create window.supabase (if it does)
-      for (let i = 0; i < 50; i++) {
-        if (window.supabase?.auth) break;
-        await new Promise(r => setTimeout(r, 50));
+    (function () {
+      // ----- Account panel open/close -----
+      const panel = document.getElementById("accountPanel");
+      const btn = document.getElementById("accountBtn");
+      const menu = document.getElementById("accountMenu");
+
+      function setOpen(open) {
+        if (!menu) return;
+        menu.style.display = open ? "block" : "none";
+        menu.setAttribute("aria-hidden", open ? "false" : "true");
       }
-      if (!window.supabase?.auth) return;
 
-      const loginLink = document.getElementById("loginLink");
-      const logoutBtn = document.getElementById("logoutBtn");
-      const submitPdfLink = document.getElementById("submitPdfLink");
-      const mySubmissionsLink = document.getElementById("mySubmissionsLink");
+      document.addEventListener("click", (e) => {
+        if (!panel) return;
+        if (!panel.contains(e.target)) setOpen(false);
+      });
 
-      const { data } = await window.supabase.auth.getSession();
-      const loggedIn = !!data.session;
+      btn?.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const isOpen = menu?.style.display === "block";
+        setOpen(!isOpen);
+      });
 
-      if (loginLink) loginLink.style.display = loggedIn ? "none" : "";
-      if (logoutBtn) logoutBtn.style.display = loggedIn ? "" : "none";
-      if (submitPdfLink) submitPdfLink.style.display = loggedIn ? "" : "none";
-      if (mySubmissionsLink) mySubmissionsLink.style.display = loggedIn ? "" : "none";
+      // ----- Supabase client -----
+      const ENV = window.__ENV || window.ENV || {};
+      const SUPABASE_URL = ENV.SUPABASE_URL || ENV.supabaseUrl;
+      const SUPABASE_ANON_KEY = ENV.SUPABASE_ANON_KEY || ENV.supabaseAnonKey;
+
+      if (!SUPABASE_URL || !SUPABASE_ANON_KEY || !window.supabase) {
+        console.warn("Supabase env/client missing. Ensure env.js defines SUPABASE_URL and SUPABASE_ANON_KEY.");
+        return;
+      }
+
+      const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      // ----- Menu items -----
+      const label = document.getElementById("accountLabel");
+      const sub = document.getElementById("accountSub");
+
+      const menuLogin = document.getElementById("menuLogin");
+      const menuSignup = document.getElementById("menuSignup");
+
+      const menuSubmit = document.getElementById("menuSubmit");
+      const menuMySub = document.getElementById("menuMySub");
+      const menuChangePw = document.getElementById("menuChangePw");
+      const menuAdmin = document.getElementById("menuAdmin");
+      const menuLogout = document.getElementById("menuLogout");
+
+      function show(el, on) {
+        if (!el) return;
+        el.style.display = on ? "" : "none";
+      }
+
+      async function refreshAccountUI() {
+        const { data } = await client.auth.getSession();
+        const session = data.session;
+
+        const loggedIn = !!session;
+
+        if (!loggedIn) {
+          if (label) label.textContent = "Guest";
+          if (sub) sub.textContent = "Not logged in";
+
+          show(menuLogin, true);
+          show(menuSignup, true);
+
+          show(menuSubmit, false);
+          show(menuMySub, false);
+          show(menuChangePw, false);
+          show(menuAdmin, false);
+          show(menuLogout, false);
+          return;
+        }
+
+        const email = session.user?.email || "Account";
+        const name =
+          session.user?.user_metadata?.full_name ||
+          session.user?.user_metadata?.name ||
+          "";
+
+        if (label) label.textContent = name ? name : "Logged in";
+        if (sub) sub.textContent = email;
+
+        show(menuLogin, false);
+        show(menuSignup, false);
+
+        show(menuSubmit, true);
+        show(menuMySub, true);
+        show(menuChangePw, true);
+
+        // Keep admin hidden by default unless you want role-based logic.
+        show(menuAdmin, false);
+
+        show(menuLogout, true);
+      }
+
+      refreshAccountUI();
+      client.auth.onAuthStateChange(() => refreshAccountUI());
+
+      menuLogout?.addEventListener("click", async () => {
+        setOpen(false);
+        await client.auth.signOut();
+
+        // small toast (no refresh)
+        const el = document.createElement("div");
+        el.textContent = "Logged out";
+        el.style.position = "fixed";
+        el.style.right = "16px";
+        el.style.bottom = "16px";
+        el.style.zIndex = "99999";
+        el.style.padding = "10px 12px";
+        el.style.borderRadius = "14px";
+        el.style.border = "1px solid #ffeb3b";
+        el.style.background = "rgba(255,235,59,0.12)";
+        el.style.color = "#fff";
+        el.style.backdropFilter = "blur(10px)";
+        el.style.fontWeight = "800";
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 1400);
+
+        refreshAccountUI();
+      });
     })();
   </script>
 </body>
