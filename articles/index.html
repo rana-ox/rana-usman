@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Articles | IR Notes Hub</title>
+
+  <link rel="icon" href="/assests/img/icon.png" type="image/png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap">
+
+  <style>
+    * { box-sizing: border-box; }
+    body { margin:0; font-family:'Poppins',sans-serif; background:#050505; color:#e0e0e0; min-height:100vh; }
+    header { background:#000; border-bottom:1px solid #1a1a1a; padding: 18px 18px; display:flex; align-items:center; justify-content:space-between; gap: 12px; flex-wrap: wrap; }
+    header a { color:#ffeb3b; text-decoration:none; font-weight:800; }
+    header a:hover { color:#00e5ff; }
+    .auth { display:flex; gap: 10px; align-items:center; flex-wrap: wrap; }
+    .auth a, .auth button {
+      border-radius: 999px; padding: 10px 14px;
+      border: 1px solid #2a2a2a; background: transparent;
+      color: #ffeb3b; font-weight: 800; cursor: pointer; text-decoration:none;
+      transition: 0.25s;
+    }
+    .auth a:hover, .auth button:hover {
+      color:#00e5ff; border-color:#0072ff;
+      box-shadow:0 0 15px rgba(0,114,255,0.35);
+      transform: translateY(-1px);
+    }
+    main { max-width: 1100px; margin: 0 auto; padding: 28px 18px 60px; }
+    h1 { margin: 0 0 8px 0; font-size: 2rem; }
+    p.lead { margin: 0 0 18px 0; color: #aaa; line-height: 1.6; }
+
+    .grid { display:grid; grid-template-columns: 1fr; gap: 16px; margin-top: 16px; }
+    @media (min-width: 768px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+
+    .card {
+      background: rgba(22,22,22,0.95);
+      border: 1px solid #333;
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.65);
+    }
+    .card h3 { margin: 0 0 8px 0; font-size: 1.15rem; color: #fff; }
+    .meta { color:#777; font-size:0.85rem; margin-bottom: 10px; }
+    .card p { margin: 0 0 12px 0; color: #bbb; line-height: 1.6; }
+
+    .actions { display:flex; gap:10px; flex-wrap: wrap; }
+    .actions button {
+      border-radius: 999px; padding: 10px 14px;
+      border: 1px solid #2a2a2a; background: transparent;
+      color: #ffeb3b; font-weight: 800; cursor: pointer;
+      transition: 0.25s;
+    }
+    .actions button:hover {
+      color:#00e5ff; border-color:#0072ff;
+      box-shadow:0 0 15px rgba(0,114,255,0.35);
+      transform: translateY(-1px);
+    }
+
+    #msg { color:#888; margin-top: 10px; }
+  </style>
+
+  <!-- Supabase env must load before JS modules -->
+  <script src="/assests/js/env.js"></script>
+</head>
+<body>
+  <header>
+    <a href="/">← Home</a>
+
+    <div class="auth">
+      <a id="loginLink" href="/login.html">Login</a>
+      <button id="logoutBtn" type="button" style="display:none;">Logout</button>
+    </div>
+  </header>
+
+  <main>
+    <h1>Articles</h1>
+    <p class="lead">Approved PDFs appear here automatically. You must login to read/view.</p>
+
+    <p id="msg">Loading…</p>
+    <div id="list" class="grid"></div>
+  </main>
+
+  <script type="module" src="/assests/js/articles.js"></script>
+</body>
+</html>
