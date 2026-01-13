@@ -58,7 +58,7 @@
     nav ul li a { color: #ffeb3b; text-decoration: none; font-weight: 700; font-size: 0.9rem; transition: 0.3s; }
     nav ul li a:hover { color: #00e5ff; text-shadow: 0 0 10px #00e5ff; }
 
-    /* Auth area */
+    /* Auth buttons */
     .nav-auth { display: inline-flex; gap: 12px; align-items: center; }
 
     .nav-auth a, .nav-auth button {
@@ -83,7 +83,7 @@
 
     /* Logged-in user label */
     .user-pill {
-      display: none; /* becomes visible when logged in */
+      display: none; /* enabled by JS when logged in */
       align-items: center;
       gap: 10px;
       border: 1px solid #2a2a2a;
@@ -99,13 +99,12 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      max-width: 220px;
+      display: inline-block;
     }
 
-    /* 3-dots menu */
-    .menu {
-      position: relative;
-      display: none; /* visible when logged in */
-    }
+    /* 3-dot menu */
+    .menu { position: relative; display: none; }
     .menu-btn {
       width: 40px;
       height: 40px;
@@ -140,7 +139,12 @@
       gap: 10px;
       align-items: center;
     }
-    .menu-pop .row.muted { color: #aaa; font-weight: 600; font-size: 0.85rem; }
+    .menu-pop .row.muted {
+      color: #aaa;
+      font-weight: 600;
+      font-size: 0.85rem;
+      word-break: break-word;
+    }
     .menu-pop a, .menu-pop button {
       width: 100%;
       text-align: left;
@@ -153,6 +157,8 @@
       border-radius: 10px;
       text-decoration: none;
       display: block;
+      font-family: inherit;
+      font-size: 0.9rem;
     }
     .menu-pop a:hover, .menu-pop button:hover {
       background: rgba(0,114,255,0.18);
@@ -198,7 +204,7 @@
     .cards { display: grid; grid-template-columns: 1fr; padding: 2rem 1.5rem; gap: 2rem; max-width: 1200px; margin: 0 auto; perspective: 1000px; }
     @media (min-width: 768px) { .cards { grid-template-columns: repeat(3, 1fr); gap: 2.5rem; padding: 3rem 2rem; } }
 
-    /* Card Styling with Tilt Support for Both Mobile & Desktop */
+    /* Card Styling */
     .card {
       padding: 3.5rem 2rem; border-radius: 25px; text-align: center;
       transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
@@ -210,7 +216,6 @@
     .card-opps { background: linear-gradient(145deg, #2d142c, #4a0e0e); }
     .card-hacks { background: linear-gradient(145deg, #1b262c, #0f4c75); }
 
-    /* Hover Effects (Tilt & Border Glow) */
     .card:hover { transform: translateY(-10px) rotateX(10deg) rotateY(-5deg); z-index: 10; }
     .card-notes:hover { border-color: #4ecca3; box-shadow: 0 20px 40px rgba(78, 204, 163, 0.4); }
     .card-opps:hover { border-color: #ff4b2b; box-shadow: 0 20px 40px rgba(255, 75, 43, 0.4); }
@@ -221,7 +226,6 @@
     .card-opps i { color: #ff4b2b; }
     .card-hacks i { color: #3282b8; }
 
-    /* Glowing Buttons */
     .button { display: inline-block; padding: 1rem 2.2rem; border-radius: 50px; text-decoration: none; font-weight: 800; text-transform: uppercase; transition: 0.4s; transform: translateZ(40px); }
 
     .btn-notes { background: #4ecca3; color: #1a1a2e; }
@@ -235,11 +239,6 @@
 
     .card h3 { color: #fff; font-size: 1.6rem; transform: translateZ(40px); }
     .card p { color: #ccc; margin-bottom: 2rem; transform: translateZ(30px); }
-
-    /* Articles section */
-    .articles { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
-    .articles h2 { text-align: center; color: #fff; font-size: 2.2rem; margin: 0 0 18px 0; }
-    .articles p.lead { text-align: center; color: #aaa; margin: 0 0 22px 0; }
 
     /* Q&A Section */
     .qa { padding: 4rem 1.5rem; background: #000; border-top: 1px solid #222; }
@@ -259,6 +258,7 @@
     footer { background: #000; color: #ffeb3b; text-align: center; padding: 3rem 1.5rem; border-top: 1px solid #1a1a1a; }
   </style>
 
+  <!-- Supabase env -->
   <script src="/assests/js/env.js"></script>
 </head>
 <body>
@@ -279,7 +279,7 @@
         <a href="/signup.html">Sign up</a>
       </li>
 
-      <!-- Logged in (no direct Logout button now) -->
+      <!-- Logged in (3-dot menu) -->
       <li class="nav-auth" id="navLoggedIn" style="display:none;">
         <div class="user-pill" id="userPill">
           <span id="userLabel">Account</span>
@@ -341,13 +341,7 @@ data-version="v1">
     </div>
   </section>
 
-  <section class="articles">
-    <h2>Articles</h2>
-    <p class="lead">Articles have been moved to a dedicated page.</p>
-    <div style="text-align:center;">
-      <a class="button btn-hacks" href="/articles/">Go to Articles</a>
-    </div>
-  </section>
+  <!-- Removed: homepage Articles "moved" section as requested -->
 
   <section id="qa" class="qa">
     <h2>Q&amp;A Hub</h2>
@@ -355,7 +349,7 @@ data-version="v1">
       <a href="/questions/why-study-ir.html" class="qa-item" data-slug="why-study-ir.html">Why study IR?</a>
       <a href="/questions/is-ir-good-for-css.html" class="qa-item" data-slug="is-ir-good-for-css.html">Is IR good for CSS?</a>
       <a href="/questions/ir-career-opportunities.html" class="qa-item" data-slug="ir-career-opportunities.html">Career opportunities?</a>
-      <a href="/questions/how-to-take-effective-ir-notes.html" class="qa-item" data-slug="is-ir-good-for-css.html">How to take notes?</a>
+      <a href="/questions/how-to-take-effective-ir-notes.html" class="qa-item" data-slug="how-to-take-effective-ir-notes.html">How to take notes?</a>
     </div>
     <div id="qa-viewer" class="qa-viewer">
       <p style="text-align:center; color: #666;">Select a question above to see the answer.</p>
@@ -374,6 +368,7 @@ data-version="v1">
       list.addEventListener('click', async function (e) {
         const link = e.target.closest('a.qa-item');
         if (!link) return;
+
         e.preventDefault();
 
         const slug = link.getAttribute('data-slug');
@@ -392,53 +387,10 @@ data-version="v1">
 
   <script type="module" src="/assests/js/index.js"></script>
 
-  <!-- Account menu + controlled popups -->
+  <!-- Auth nav toggle + 3-dot menu logic (no "logged in" popup on refresh) -->
   <script type="module">
-    function toast(message, type = "info") {
-      const el = document.createElement("div");
-      el.textContent = message;
-
-      const colors = {
-        info:  { bg: "rgba(0,114,255,0.20)", border: "#0072ff" },
-        ok:    { bg: "rgba(0,230,118,0.18)", border: "#00e676" },
-        warn:  { bg: "rgba(255,235,59,0.14)", border: "#ffeb3b" },
-        bad:   { bg: "rgba(255,75,43,0.18)", border: "#ff4b2b" },
-      };
-      const c = colors[type] || colors.info;
-
-      el.style.position = "fixed";
-      el.style.right = "16px";
-      el.style.bottom = "16px";
-      el.style.zIndex = "99999";
-      el.style.padding = "12px 14px";
-      el.style.borderRadius = "14px";
-      el.style.border = `1px solid ${c.border}`;
-      el.style.background = c.bg;
-      el.style.color = "#fff";
-      el.style.backdropFilter = "blur(10px)";
-      el.style.boxShadow = "0 12px 30px rgba(0,0,0,0.55)";
-      el.style.fontWeight = "800";
-
-      document.body.appendChild(el);
-      setTimeout(() => el.remove(), 2000);
-    }
-
-    // Show toast only if previous page explicitly asked for it:
-    // - login page should redirect to "/?loggedin=1" after successful login
-    // - logout will set "__flash_loggedout" in sessionStorage
-    const params = new URLSearchParams(location.search);
-    if (params.get("loggedin") === "1") {
-      toast("Logged in", "ok");
-      // clean URL so it doesn't show again on refresh
-      history.replaceState({}, "", location.pathname + location.hash);
-    }
-    if (sessionStorage.getItem("__flash_loggedout") === "1") {
-      sessionStorage.removeItem("__flash_loggedout");
-      toast("Logged out", "warn");
-    }
-
     const waitForSupabase = async () => {
-      for (let i = 0; i < 60; i++) {
+      for (let i = 0; i < 80; i++) {
         if (window.supabase?.auth) return window.supabase;
         await new Promise(r => setTimeout(r, 50));
       }
@@ -451,13 +403,16 @@ data-version="v1">
       return;
     }
 
-    // Menu elements
-    const menu = document.getElementById("userMenu");
+    const navLoggedOut = document.getElementById("navLoggedOut");
+    const navLoggedIn = document.getElementById("navLoggedIn");
+
+    const userPill = document.getElementById("userPill");
+    const userLabel = document.getElementById("userLabel");
+
+    const userMenu = document.getElementById("userMenu");
     const menuBtn = document.getElementById("menuBtn");
     const menuPop = document.getElementById("menuPop");
     const menuEmail = document.getElementById("menuEmail");
-    const userPill = document.getElementById("userPill");
-    const userLabel = document.getElementById("userLabel");
     const logoutBtn = document.getElementById("logoutBtn");
 
     function openMenu(open) {
@@ -467,28 +422,28 @@ data-version="v1">
     }
 
     document.addEventListener("click", (e) => {
-      if (!menu) return;
-      const clickedInside = menu.contains(e.target);
-      if (!clickedInside) openMenu(false);
+      if (!userMenu) return;
+      if (!userMenu.contains(e.target)) openMenu(false);
     });
 
-    if (menuBtn) {
-      menuBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const isOpen = menuPop && menuPop.style.display === "block";
-        openMenu(!isOpen);
-      });
-    }
+    menuBtn?.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const isOpen = menuPop?.style.display === "block";
+      openMenu(!isOpen);
+    });
 
-    // Fill user data (email / name)
-    async function refreshUserUI() {
+    async function refreshNav() {
       const { data } = await supabase.auth.getSession();
       const session = data.session;
 
       const loggedIn = !!session;
+
+      if (navLoggedOut) navLoggedOut.style.display = loggedIn ? "none" : "";
+      if (navLoggedIn) navLoggedIn.style.display = loggedIn ? "" : "none";
+
       if (userPill) userPill.style.display = loggedIn ? "inline-flex" : "none";
-      if (menu) menu.style.display = loggedIn ? "block" : "none";
+      if (userMenu) userMenu.style.display = loggedIn ? "block" : "none";
 
       if (loggedIn) {
         const email = session.user?.email || "Account";
@@ -499,25 +454,46 @@ data-version="v1">
 
         if (menuEmail) menuEmail.textContent = email;
         if (userLabel) userLabel.textContent = name ? name : email;
+      } else {
+        openMenu(false);
       }
     }
 
-    await refreshUserUI();
+    await refreshNav();
 
-    // Logout
-    if (logoutBtn) {
-      logoutBtn.addEventListener("click", async () => {
-        openMenu(false);
-        await supabase.auth.signOut();
-        sessionStorage.setItem("__flash_loggedout", "1");
-        location.href = "/"; // reload via navigation
-      });
-    }
-
-    // If login/logout happens while on this page, update UI (no refresh loop)
+    // Keep UI updated without refresh loops
     supabase.auth.onAuthStateChange(async () => {
-      await refreshUserUI();
+      await refreshNav();
     });
+
+    // Logout button
+    logoutBtn?.addEventListener("click", async () => {
+      openMenu(false);
+      await supabase.auth.signOut();
+      // show a tiny "Logged out" toast ONCE
+      sessionStorage.setItem("__flash_loggedout", "1");
+      location.href = "/";
+    });
+
+    // Logged out toast once (no effect on decor)
+    if (sessionStorage.getItem("__flash_loggedout") === "1") {
+      sessionStorage.removeItem("__flash_loggedout");
+      const el = document.createElement("div");
+      el.textContent = "Logged out";
+      el.style.position = "fixed";
+      el.style.right = "16px";
+      el.style.bottom = "16px";
+      el.style.zIndex = "99999";
+      el.style.padding = "10px 12px";
+      el.style.borderRadius = "14px";
+      el.style.border = "1px solid #ffeb3b";
+      el.style.background = "rgba(255,235,59,0.12)";
+      el.style.color = "#fff";
+      el.style.backdropFilter = "blur(10px)";
+      el.style.fontWeight = "800";
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 1400);
+    }
   </script>
 </body>
 </html>
