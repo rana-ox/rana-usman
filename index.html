@@ -27,10 +27,6 @@
   <meta property="twitter:description" content="Unlock smart tips and exclusive student benefits. Federal Urdu University students can now get the GitHub Developer Program for free!">
   <meta property="twitter:image" content="https://ranausman.me/assests/img/close-up-of-student-studying.jpg">
 
-  <!-- Brand (site name) vs page title:
-       - Page title is IR Notes Hub (title/og:title/twitter:title)
-       - Brand/site name is Notes by Rana Usman (JSON-LD WebSite name + publisher)
-  -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -215,7 +211,6 @@
     footer { background: #000; color: #ffeb3b; text-align: center; padding: 3rem 1.5rem; border-top: 1px solid #1a1a1a; }
   </style>
 
-  <!-- NEW: Supabase env (public) -->
   <script src="/assests/js/env.js"></script>
 </head>
 <body>
@@ -228,19 +223,17 @@
       <li><a href="hacks.html">Study Hacks</a></li>
       <li><a href="https://notes.ranausman.me">Notes</a></li>
 
-      <!-- UPDATED: Articles link goes to /articles/ -->
       <li><a href="/articles/">Articles</a></li>
 
       <li><a href="#qa">Q&amp;A</a></li>
 
-      <!-- NEW: Auth links (JS will toggle) -->
       <li class="nav-auth" id="navLoggedOut">
         <a id="loginLink" href="/login.html">Login</a>
         <a href="/signup.html">Sign up</a>
       </li>
+
+      <!-- UPDATED: moved Submit PDF + My Submissions to Articles page -->
       <li class="nav-auth" id="navLoggedIn" style="display:none;">
-        <a href="/upload.html">Submit PDF</a>
-        <a href="/my-submissions.html">My Submissions</a>
         <a href="/admin.html" id="adminLink" style="display:none;">Admin</a>
         <button id="logoutBtn" type="button">Logout</button>
       </li>
@@ -290,11 +283,9 @@ data-version="v1">
     </div>
   </section>
 
-  <!-- UPDATED: Articles section is now just a link to the /articles/ page -->
   <section class="articles">
     <h2>Articles</h2>
     <p class="lead">Articles have been moved to a dedicated page.</p>
-
     <div style="text-align:center;">
       <a class="button btn-hacks" href="/articles/">Go to Articles</a>
     </div>
@@ -326,7 +317,6 @@ data-version="v1">
         const link = e.target.closest('a.qa-item');
         if (!link) return;
 
-        // Keep links crawlable while still using JS fetch
         e.preventDefault();
 
         const slug = link.getAttribute('data-slug');
@@ -343,7 +333,76 @@ data-version="v1">
     })();
   </script>
 
-  <!-- NEW: Homepage logic (auth nav + articles list). This will be added next. -->
   <script type="module" src="/assests/js/index.js"></script>
+
+  <!-- NEW: popup + auto refresh on login/logout -->
+  <script type="module">
+    function toast(message, type = "info") {
+      const el = document.createElement("div");
+      el.textContent = message;
+
+      const colors = {
+        info:  { bg: "rgba(0,114,255,0.20)", border: "#0072ff" },
+        ok:    { bg: "rgba(0,230,118,0.18)", border: "#00e676" },
+        warn:  { bg: "rgba(255,235,59,0.14)", border: "#ffeb3b" },
+        bad:   { bg: "rgba(255,75,43,0.18)", border: "#ff4b2b" },
+      };
+
+      const c = colors[type] || colors.info;
+
+      el.style.position = "fixed";
+      el.style.right = "16px";
+      el.style.bottom = "16px";
+      el.style.zIndex = "99999";
+      el.style.padding = "12px 14px";
+      el.style.borderRadius = "14px";
+      el.style.border = `1px solid ${c.border}`;
+      el.style.background = c.bg;
+      el.style.color = "#fff";
+      el.style.backdropFilter = "blur(10px)";
+      el.style.boxShadow = "0 12px 30px rgba(0,0,0,0.55)";
+      el.style.fontWeight = "800";
+
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 2200);
+    }
+
+    const flash = sessionStorage.getItem("__flash");
+    if (flash) {
+      try {
+        const { msg, type } = JSON.parse(flash);
+        toast(msg, type);
+      } catch {}
+      sessionStorage.removeItem("__flash");
+    }
+
+    function setFlash(msg, type) {
+      sessionStorage.setItem("__flash", JSON.stringify({ msg, type }));
+    }
+
+    const waitForSupabase = async () => {
+      for (let i = 0; i < 50; i++) {
+        if (window.supabase?.auth) return window.supabase;
+        await new Promise(r => setTimeout(r, 50));
+      }
+      return null;
+    };
+
+    const supabase = await waitForSupabase();
+    if (!supabase) {
+      console.warn("Supabase client not found on window.supabase");
+    } else {
+      supabase.auth.onAuthStateChange((event) => {
+        if (event === "SIGNED_IN") {
+          setFlash("Logged in", "ok");
+          location.reload();
+        }
+        if (event === "SIGNED_OUT") {
+          setFlash("Logged out", "warn");
+          location.reload();
+        }
+      });
+    }
+  </script>
 </body>
 </html>
