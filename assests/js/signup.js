@@ -1,47 +1,71 @@
-import { supabase } from "./auth.js";
+import { createClient } from "@supabase/supabase-js";
+import jwt from "@tsndr/cloudflare-worker-jwt";
 
-const form = document.getElementById("signupForm");
-const msg = document.getElementById("msg");
-const goLogin = document.getElementById("goLogin");
-
-function setMsg(text, type = "") {
-  msg.textContent = text || "";
-  msg.className = type; // "", "ok", "danger"
+function json(body, status = 200) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: {
+      "content-type": "application/json; charset=utf-8",
+      // Optional CORS if you ever call from a different origin:
+      // "access-control-allow-origin": "*",
+    },
+  });
 }
 
-function getNextUrl() {
-  const params = new URLSearchParams(location.search);
-  const next = params.get("next");
-  if (next && next.startsWith("/")) return next;
-  return "/index.html";
+export async function onRequestGet(context) {
+  const { request, env } = context;
+
+  const id = new URL(request.url).searchParams.get("id");
+  if (!id) return json({ error: "Missing id" }, 400);
+
+  const auth = request.headers.get("authorization") || "";
+  const token = auth.startsWith("Bearer ") ? auth.slice(7) : null;
+  if (!token) return json({ error: "Missing Bearer token" }, 401);
+
+  // 1) Verify Supabase JWT
+  const ok = await jwt.verify(token, env.SUPABASE_JWT_SECRET);
+  if (!ok) return json({ error: "Invalid token" }, 401);
+
+  const decoded = jwt.decode(token);
+  const userId = decoded?.payload?.sub;
+  if (!userId) return json({ error: "Invalid token payload" }, 401);
+
+  // 2) Service role client (bypasses RLS so we enforce rules here)
+  const admin = createClient(env.SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY);
+
+  // 3) Load submission + check access
+  const { data: sub, error: subErr } = await admin
+    .from("submissions")
+    .select("id,status,user_id")
+    .eq("id", id)
+    .single();
+
+  if (subErr || !sub) return json({ error: "Submission not found" }, 404);
+
+  // Determine admin
+  const { data: adminRow } = await admin
+    .from("admins")
+    .select("user_id")
+    .eq("user_id", userId)
+    .maybeSingle();
+
+  const isAdmin = !!adminRow;
+
+  const canRead =
+    sub.status === "approved" || isAdmin || sub.user_id === userId;
+
+  if (!canRead) return json({ error: "Forbidden" }, 403);
+
+  // 4) Signed URL for the PDF
+  const objectPath = `articles/${id}.pdf`;
+
+  const { data: signed, error: signErr } = await admin.storage
+    .from("pdfs")
+    .createSignedUrl(objectPath, 60 * 5); // 5 minutes
+
+  if (signErr || !signed?.signedUrl) {
+    return json({ error: "Could not create signed URL" }, 500);
+  }
+
+  return json({ url: signed.signedUrl });
 }
-
-// keep "Already have an account" returning to same next
-(function syncNextToLoginLink() {
-  const next = getNextUrl();
-  if (goLogin) goLogin.href = `/login.html?next=${encodeURIComponent(next)}`;
-})();
-
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  setMsg("Creating account…");
-
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
-
-  const { data, error } = await supabase.auth.signUp({ email, password });
-
-  if (error) {
-    setMsg(error.message || "Signup failed.", "danger");
-    return;
-  }
-
-  // Supabase may require email confirmation depending on your Auth settings.
-  if (!data?.session) {
-    setMsg("Account created. Please check your email to confirm, then login.", "ok");
-    return;
-  }
-
-  setMsg("Signed up. Redirecting…", "ok");
-  window.location.href = getNextUrl();
-});
