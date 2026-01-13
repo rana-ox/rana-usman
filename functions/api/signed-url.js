@@ -48,7 +48,7 @@ export async function onRequestGet(context) {
   const objectPath = `articles/${id}.pdf`;
 
   const { data: signed, error: signErr } = await admin.storage
-    .from("pdfs")
+    .from("pdf_submissions")
     .createSignedUrl(objectPath, 60 * 5);
 
   if (signErr || !signed?.signedUrl) {
