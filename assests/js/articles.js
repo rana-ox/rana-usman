@@ -39,7 +39,7 @@ async function loadApprovedArticles() {
   if (msg) msg.textContent = "Loading…";
 
   const { data, error } = await supabase
-    .from("pdf_submissions") // IMPORTANT: correct table
+    .from("pdfs") // IMPORTANT: correct table
     .select("id,title,description,created_at")
     .eq("status", "approved")
     .order("created_at", { ascending: false });
