@@ -12,368 +12,238 @@
   <style>
     * { box-sizing: border-box; }
     body { margin:0; font-family:'Poppins',sans-serif; background:#050505; color:#e0e0e0; min-height:100vh; }
-    header { background:#000; border-bottom:1px solid #1a1a1a; padding: 18px 18px; display:flex; align-items:center; justify-content:space-between; gap: 12px; flex-wrap: wrap; }
+    header { background:#000; border-bottom:1px solid #1a1a1a; padding:18px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
     header a { color:#ffeb3b; text-decoration:none; font-weight:800; }
     header a:hover { color:#00e5ff; }
 
-    /* ===== Account Panel (always visible) ===== */
     .account-panel {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid #2a2a2a;
-      background: rgba(255,255,255,0.03);
-      position: relative;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid #2a2a2a;
+      background:rgba(255,255,255,0.03);
+      position:relative;
     }
+
     .account-dot {
-      width: 34px;
-      height: 34px;
-      border-radius: 999px;
-      border: 1px solid #2a2a2a;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffeb3b;
-      background: transparent;
-      cursor: pointer;
-      transition: 0.25s;
-      font-size: 18px;
-      line-height: 1;
-      font-weight: 900;
+      width:34px;
+      height:34px;
+      border-radius:999px;
+      border:1px solid #2a2a2a;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      color:#ffeb3b;
+      background:transparent;
+      cursor:pointer;
+      transition:0.25s;
+      font-size:18px;
+      font-weight:900;
     }
+
     .account-dot:hover {
-      color: #00e5ff;
-      border-color: #0072ff;
-      box-shadow: 0 0 15px rgba(0,114,255,0.35);
-      transform: translateY(-1px);
+      color:#00e5ff;
+      border-color:#0072ff;
+      box-shadow:0 0 15px rgba(0,114,255,0.35);
+      transform:translateY(-1px);
     }
 
     .account-meta {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.1;
-      max-width: 240px;
+      display:flex;
+      flex-direction:column;
+      line-height:1.1;
+      max-width:240px;
     }
+
     .account-meta .label {
-      font-weight: 900;
-      font-size: 0.82rem;
-      color: #fff;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      max-width: 240px;
+      font-weight:900;
+      font-size:0.82rem;
+      color:#fff;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
     }
+
     .account-meta .sub {
-      font-weight: 700;
-      font-size: 0.72rem;
-      color: #999;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      max-width: 240px;
+      font-weight:700;
+      font-size:0.72rem;
+      color:#999;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
     }
 
     .account-menu {
-      position: absolute;
-      right: 0;
-      top: calc(100% + 10px);
-      width: 290px;
-      background: rgba(10,10,10,0.96);
-      border: 1px solid #2a2a2a;
-      border-radius: 16px;
-      padding: 10px;
-      box-shadow: 0 18px 50px rgba(0,0,0,0.85);
-      display: none;
-      z-index: 99999;
-    }
-
-    .account-menu .group-title {
-      color: #777;
-      font-weight: 900;
-      font-size: 0.72rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      padding: 10px 10px 6px;
+      position:absolute;
+      right:0;
+      top:calc(100% + 10px);
+      width:290px;
+      background:rgba(10,10,10,0.96);
+      border:1px solid #2a2a2a;
+      border-radius:16px;
+      padding:10px;
+      box-shadow:0 18px 50px rgba(0,0,0,0.85);
+      display:none;
+      z-index:99999;
     }
 
     .account-menu a,
     .account-menu button {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 10px;
-      border-radius: 12px;
-      border: 0;
-      background: transparent;
-      color: #ffeb3b;
-      text-decoration: none;
-      cursor: pointer;
-      font-weight: 900;
-      font-family: inherit;
-      font-size: 0.9rem;
-      transition: 0.2s;
-      text-align: left;
+      width:100%;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px;
+      border-radius:12px;
+      border:0;
+      background:transparent;
+      color:#ffeb3b;
+      font-weight:900;
+      cursor:pointer;
+      text-decoration:none;
+      font-family:inherit;
+      font-size:0.9rem;
     }
 
     .account-menu a:hover,
     .account-menu button:hover {
-      background: rgba(0,114,255,0.18);
-      color: #00e5ff;
+      background:rgba(0,114,255,0.18);
+      color:#00e5ff;
     }
 
     .account-menu .danger {
-      color: #ff4b2b;
-    }
-    .account-menu .danger:hover {
-      background: rgba(255,75,43,0.12);
-      color: #ff7b64;
+      color:#ff4b2b;
     }
 
-    .account-divider {
-      height: 1px;
-      background: #222;
-      margin: 6px 0;
-      border: 0;
+    main {
+      max-width:1100px;
+      margin:0 auto;
+      padding:28px 18px 60px;
     }
 
-    /* Quick action buttons (visible on Articles page) */
-    .quick-actions { display:flex; gap:10px; flex-wrap: wrap; align-items: center; }
-    .quick-actions a {
-      border-radius: 999px; padding: 10px 14px;
-      border: 1px solid #2a2a2a; background: transparent;
-      color: #ffeb3b; font-weight: 900; cursor: pointer; text-decoration:none;
-      transition: 0.25s;
-      display:none; /* only visible when logged in (JS toggles) */
-    }
-    .quick-actions a:hover {
-      color:#00e5ff; border-color:#0072ff;
-      box-shadow:0 0 15px rgba(0,114,255,0.35);
-      transform: translateY(-1px);
+    .grid {
+      display:grid;
+      grid-template-columns:1fr;
+      gap:16px;
     }
 
-    main { max-width: 1100px; margin: 0 auto; padding: 28px 18px 60px; }
-    h1 { margin: 0 0 8px 0; font-size: 2rem; }
-    p.lead { margin: 0 0 18px 0; color: #aaa; line-height: 1.6; }
-
-    .grid { display:grid; grid-template-columns: 1fr; gap: 16px; margin-top: 16px; }
-    @media (min-width: 768px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width:768px) {
+      .grid { grid-template-columns:repeat(2,1fr); }
+    }
 
     .card {
-      background: rgba(22,22,22,0.95);
-      border: 1px solid #333;
-      border-radius: 16px;
-      padding: 18px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.65);
+      background:rgba(22,22,22,0.95);
+      border:1px solid #333;
+      border-radius:16px;
+      padding:18px;
     }
-    .card h3 { margin: 0 0 8px 0; font-size: 1.15rem; color: #fff; }
-    .meta { color:#777; font-size:0.85rem; margin-bottom: 10px; }
-    .card p { margin: 0 0 12px 0; color: #bbb; line-height: 1.6; }
 
-    .actions { display:flex; gap:10px; flex-wrap: wrap; }
     .actions button {
-      border-radius: 999px; padding: 10px 14px;
-      border: 1px solid #2a2a2a; background: transparent;
-      color: #ffeb3b; font-weight: 800; cursor: pointer;
-      transition: 0.25s;
+      border-radius:999px;
+      padding:10px 14px;
+      border:1px solid #2a2a2a;
+      background:transparent;
+      color:#ffeb3b;
+      font-weight:800;
+      cursor:pointer;
     }
-    .actions button:hover {
-      color:#00e5ff; border-color:#0072ff;
-      box-shadow:0 0 15px rgba(0,114,255,0.35);
-      transform: translateY(-1px);
-    }
-
-    #msg { color:#888; margin-top: 10px; }
   </style>
 
-  <!-- Supabase env must load before JS modules -->
   <script src="/assests/js/env.js"></script>
-</head>
-<body>
-  <header>
-    <a href="/">← Home</a>
-
-    <!-- NEW: Quick actions on Articles page -->
-    <div class="quick-actions">
-      <a id="quickSubmit" href="/upload.html"><i class="fa-solid fa-cloud-arrow-up"></i>&nbsp; Submit PDF</a>
-      <a id="quickMySubs" href="/my-submissions.html"><i class="fa-solid fa-folder-open"></i>&nbsp; My Submissions</a>
-    </div>
-
-    <!-- Always-visible Account Panel -->
-    <div class="account-panel" id="accountPanel">
-      <button class="account-dot" id="accountBtn" type="button" aria-label="Account menu" title="Account">⋮</button>
-      <div class="account-meta">
-        <div class="label" id="accountLabel">Guest</div>
-        <div class="sub" id="accountSub">Not logged in</div>
-      </div>
-
-      <div class="account-menu" id="accountMenu" role="menu" aria-hidden="true">
-        <div class="group-title">Account</div>
-
-        <!-- Logged OUT options -->
-        <a id="menuLogin" href="/login.html" role="menuitem"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
-        <a id="menuSignup" href="/signup.html" role="menuitem"><i class="fa-solid fa-user-plus"></i> Sign up</a>
-
-        <hr class="account-divider" />
-
-        <div class="group-title">Articles</div>
-        <a href="/articles/" role="menuitem"><i class="fa-regular fa-file-lines"></i> Browse articles</a>
-
-        <!-- Logged IN options -->
-        <a id="menuSubmit" href="/upload.html" role="menuitem" style="display:none;"><i class="fa-solid fa-cloud-arrow-up"></i> Submit PDF</a>
-        <a id="menuMySub" href="/my-submissions.html" role="menuitem" style="display:none;"><i class="fa-solid fa-folder-open"></i> My submissions</a>
-        <a id="menuChangePw" href="/change-password.html" role="menuitem" style="display:none;"><i class="fa-solid fa-key"></i> Change password</a>
-        <a id="menuAdmin" href="/admin.html" role="menuitem" style="display:none;"><i class="fa-solid fa-shield-halved"></i> Admin</a>
-
-        <button id="menuLogout" type="button" role="menuitem" class="danger" style="display:none;">
-          <i class="fa-solid fa-right-from-bracket"></i> Logout
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <h1>Articles</h1>
-    <p class="lead">Approved PDFs appear here automatically. You must login to read/view.</p>
-
-    <p id="msg">Loading…</p>
-    <div id="list" class="grid"></div>
-  </main>
-
   <script type="module" src="/assests/js/articles.js"></script>
+</head>
 
-  <!-- Account panel logic: uses window.supabase (no new clients, no refresh loops) -->
-  <script>
-    (function () {
-      const panel = document.getElementById("accountPanel");
-      const btn = document.getElementById("accountBtn");
-      const menu = document.getElementById("accountMenu");
+<body>
 
-      function setOpen(open) {
-        if (!menu) return;
-        menu.style.display = open ? "block" : "none";
-        menu.setAttribute("aria-hidden", open ? "false" : "true");
-      }
+<header>
+  <a href="/">← Home</a>
 
-      document.addEventListener("click", (e) => {
-        if (!panel) return;
-        if (!panel.contains(e.target)) setOpen(false);
-      });
+  <div class="quick-actions">
+    <a id="quickSubmit" href="/upload.html"><i class="fa-solid fa-cloud-arrow-up"></i> Submit PDF</a>
+    <a id="quickMySubs" href="/my-submissions.html"><i class="fa-solid fa-folder-open"></i> My Submissions</a>
+  </div>
 
-      btn?.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const isOpen = menu?.style.display === "block";
-        setOpen(!isOpen);
-      });
+  <div class="account-panel" id="accountPanel">
+    <button class="account-dot" id="accountBtn">⋮</button>
+    <div class="account-meta">
+      <div class="label" id="accountLabel">Guest</div>
+      <div class="sub" id="accountSub">Not logged in</div>
+    </div>
 
-      async function waitForClient() {
-        for (let i = 0; i < 100; i++) {
-          if (window.supabase?.auth) return window.supabase;
-          await new Promise(r => setTimeout(r, 50));
-        }
-        return null;
-      }
+    <div class="account-menu" id="accountMenu">
+      <a id="menuLogin" href="/login.html">Login</a>
+      <a id="menuSignup" href="/signup.html">Sign up</a>
+      <a id="menuSubmit" href="/upload.html" style="display:none;">Submit PDF</a>
+      <a id="menuMySub" href="/my-submissions.html" style="display:none;">My submissions</a>
+      <button id="menuLogout" style="display:none;" class="danger">Logout</button>
+    </div>
+  </div>
+</header>
 
-      const label = document.getElementById("accountLabel");
-      const sub = document.getElementById("accountSub");
+<main>
+  <h1>Articles</h1>
+  <p class="lead">Approved PDFs appear here automatically. You must login to read/view.</p>
+  <p id="msg">Loading…</p>
+  <div id="list" class="grid"></div>
+</main>
 
-      const menuLogin = document.getElementById("menuLogin");
-      const menuSignup = document.getElementById("menuSignup");
-      const menuSubmit = document.getElementById("menuSubmit");
-      const menuMySub = document.getElementById("menuMySub");
-      const menuChangePw = document.getElementById("menuChangePw");
-      const menuAdmin = document.getElementById("menuAdmin");
-      const menuLogout = document.getElementById("menuLogout");
+<!-- ARTICLES LOGIC -->
+<script type="module">
+  const supabase = window.supabase;
+  const msg = document.getElementById("msg");
+  const list = document.getElementById("list");
 
-      const quickSubmit = document.getElementById("quickSubmit");
-      const quickMySubs = document.getElementById("quickMySubs");
+  async function openPdf(file_path) {
+    const { data, error } = await supabase
+      .storage
+      .from("pdfs")
+      .createSignedUrl(file_path, 600);
 
-      function show(el, on) {
-        if (!el) return;
-        el.style.display = on ? "" : "none";
-      }
+    if (error) return;
+    window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+  }
 
-      async function refreshAccountUI(client) {
-        const { data } = await client.auth.getSession();
-        const session = data.session;
-        const loggedIn = !!session;
+  async function load() {
+    const { data: sessionData } = await supabase.auth.getSession();
+    if (!sessionData.session) {
+      msg.textContent = "Please login to view articles.";
+      return;
+    }
 
-        // Toggle quick buttons
-        show(quickSubmit, loggedIn);
-        show(quickMySubs, loggedIn);
+    const { data, error } = await supabase
+      .from("submissions")
+      .select("id,writer_name,title,description,status,created_at,file_path")
+      .order("created_at", { ascending:false });
 
-        if (!loggedIn) {
-          if (label) label.textContent = "Guest";
-          if (sub) sub.textContent = "Not logged in";
+    if (error) {
+      msg.textContent = "Failed to load submissions.";
+      return;
+    }
 
-          show(menuLogin, true);
-          show(menuSignup, true);
+    msg.textContent = "";
+    list.innerHTML = "";
 
-          show(menuSubmit, false);
-          show(menuMySub, false);
-          show(menuChangePw, false);
-          show(menuAdmin, false);
-          show(menuLogout, false);
-          return;
-        }
+    for (const row of data) {
+      if (row.status !== "approved") continue;
 
-        const email = session.user?.email || "Account";
-        const name =
-          session.user?.user_metadata?.full_name ||
-          session.user?.user_metadata?.name ||
-          "";
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <h3>${row.title}</h3>
+        <p>${row.description || ""}</p>
+        <div class="actions">
+          <button>Open PDF</button>
+        </div>
+      `;
+      card.querySelector("button").onclick = () => openPdf(row.file_path);
+      list.appendChild(card);
+    }
+  }
 
-        if (label) label.textContent = name ? name : "Logged in";
-        if (sub) sub.textContent = email;
+  load();
+</script>
 
-        show(menuLogin, false);
-        show(menuSignup, false);
-
-        show(menuSubmit, true);
-        show(menuMySub, true);
-        show(menuChangePw, true);
-        show(menuAdmin, false); // add role-based admin later if you want
-        show(menuLogout, true);
-      }
-
-      (async function init() {
-        const client = await waitForClient();
-        if (!client) {
-          console.warn("window.supabase client not found. Ensure /assests/js/articles.js initializes it.");
-          return;
-        }
-
-        await refreshAccountUI(client);
-
-        client.auth.onAuthStateChange(async () => {
-          await refreshAccountUI(client);
-        });
-
-        menuLogout?.addEventListener("click", async () => {
-          setOpen(false);
-          await client.auth.signOut();
-
-          const el = document.createElement("div");
-          el.textContent = "Logged out";
-          el.style.position = "fixed";
-          el.style.right = "16px";
-          el.style.bottom = "16px";
-          el.style.zIndex = "99999";
-          el.style.padding = "10px 12px";
-          el.style.borderRadius = "14px";
-          el.style.border = "1px solid #ffeb3b";
-          el.style.background = "rgba(255,235,59,0.12)";
-          el.style.color = "#fff";
-          el.style.backdropFilter = "blur(10px)";
-          el.style.fontWeight = "800";
-          document.body.appendChild(el);
-          setTimeout(() => el.remove(), 1400);
-        });
-      })();
-    })();
-  </script>
 </body>
 </html>
