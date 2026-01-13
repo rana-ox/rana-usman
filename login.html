@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login | IR Notes Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="icon" href="/assests/img/icon.png" type="image/png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap">
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh;
+      display: grid; place-items: center;
+      font-family: 'Poppins', sans-serif;
+      background: #050505; color: #e0e0e0;
+      padding: 24px;
+    }
+    .card {
+      width: 100%; max-width: 460px;
+      background: rgba(22,22,22,0.95);
+      border: 1px solid #333;
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.85);
+    }
+    h1 { margin: 0 0 6px 0; font-size: 1.6rem; }
+    p { margin: 0 0 18px 0; color: #bbb; line-height: 1.6; }
+    label { display:block; margin: 12px 0 6px; color:#ddd; font-weight: 600; }
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid #2a2a2a;
+      background: #0b0b0b;
+      color: #fff;
+      outline: none;
+    }
+    button {
+      width: 100%;
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 999px;
+      border: 1px solid #2a2a2a;
+      background: transparent;
+      color: #ffeb3b;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+    button:hover {
+      color: #00e5ff;
+      border-color: #0072ff;
+      box-shadow: 0 0 15px rgba(0,114,255,0.35);
+      transform: translateY(-1px);
+    }
+    .row {
+      display:flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+      margin-top: 14px;
+      color: #bbb;
+      font-size: 0.95rem;
+    }
+    .row a { color: #ffeb3b; text-decoration:none; font-weight: 700; }
+    .row a:hover { color: #00e5ff; }
+    #msg { margin-top: 12px; color: #aaa; min-height: 22px; }
+    .danger { color: #ff6b6b !important; }
+    .ok { color: #4ecca3 !important; }
+  </style>
+
+  <!-- Supabase env must load before JS modules -->
+  <script src="/assests/js/env.js"></script>
+</head>
+<body>
+  <main class="card">
+    <h1>Login</h1>
+    <p>Login to read/view approved Articles.</p>
+
+    <form id="loginForm">
+      <label for="email">Email</label>
+      <input id="email" type="email" autocomplete="email" required>
+
+      <label for="password">Password</label>
+      <input id="password" type="password" autocomplete="current-password" required>
+
+      <button type="submit">Login</button>
+      <div id="msg"></div>
+    </form>
+
+    <div class="row">
+      <a href="/" id="backHome">← Back home</a>
+      <a href="/signup.html" id="goSignup">Create account</a>
+    </div>
+  </main>
+
+  <script type="module" src="/assests/js/login.js"></script>
+</body>
+</html>
