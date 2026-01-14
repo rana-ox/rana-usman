@@ -11,131 +11,113 @@
 
   <style>
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: #050505;
-      color: #e0e0e0;
-      min-height: 100vh;
-    }
+    body { margin:0; font-family:'Poppins',sans-serif; background:#050505; color:#e0e0e0; min-height:100vh; }
 
     header {
-      background: #000;
-      border-bottom: 1px solid #1a1a1a;
-      padding: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
+      background:#000;
+      border-bottom:1px solid #1a1a1a;
+      padding:18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
     }
 
-    header a {
-      color: #ffeb3b;
-      text-decoration: none;
-      font-weight: 800;
-    }
-
-    header a:hover { color: #00e5ff; }
+    header a { color:#ffeb3b; text-decoration:none; font-weight:800; }
+    header a:hover { color:#00e5ff; }
 
     .account-panel {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid #2a2a2a;
-      background: rgba(255,255,255,0.03);
-      position: relative;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid #2a2a2a;
+      background:rgba(255,255,255,0.03);
+      position:relative;
     }
 
     .account-dot {
-      width: 34px;
-      height: 34px;
-      border-radius: 999px;
-      border: 1px solid #2a2a2a;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffeb3b;
-      background: transparent;
-      cursor: pointer;
-      font-size: 18px;
-      font-weight: 900;
-    }
-
-    .account-meta {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.1;
-      max-width: 240px;
+      width:34px;
+      height:34px;
+      border-radius:999px;
+      border:1px solid #2a2a2a;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      color:#ffeb3b;
+      background:transparent;
+      cursor:pointer;
+      font-size:18px;
+      font-weight:900;
     }
 
     .account-menu {
-      position: absolute;
-      right: 0;
-      top: calc(100% + 10px);
-      width: 290px;
-      background: #0b0b0b;
-      border: 1px solid #2a2a2a;
-      border-radius: 16px;
-      padding: 10px;
-      display: none;
-      z-index: 99999;
+      position:absolute;
+      right:0;
+      top:calc(100% + 10px);
+      width:290px;
+      background:#0b0b0b;
+      border:1px solid #2a2a2a;
+      border-radius:16px;
+      padding:10px;
+      display:none;
+      z-index:99999;
     }
 
     .account-menu a,
     .account-menu button {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px;
-      border-radius: 12px;
-      border: 0;
-      background: transparent;
-      color: #ffeb3b;
-      font-weight: 900;
-      cursor: pointer;
-      text-decoration: none;
-      font-family: inherit;
+      width:100%;
+      padding:10px;
+      border-radius:12px;
+      background:transparent;
+      border:0;
+      color:#ffeb3b;
+      font-weight:900;
+      cursor:pointer;
+      text-decoration:none;
+      display:block;
     }
 
-    .account-menu .danger { color: #ff4b2b; }
+    .danger { color:#ff4b2b; }
 
     main {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 28px 18px 60px;
+      max-width:1100px;
+      margin:0 auto;
+      padding:28px 18px 60px;
     }
 
     .grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:16px;
     }
 
-    @media (min-width: 768px) {
-      .grid { grid-template-columns: repeat(2, 1fr); }
+    @media (min-width:768px) {
+      .grid { grid-template-columns:repeat(2,1fr); }
     }
 
     .card {
-      background: #161616;
-      border: 1px solid #333;
-      border-radius: 16px;
-      padding: 18px;
+      background:#161616;
+      border:1px solid #333;
+      border-radius:16px;
+      padding:18px;
     }
 
-    .actions button {
-      border-radius: 999px;
-      padding: 10px 14px;
-      border: 1px solid #2a2a2a;
-      background: transparent;
-      color: #ffeb3b;
-      font-weight: 800;
-      cursor: pointer;
+    button {
+      border-radius:999px;
+      padding:10px 14px;
+      border:1px solid #2a2a2a;
+      background:transparent;
+      color:#ffeb3b;
+      font-weight:800;
+      cursor:pointer;
     }
   </style>
+
+  <!-- YOUR EXISTING SUPABASE SETUP -->
+  <script src="/assests/js/env.js"></script>
 </head>
 
 <body>
@@ -143,16 +125,11 @@
 <header>
   <a href="/">← Home</a>
 
-  <div class="quick-actions">
-    <a href="/upload.html">Submit PDF</a>
-    <a href="/my-submissions.html">My Submissions</a>
-  </div>
-
   <div class="account-panel">
     <button class="account-dot" id="accountBtn">⋮</button>
-    <div class="account-meta">
-      <div class="label" id="accountLabel">Guest</div>
-      <div class="sub" id="accountSub">Not logged in</div>
+    <div>
+      <div id="accountLabel">Guest</div>
+      <div id="accountSub">Not logged in</div>
     </div>
 
     <div class="account-menu" id="accountMenu">
@@ -171,8 +148,8 @@
   <div id="list" class="grid"></div>
 </main>
 
-<script type="module">
-  import { supabase } from "/assests/js/env.js";
+<script>
+  const supabase = window.supabase; // ✅ CORRECT FOR YOUR SETUP
 
   const msg = document.getElementById("msg");
   const list = document.getElementById("list");
@@ -193,9 +170,7 @@
       accountMenu.style.display === "block" ? "none" : "block";
   };
 
-  async function syncAccount() {
-    const { data: { session } } = await supabase.auth.getSession();
-
+  async function syncAccount(session) {
     if (!session) {
       accountLabel.textContent = "Guest";
       accountSub.textContent = "Not logged in";
@@ -233,10 +208,8 @@
     }
   }
 
-  async function loadArticles() {
-    msg.textContent = "Loading…";
-
-    const loggedIn = await syncAccount();
+  async function loadArticles(session) {
+    const loggedIn = await syncAccount(session);
 
     if (!loggedIn) {
       msg.textContent = "Please login to view articles.";
@@ -264,20 +237,21 @@
       card.innerHTML = `
         <h3>${row.title}</h3>
         <p>${row.description || ""}</p>
-        <div class="actions">
-          <button>Open PDF</button>
-        </div>
+        <button>Open PDF</button>
       `;
       card.querySelector("button").onclick = () => openPdf(row.file_path);
       list.appendChild(card);
     });
   }
 
-  supabase.auth.onAuthStateChange(() => {
-    loadArticles();
+  // ✅ CRITICAL: wait for auth to be restored
+  supabase.auth.getSession().then(({ data }) => {
+    loadArticles(data.session);
   });
 
-  loadArticles();
+  supabase.auth.onAuthStateChange((_event, session) => {
+    loadArticles(session);
+  });
 </script>
 
 </body>
