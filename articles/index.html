@@ -214,11 +214,6 @@ logoutBtn.onclick = () => {
   submitBtn.style.display = "none";
   logoutBtn.style.display = "none";
 
-  // Fire-and-forget sign out (no waiting)
-  supabase.auth.signOut().catch(console.error);
-
-  // Immediate redirect
-  window.location.replace("/login.html");
 };
 
 };
