@@ -204,8 +204,7 @@ async function refreshAuth(){
   return s;
 }
 
-logoutBtn.onclick = () => {
-  // Instant UI reset
+logoutBtn.onclick = async () => {
   label.textContent = "Guest";
   sub.textContent = "Not logged in";
 
@@ -214,9 +213,9 @@ logoutBtn.onclick = () => {
   submitBtn.style.display = "none";
   logoutBtn.style.display = "none";
 
+  await supabase.auth.signOut();
 };
 
-};
 
 let session=await refreshAuth();
 supabase.auth.onAuthStateChange(refreshAuth);
