@@ -204,9 +204,23 @@ async function refreshAuth(){
   return s;
 }
 
-logoutBtn.onclick=async()=>{
-  await supabase.auth.signOut();
-  location.reload();
+logoutBtn.onclick = () => {
+  // Instant UI reset
+  label.textContent = "Guest";
+  sub.textContent = "Not logged in";
+
+  loginBtn.style.display = "";
+  signupBtn.style.display = "";
+  submitBtn.style.display = "none";
+  logoutBtn.style.display = "none";
+
+  // Fire-and-forget sign out (no waiting)
+  supabase.auth.signOut().catch(console.error);
+
+  // Immediate redirect
+  window.location.replace("/login.html");
+};
+
 };
 
 let session=await refreshAuth();
