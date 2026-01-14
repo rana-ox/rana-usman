@@ -11,7 +11,7 @@
 
   <style>
     * { box-sizing: border-box; }
-    body { margin:0; font-family:'Poppins',sans-serif; background:#050505; color:#e0e0e0; min-height:100vh; }
+    body { margin:0; font-family:'Poppins',sans-serif; background:#050505; color:#e0e0e0; }
 
     header {
       background:#000;
@@ -43,9 +43,6 @@
       height:34px;
       border-radius:999px;
       border:1px solid #2a2a2a;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
       color:#ffeb3b;
       background:transparent;
       cursor:pointer;
@@ -57,13 +54,13 @@
       position:absolute;
       right:0;
       top:calc(100% + 10px);
-      width:290px;
+      width:280px;
       background:#0b0b0b;
       border:1px solid #2a2a2a;
       border-radius:16px;
       padding:10px;
       display:none;
-      z-index:99999;
+      z-index:9999;
     }
 
     .account-menu a,
@@ -116,7 +113,7 @@
     }
   </style>
 
-  <!-- YOUR EXISTING SUPABASE SETUP -->
+  <!-- existing supabase setup -->
   <script src="/assests/js/env.js"></script>
 </head>
 
@@ -149,7 +146,7 @@
 </main>
 
 <script>
-  const supabase = window.supabase; // ✅ CORRECT FOR YOUR SETUP
+  const supabase = window.supabase;
 
   const msg = document.getElementById("msg");
   const list = document.getElementById("list");
@@ -165,12 +162,16 @@
   const menuMySub = document.getElementById("menuMySub");
   const menuLogout = document.getElementById("menuLogout");
 
+  let currentSession = null;
+
   accountBtn.onclick = () => {
     accountMenu.style.display =
       accountMenu.style.display === "block" ? "none" : "block";
   };
 
-  async function syncAccount(session) {
+  function syncAccount(session) {
+    currentSession = session;
+
     if (!session) {
       accountLabel.textContent = "Guest";
       accountSub.textContent = "Not logged in";
@@ -179,7 +180,7 @@
       menuSubmit.style.display = "none";
       menuMySub.style.display = "none";
       menuLogout.style.display = "none";
-      return false;
+      return;
     }
 
     accountLabel.textContent = session.user.email;
@@ -189,7 +190,6 @@
     menuSubmit.style.display = "";
     menuMySub.style.display = "";
     menuLogout.style.display = "";
-    return true;
   }
 
   menuLogout.onclick = async () => {
@@ -198,6 +198,12 @@
   };
 
   async function openPdf(path) {
+    if (!currentSession) {
+      alert("Please login to read this article.");
+      location.href = "/login.html";
+      return;
+    }
+
     const { data } = await supabase
       .storage
       .from("pdfs")
@@ -208,14 +214,8 @@
     }
   }
 
-  async function loadArticles(session) {
-    const loggedIn = await syncAccount(session);
-
-    if (!loggedIn) {
-      msg.textContent = "Please login to view articles.";
-      list.innerHTML = "";
-      return;
-    }
+  async function loadArticles() {
+    msg.textContent = "Loading…";
 
     const { data, error } = await supabase
       .from("submissions")
@@ -244,13 +244,14 @@
     });
   }
 
-  // ✅ CRITICAL: wait for auth to be restored
+  // initial load
   supabase.auth.getSession().then(({ data }) => {
-    loadArticles(data.session);
+    syncAccount(data.session);
+    loadArticles();
   });
 
   supabase.auth.onAuthStateChange((_event, session) => {
-    loadArticles(session);
+    syncAccount(session);
   });
 </script>
 
