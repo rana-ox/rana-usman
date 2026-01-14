@@ -6,27 +6,39 @@
   <title>Articles | IR Notes Hub</title>
 
   <link rel="icon" href="/assests/img/icon.png" type="image/png">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
     * { box-sizing: border-box; }
-    body { margin:0; font-family:'Poppins',sans-serif; background:#050505; color:#e0e0e0; }
+    body {
+      margin:0;
+      font-family:'Poppins',sans-serif;
+      background:#050505;
+      color:#e0e0e0;
+      min-height:100vh;
+    }
 
     header {
       background:#000;
       border-bottom:1px solid #1a1a1a;
       padding:18px;
       display:flex;
-      align-items:center;
       justify-content:space-between;
+      align-items:center;
       gap:12px;
       flex-wrap:wrap;
     }
 
-    header a { color:#ffeb3b; text-decoration:none; font-weight:800; }
+    header a {
+      color:#ffeb3b;
+      text-decoration:none;
+      font-weight:800;
+    }
+
     header a:hover { color:#00e5ff; }
 
+    /* Account panel */
     .account-panel {
       display:inline-flex;
       align-items:center;
@@ -43,11 +55,39 @@
       height:34px;
       border-radius:999px;
       border:1px solid #2a2a2a;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:18px;
       color:#ffeb3b;
       background:transparent;
       cursor:pointer;
-      font-size:18px;
+      transition:.25s;
       font-weight:900;
+    }
+
+    .account-dot:hover {
+      color:#00e5ff;
+      border-color:#0072ff;
+      box-shadow:0 0 15px rgba(0,114,255,.35);
+    }
+
+    .account-meta {
+      display:flex;
+      flex-direction:column;
+      line-height:1.1;
+    }
+
+    .account-meta .label {
+      font-weight:900;
+      font-size:.82rem;
+      color:#fff;
+    }
+
+    .account-meta .sub {
+      font-weight:700;
+      font-size:.72rem;
+      color:#999;
     }
 
     .account-menu {
@@ -55,10 +95,11 @@
       right:0;
       top:calc(100% + 10px);
       width:280px;
-      background:#0b0b0b;
+      background:rgba(10,10,10,.97);
       border:1px solid #2a2a2a;
       border-radius:16px;
       padding:10px;
+      box-shadow:0 18px 50px rgba(0,0,0,.85);
       display:none;
       z-index:9999;
     }
@@ -66,6 +107,9 @@
     .account-menu a,
     .account-menu button {
       width:100%;
+      display:flex;
+      align-items:center;
+      gap:10px;
       padding:10px;
       border-radius:12px;
       background:transparent;
@@ -74,15 +118,38 @@
       font-weight:900;
       cursor:pointer;
       text-decoration:none;
-      display:block;
+      transition:.2s;
+      font-family:inherit;
     }
 
-    .danger { color:#ff4b2b; }
+    .account-menu a:hover,
+    .account-menu button:hover {
+      background:rgba(0,114,255,.18);
+      color:#00e5ff;
+    }
+
+    .account-divider {
+      height:1px;
+      background:#222;
+      border:0;
+      margin:6px 0;
+    }
 
     main {
       max-width:1100px;
       margin:0 auto;
       padding:28px 18px 60px;
+    }
+
+    h1 {
+      margin:0 0 8px;
+      font-size:2rem;
+    }
+
+    p.lead {
+      margin:0 0 18px;
+      color:#aaa;
+      line-height:1.6;
     }
 
     .grid {
@@ -96,100 +163,134 @@
     }
 
     .card {
-      background:#161616;
+      background:rgba(22,22,22,.95);
       border:1px solid #333;
       border-radius:16px;
       padding:18px;
+      box-shadow:0 12px 30px rgba(0,0,0,.65);
     }
 
-    button {
+    .card h3 {
+      margin:0 0 6px;
+      color:#fff;
+    }
+
+    .meta {
+      font-size:.85rem;
+      color:#777;
+      margin-bottom:10px;
+    }
+
+    .card p {
+      color:#bbb;
+      line-height:1.6;
+    }
+
+    .actions {
+      margin-top:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .actions button {
       border-radius:999px;
       padding:10px 14px;
       border:1px solid #2a2a2a;
       background:transparent;
       color:#ffeb3b;
-      font-weight:800;
+      font-weight:900;
       cursor:pointer;
+      transition:.25s;
+      display:flex;
+      gap:8px;
+      align-items:center;
     }
+
+    .actions button:hover {
+      color:#00e5ff;
+      border-color:#0072ff;
+      box-shadow:0 0 15px rgba(0,114,255,.35);
+      transform:translateY(-1px);
+    }
+
+    #msg { color:#888; margin-top:10px; }
   </style>
 
-  <!-- existing supabase setup -->
   <script src="/assests/js/env.js"></script>
+  <script type="module" src="/assests/js/supabase-client.js"></script>
 </head>
 
 <body>
-
 <header>
-  <a href="/">← Home</a>
+  <a href="/">IR Notes Hub</a>
 
-  <div class="account-panel">
+  <div class="account-panel" id="accountPanel">
     <button class="account-dot" id="accountBtn">⋮</button>
-    <div>
-      <div id="accountLabel">Guest</div>
-      <div id="accountSub">Not logged in</div>
+    <div class="account-meta">
+      <div class="label" id="accountLabel">Guest</div>
+      <div class="sub" id="accountSub">Not logged in</div>
     </div>
 
     <div class="account-menu" id="accountMenu">
-      <a id="menuLogin" href="/login.html">Login</a>
-      <a id="menuSignup" href="/signup.html">Sign up</a>
-      <a id="menuSubmit" href="/upload.html" style="display:none;">Submit PDF</a>
-      <a id="menuMySub" href="/my-submissions.html" style="display:none;">My submissions</a>
-      <button id="menuLogout" class="danger" style="display:none;">Logout</button>
+      <a id="menuLogin" href="/login.html"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+      <a id="menuSignup" href="/signup.html"><i class="fa-solid fa-user-plus"></i> Sign up</a>
+      <hr class="account-divider">
+      <a href="/upload.html" id="menuSubmit" style="display:none;"><i class="fa-solid fa-cloud-arrow-up"></i> Submit PDF</a>
+      <button id="menuLogout" style="display:none;"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
     </div>
   </div>
 </header>
 
 <main>
   <h1>Articles</h1>
+  <p class="lead">Browse approved notes. Login required to read.</p>
+
   <p id="msg">Loading…</p>
   <div id="list" class="grid"></div>
 </main>
 
-<script>
-  const supabase = window.supabase;
+<script type="module">
+  async function waitForClient() {
+    for (let i = 0; i < 120; i++) {
+      if (window.supabase?.auth) return window.supabase;
+      await new Promise(r => setTimeout(r, 50));
+    }
+    return null;
+  }
 
-  const msg = document.getElementById("msg");
-  const list = document.getElementById("list");
+  const supabase = await waitForClient();
 
-  const accountBtn = document.getElementById("accountBtn");
-  const accountMenu = document.getElementById("accountMenu");
   const accountLabel = document.getElementById("accountLabel");
   const accountSub = document.getElementById("accountSub");
-
   const menuLogin = document.getElementById("menuLogin");
   const menuSignup = document.getElementById("menuSignup");
   const menuSubmit = document.getElementById("menuSubmit");
-  const menuMySub = document.getElementById("menuMySub");
   const menuLogout = document.getElementById("menuLogout");
 
-  let currentSession = null;
+  function show(el, on) { el.style.display = on ? "" : "none"; }
 
-  accountBtn.onclick = () => {
-    accountMenu.style.display =
-      accountMenu.style.display === "block" ? "none" : "block";
-  };
+  async function refreshAuthUI() {
+    const { data } = await supabase.auth.getSession();
+    const s = data.session;
 
-  function syncAccount(session) {
-    currentSession = session;
-
-    if (!session) {
+    if (!s) {
       accountLabel.textContent = "Guest";
       accountSub.textContent = "Not logged in";
-      menuLogin.style.display = "";
-      menuSignup.style.display = "";
-      menuSubmit.style.display = "none";
-      menuMySub.style.display = "none";
-      menuLogout.style.display = "none";
-      return;
+      show(menuLogin,true);
+      show(menuSignup,true);
+      show(menuSubmit,false);
+      show(menuLogout,false);
+      return null;
     }
 
-    accountLabel.textContent = session.user.email;
+    accountLabel.textContent = s.user.email;
     accountSub.textContent = "Logged in";
-    menuLogin.style.display = "none";
-    menuSignup.style.display = "none";
-    menuSubmit.style.display = "";
-    menuMySub.style.display = "";
-    menuLogout.style.display = "";
+    show(menuLogin,false);
+    show(menuSignup,false);
+    show(menuSubmit,true);
+    show(menuLogout,true);
+    return s;
   }
 
   menuLogout.onclick = async () => {
@@ -197,63 +298,61 @@
     location.reload();
   };
 
-  async function openPdf(path) {
-    if (!currentSession) {
-      alert("Please login to read this article.");
-      location.href = "/login.html";
-      return;
-    }
+  let session = await refreshAuthUI();
+  supabase.auth.onAuthStateChange(refreshAuthUI);
 
-    const { data } = await supabase
-      .storage
-      .from("pdfs")
-      .createSignedUrl(path, 600);
-
-    if (data?.signedUrl) {
-      window.open(data.signedUrl, "_blank", "noopener");
-    }
-  }
-
-  async function loadArticles() {
-    msg.textContent = "Loading…";
-
-    const { data, error } = await supabase
-      .from("submissions")
-      .select("title,description,file_path")
-      .eq("status", "approved")
-      .order("created_at", { ascending: false });
-
-    if (error || !data || data.length === 0) {
-      msg.textContent = "No approved articles available.";
-      return;
-    }
-
-    msg.textContent = "";
-    list.innerHTML = "";
-
-    data.forEach(row => {
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-        <h3>${row.title}</h3>
-        <p>${row.description || ""}</p>
-        <button>Open PDF</button>
-      `;
-      card.querySelector("button").onclick = () => openPdf(row.file_path);
-      list.appendChild(card);
-    });
-  }
-
-  // initial load
-  supabase.auth.getSession().then(({ data }) => {
-    syncAccount(data.session);
-    loadArticles();
+  // menu toggle
+  const panel = document.getElementById("accountPanel");
+  const menu = document.getElementById("accountMenu");
+  document.getElementById("accountBtn").onclick = e => {
+    e.stopPropagation();
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+  };
+  document.addEventListener("click", e => {
+    if (!panel.contains(e.target)) menu.style.display = "none";
   });
 
-  supabase.auth.onAuthStateChange((_event, session) => {
-    syncAccount(session);
-  });
+  const list = document.getElementById("list");
+  const msg = document.getElementById("msg");
+
+  const { data, error } = await supabase
+    .from("submissions")
+    .select("id,title,description,topic,file_path")
+    .eq("status","approved")
+    .order("created_at",{ascending:false});
+
+  if (error) {
+    msg.textContent = "Failed to load articles.";
+    return;
+  }
+
+  msg.textContent = "";
+
+  for (const row of data) {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <h3>${row.title}</h3>
+      <div class="meta">${row.topic || ""}</div>
+      <p>${row.description || ""}</p>
+      <div class="actions">
+        <button><i class="fa-regular fa-file-pdf"></i> Read</button>
+      </div>
+    `;
+
+    card.querySelector("button").onclick = async () => {
+      if (!session) {
+        location.href = "/login.html?next=/articles/";
+        return;
+      }
+      const { data } = await supabase.storage
+        .from("pdfs")
+        .createSignedUrl(row.file_path, 600);
+      window.open(data.signedUrl,"_blank");
+    };
+
+    list.appendChild(card);
+  }
 </script>
-
 </body>
 </html>
