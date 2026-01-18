@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>IR Notes Hub — Notes, Study Hacks & Opportunities</title>
-  <link rel="canonical" href="https://www.ranausman.me/">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <link rel="icon" href="/assests/img/icon.png" type="image/png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -14,7 +12,7 @@
     * { box-sizing: border-box; }
     body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: #050505; color: #e0e0e0; min-height: 100vh; scroll-behavior: smooth; overflow-x: hidden; }
 
-    /* --- NAVIGATION HEADER --- */
+    /* Navigation Header */
     .nav-header {
       background: #000;
       padding: 1.2rem 2rem;
@@ -36,14 +34,12 @@
       border-radius: 999px;
       cursor: pointer;
       font-weight: 700;
-      transition: 0.3s;
       display: flex;
       align-items: center;
       gap: 12px;
     }
-    .menu-trigger:hover { color: #00e5ff; border-color: #0072ff; box-shadow: 0 0 15px rgba(0,114,255,0.35); }
 
-    /* --- PROFESSIONAL SLIDE MENU --- */
+    /* Side Menu Drawer */
     .side-menu {
       height: 100%;
       width: 0; 
@@ -57,7 +53,7 @@
       box-shadow: -15px 0 40px rgba(0,0,0,1);
       border-left: 1px solid #222;
     }
-    .close-btn { position: absolute; top: 15px; left: 20px; font-size: 35px; cursor: pointer; color: #fff; line-height: 1; }
+    .close-btn { position: absolute; top: 15px; left: 20px; font-size: 35px; cursor: pointer; color: #fff; }
 
     .menu-content { padding: 90px 25px 30px; }
     
@@ -68,8 +64,8 @@
       border-radius: 15px;
       margin-bottom: 25px; 
     }
-    .account-info-box .label { font-weight: 900; color: #fff; font-size: 1rem; display: block; overflow: hidden; text-overflow: ellipsis; }
-    .account-info-box .sub { color: #666; font-size: 0.75rem; display: block; }
+    .account-info-box .label { font-weight: 900; color: #fff; font-size: 1.1rem; display: block; }
+    .account-info-box .sub { color: #666; font-size: 0.8rem; display: block; }
 
     .menu-content a, .menu-content button {
       width: 100%;
@@ -88,59 +84,42 @@
       font-size: 0.95rem;
       text-align: left;
       cursor: pointer;
-      margin-bottom: 5px;
     }
-    .menu-content a:hover, .menu-content button:hover { background: rgba(0,114,255,0.12); color: #00e5ff; transform: translateX(5px); }
-    .menu-content .danger { color: #ff4b2b; border-top: 1px solid #222; margin-top: 10px; padding-top: 20px; }
-    .menu-content .danger:hover { color: #ff7b64; background: rgba(255,75,43,0.08); }
+    .menu-content a:hover, .menu-content button:hover { background: rgba(0,114,255,0.12); color: #00e5ff; }
+    .menu-content .danger { color: #ff4b2b; margin-top: 10px; border-top: 1px solid #222; padding-top: 20px; }
     .menu-content .group-title { color: #444; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; padding: 20px 10px 8px; font-weight: 900; }
 
     .overlay-bg { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9998; backdrop-filter: blur(5px); }
 
-    /* --- HERO --- */
+    /* Hero & Content */
     .hero { background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); color: #fff; text-align: center; padding: 6rem 1.5rem; border-bottom: 3px solid #0072ff; }
-    .hero h2 { font-size: 2.5rem; margin-bottom: 15px; letter-spacing: 1px; }
-
-    /* --- ABOUT SECTION --- */
-    .about-container { max-width: 1000px; margin: -4rem auto 3rem; padding: 2.5rem; background: rgba(22, 22, 22, 0.98); border-radius: 25px; display: flex; flex-direction: column; align-items: center; gap: 40px; border: 1px solid #333; box-shadow: 0 30px 60px rgba(0,0,0,0.8); backdrop-filter: blur(15px); }
+    .about-container { max-width: 1000px; margin: -4rem auto 3rem; padding: 2.5rem; background: rgba(22, 22, 22, 0.98); border-radius: 25px; display: flex; flex-direction: column; align-items: center; gap: 40px; border: 1px solid #333; box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
     @media (min-width: 768px) { .about-container { flex-direction: row; text-align: left; } .about-right { border-left: 4px solid #0072ff; padding-left: 40px; } }
 
-    /* --- CARDS WITH 3D HOVER --- */
-    .cards { display: grid; grid-template-columns: 1fr; padding: 2rem 1.5rem; gap: 2.5rem; max-width: 1200px; margin: 0 auto; perspective: 1200px; }
+    /* 3D Hover Cards */
+    .cards { display: grid; grid-template-columns: 1fr; padding: 2rem 1.5rem; gap: 2.5rem; max-width: 1200px; margin: 0 auto; perspective: 1000px; }
     @media (min-width: 768px) { .cards { grid-template-columns: repeat(3, 1fr); } }
-
     .card {
       padding: 4rem 2rem; border-radius: 30px; text-align: center;
-      transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.6s ease, border-color 0.6s ease;
-      border: 1px solid rgba(255,255,255,0.08); transform-style: preserve-3d;
-      background: rgba(255,255,255,0.02);
+      transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
+      border: 1px solid rgba(255,255,255,0.1); transform-style: preserve-3d;
+      background: #111;
     }
+    .card:hover { transform: translateY(-10px) rotateX(10deg); }
     .card-notes { background: linear-gradient(145deg, #1a1a2e, #16213e); }
     .card-opps { background: linear-gradient(145deg, #2d142c, #4a0e0e); }
     .card-hacks { background: linear-gradient(145deg, #1b262c, #0f4c75); }
-    
-    .card:hover { transform: translateY(-15px) rotateX(8deg) rotateY(-2deg); }
-    .card-notes:hover { border-color: #4ecca3; box-shadow: 0 25px 50px rgba(78, 204, 163, 0.3); }
-    .card-opps:hover { border-color: #ff4b2b; box-shadow: 0 25px 50px rgba(255, 75, 43, 0.3); }
-    .card-hacks:hover { border-color: #3282b8; box-shadow: 0 25px 50px rgba(50, 130, 184, 0.3); }
-    .card i { font-size: 3.5rem; margin-bottom: 2rem; display: block; transform: translateZ(50px); }
+    .card i { font-size: 3.5rem; margin-bottom: 2rem; }
 
-    .button-link { display: inline-block; padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: 800; text-transform: uppercase; transition: 0.4s; transform: translateZ(30px); }
-
-    /* --- Q&A SECTION --- */
+    /* Q&A Section */
     .qa { padding: 5rem 1.5rem; background: #000; border-top: 1px solid #1a1a1a; }
-    .qa h2 { text-align: center; font-size: 2.2rem; margin-bottom: 40px; color: #fff; }
-    .qa-list { display: grid; grid-template-columns: 1fr; gap: 20px; max-width: 1000px; margin: 0 auto; }
+    .qa-list { display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 1000px; margin: 0 auto; }
     @media (min-width: 768px) { .qa-list { grid-template-columns: repeat(2, 1fr); } }
-    .qa-item { 
-      background: #0a0a0a; border: 1px solid #222; border-radius: 15px; padding: 1.5rem; 
-      text-decoration: none; color: #bbb; font-weight: 600; display: block; 
-      border-left: 6px solid #0072ff; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-    }
-    .qa-item:hover { transform: scale(1.02) translateX(10px); color: #00e5ff; border-color: #00e5ff; background: #111; }
-    .qa-viewer { margin: 3rem auto 0; max-width: 1000px; background: rgba(15, 15, 15, 0.95); border-radius: 20px; padding: 2.5rem; min-height: 180px; border: 1px solid #333; box-shadow: inset 0 0 20px rgba(0,0,0,0.5); }
+    .qa-item { background: #0a0a0a; border: 1px solid #222; border-radius: 12px; padding: 1.5rem; text-decoration: none; color: #ddd; font-weight: 600; display: block; border-left: 6px solid #0072ff; transition: 0.3s; }
+    .qa-item:hover { transform: translateX(10px); color: #00e5ff; }
+    .qa-viewer { margin: 3rem auto 0; max-width: 1000px; background: rgba(15, 15, 15, 0.9); border-radius: 20px; padding: 2rem; min-height: 150px; border: 1px solid #333; }
     
-    footer { background: #000; color: #ffeb3b; text-align: center; padding: 4rem 1.5rem; border-top: 1px solid #1a1a1a; font-weight: 600; }
+    footer { background: #000; color: #ffeb3b; text-align: center; padding: 4rem 1.5rem; border-top: 1px solid #1a1a1a; }
   </style>
 
   <script src="/assests/js/env.js"></script>
@@ -164,42 +143,36 @@
         <span id="accountSub" class="sub">Not logged in</span>
       </div>
 
-      <div class="group-title">Explore</div>
+      <div class="group-title">Main</div>
       <a href="https://www.ranausman.me"><i class="fa-solid fa-house"></i> Home</a>
       <a href="opportunities.html"><i class="fa-solid fa-graduation-cap"></i> Opportunities</a>
       <a href="hacks.html"><i class="fa-solid fa-rocket"></i> Study Hacks</a>
-      <a href="https://notes.ranausman.me"><i class="fa-solid fa-book"></i> IR Notes</a>
-      <a href="/articles/"><i class="fa-solid fa-file-lines"></i> Articles</a>
+      <a href="https://notes.ranausman.me"><i class="fa-solid fa-book"></i> Notes</a>
       
-      <div class="group-title">Settings</div>
+      <div class="group-title">Account</div>
       <a id="menuLogin" href="/login.html"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
-      <a id="menuSignup" href="/signup.html"><i class="fa-solid fa-user-plus"></i> Create Account</a>
-      
+      <a id="menuSignup" href="/signup.html"><i class="fa-solid fa-user-plus"></i> Sign up</a>
       <a id="menuSubmit" href="/upload.html" style="display:none;"><i class="fa-solid fa-cloud-arrow-up"></i> Submit PDF</a>
       <a id="menuMySub" href="/my-submissions.html" style="display:none;"><i class="fa-solid fa-folder-open"></i> My Library</a>
       <a id="menuChangePw" href="/change-password.html" style="display:none;"><i class="fa-solid fa-key"></i> Security</a>
-      
       <button id="menuLogout" class="danger" style="display:none;"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
     </div>
   </div>
 
   <section class="hero">
     <h2>🚀 Your Ultimate IR Resource</h2>
-    <p>Simplified notes, career paths, and study hacks for IR students.</p>
+    <p>Simplified notes and study hacks for IR students.</p>
   </section>
 
   <section class="about-container">
     <div class="about-left">
-        <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="rana-xo" data-version="v1">
-            <a class="badge-base__link LI-simple-link" href="https://pk.linkedin.com/in/rana-xo?trk=profile-badge"></a>
-        </div>
+      <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="rana-xo" data-version="v1">
+        <a class="badge-base__link LI-simple-link" href="https://pk.linkedin.com/in/rana-xo?trk=profile-badge"></a>
+      </div>
     </div>
     <div class="about-right">
       <h3>About the Author</h3>
-      <p>I am <b>Rana Usman</b>, specializing in International Relations. My mission is to simplify global theories and empower students.</p>
-      <a href="mailto:info@ranausman.me" class="email-box" style="display:inline-flex; align-items:center; background:#0072ff; color:#fff; padding:12px 25px; border-radius:10px; text-decoration:none; font-weight:700;">
-        <i class="fa-solid fa-envelope"></i>&nbsp; info@ranausman.me
-      </a>
+      <p>I am <b>Rana Usman</b>, specializing in International Relations.</p>
     </div>
   </section>
 
@@ -207,20 +180,17 @@
     <div class="card card-notes">
       <i class="fa-solid fa-book-open" style="color:#4ecca3"></i>
       <h3>Lecture Notes</h3>
-      <p>Organized semester-wise materials for easy exam prep.</p>
-      <a href="https://notes.ranausman.me" class="button-link" style="background:#4ecca3; color:#1a1a2e;">Access Now</a>
+      <a href="https://notes.ranausman.me" style="color:#4ecca3; font-weight:800; text-decoration:none;">Access Now</a>
     </div>
     <div class="card card-opps">
       <i class="fa-solid fa-graduation-cap" style="color:#ff4b2b"></i>
       <h3>Opportunities</h3>
-      <p>Find the latest scholarships and internships globally.</p>
-      <a href="opportunities.html" class="button-link" style="background:#ff4b2b; color:#fff;">Explore</a>
+      <a href="opportunities.html" style="color:#ff4b2b; font-weight:800; text-decoration:none;">Explore</a>
     </div>
     <div class="card card-hacks">
       <i class="fa-solid fa-rocket" style="color:#3282b8"></i>
       <h3>Study Hacks</h3>
-      <p>Smart techniques to memorize and write better papers.</p>
-      <a href="hacks.html" class="button-link" style="background:#3282b8; color:#fff;">Get Tips</a>
+      <a href="hacks.html" style="color:#3282b8; font-weight:800; text-decoration:none;">Get Tips</a>
     </div>
   </section>
 
@@ -238,93 +208,68 @@
   </section>
 
   <footer>
-    <p>&copy; 2026 Notes by Rana Usman | Designed for IR Students ✨</p>
+    <p>&copy; 2026 Notes by Rana Usman</p>
   </footer>
 
   <script>
-    /* 1. Menu Controls */
-    function openMenu() {
-        document.getElementById("sideMenu").style.width = window.innerWidth > 500 ? "350px" : "100%";
-        document.getElementById("overlay").style.display = "block";
-    }
-    function closeMenu() {
-        document.getElementById("sideMenu").style.width = "0";
-        document.getElementById("overlay").style.display = "none";
-    }
+    function openMenu() { document.getElementById("sideMenu").style.width = "320px"; document.getElementById("overlay").style.display = "block"; }
+    function closeMenu() { document.getElementById("sideMenu").style.width = "0"; document.getElementById("overlay").style.display = "none"; }
 
-    /* 2. Original Q&A Logic - RESTORED WITH ALL 4 QUESTIONS */
-    (function () {
-      const list = document.querySelector('.qa-list');
+    // Q&A Logic
+    document.querySelector('.qa-list').addEventListener('click', async (e) => {
+      const link = e.target.closest('a.qa-item');
+      if (!link) return;
+      e.preventDefault();
       const viewer = document.getElementById('qa-viewer');
-      list.addEventListener('click', async function (e) {
-        const link = e.target.closest('a.qa-item');
-        if (!link) return;
-        e.preventDefault();
-        const slug = link.getAttribute('data-slug');
-        viewer.innerHTML = '<div style="text-align:center;"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:2rem; color:#0072ff;"></i><p>Loading...</p></div>';
-        try {
-          const res = await fetch(`/questions/${slug}`);
-          viewer.innerHTML = await res.text();
-        } catch (err) { viewer.innerHTML = '<p style="color:#ff4b2b; text-align:center;">Answer not found.</p>'; }
-      });
-    })();
+      const slug = link.getAttribute('data-slug');
+      viewer.innerHTML = '<p>Loading...</p>';
+      try {
+        const res = await fetch(`/questions/${slug}`);
+        viewer.innerHTML = await res.text();
+      } catch (err) { viewer.innerHTML = '<p>Error loading answer.</p>'; }
+    });
 
-    /* 3. Account Persistence Logic (Ensures name appears) */
-    async function initAccountUI() {
-        const getClient = () => window.supabase;
+    // ACCOUNT UI SYNC - THE FIX
+    async function syncAccount() {
+      const sb = window.supabase;
+      if (!sb || !sb.auth) return;
 
-        async function refreshUI() {
-            const supabase = getClient();
-            if (!supabase || !supabase.auth) return;
+      const { data: { session } } = await sb.auth.getSession();
+      const user = session?.user;
+      
+      const label = document.getElementById("accountLabel");
+      const sub = document.getElementById("accountSub");
 
-            const { data: { session } } = await supabase.auth.getSession();
-            const loggedIn = !!session;
-
-            const label = document.getElementById("accountLabel");
-            const sub = document.getElementById("accountSub");
-
-            if (loggedIn) {
-                const name = session.user?.user_metadata?.full_name || session.user?.user_metadata?.name || "Member";
-                label.textContent = name;
-                sub.textContent = session.user?.email;
-                document.getElementById("menuLogin").style.display = "none";
-                document.getElementById("menuSignup").style.display = "none";
-                document.getElementById("menuSubmit").style.display = "flex";
-                document.getElementById("menuMySub").style.display = "flex";
-                document.getElementById("menuChangePw").style.display = "flex";
-                document.getElementById("menuLogout").style.display = "flex";
-            } else {
-                label.textContent = "Guest";
-                sub.textContent = "Not logged in";
-                document.getElementById("menuLogin").style.display = "flex";
-                document.getElementById("menuSignup").style.display = "flex";
-                document.getElementById("menuSubmit").style.display = "none";
-                document.getElementById("menuMySub").style.display = "none";
-                document.getElementById("menuChangePw").style.display = "none";
-                document.getElementById("menuLogout").style.display = "none";
-            }
-        }
-
-        const checkInterval = setInterval(() => {
-            const supabase = getClient();
-            if (supabase && supabase.auth) {
-                clearInterval(checkInterval);
-                refreshUI();
-                supabase.auth.onAuthStateChange(() => refreshUI());
-            }
-        }, 300);
-
-        document.getElementById("menuLogout").addEventListener("click", async () => {
-            const supabase = getClient();
-            if (supabase) {
-                await supabase.auth.signOut();
-                window.location.reload();
-            }
-        });
+      if (user) {
+        label.textContent = user.user_metadata?.full_name || user.email.split('@')[0];
+        sub.textContent = user.email;
+        document.getElementById("menuLogin").style.display = "none";
+        document.getElementById("menuSignup").style.display = "none";
+        document.getElementById("menuSubmit").style.display = "flex";
+        document.getElementById("menuMySub").style.display = "flex";
+        document.getElementById("menuChangePw").style.display = "flex";
+        document.getElementById("menuLogout").style.display = "flex";
+      } else {
+        label.textContent = "Guest";
+        sub.textContent = "Not logged in";
+      }
     }
-    initAccountUI();
+
+    // This loop ensures that even if Supabase loads slowly, we catch it.
+    const runSync = setInterval(() => {
+      if (window.supabase) {
+        syncAccount();
+        window.supabase.auth.onAuthStateChange(() => syncAccount());
+        clearInterval(runSync);
+      }
+    }, 500);
+
+    document.getElementById("menuLogout").onclick = async () => {
+      await window.supabase.auth.signOut();
+      window.location.reload();
+    };
   </script>
+
   <script type="module" src="/assests/js/index.js"></script>
-  <script src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
 </body>
 </html>
