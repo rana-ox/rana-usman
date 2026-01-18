@@ -12,46 +12,64 @@
     * { box-sizing: border-box; }
     body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: #050505; color: #e0e0e0; min-height: 100vh; scroll-behavior: smooth; overflow-x: hidden; }
 
-    /* Navigation */
+    /* Navigation Header */
     .nav-header { background: #000; padding: 1.2rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1a1a1a; position: sticky; top: 0; z-index: 1000; }
     .nav-header h1 { font-size: 1.5rem; letter-spacing: 2px; text-transform: uppercase; margin: 0; color: #fff; }
+    
     .menu-trigger { background: rgba(255,255,255,0.03); border: 1px solid #2a2a2a; color: #ffeb3b; padding: 10px 20px; border-radius: 999px; cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 12px; transition: 0.3s; }
-    .menu-trigger:hover { border-color: #00e5ff; color: #00e5ff; }
+    .menu-trigger:hover { border-color: #00e5ff; color: #00e5ff; box-shadow: 0 0 10px rgba(0,229,255,0.2); }
 
-    /* Side Menu */
+    /* Side Menu Drawer */
     .side-menu { height: 100%; width: 0; position: fixed; z-index: 9999; top: 0; right: 0; background-color: #0a0a0a; overflow-x: hidden; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -15px 0 40px rgba(0,0,0,1); border-left: 1px solid #222; }
     .close-btn { position: absolute; top: 15px; left: 20px; font-size: 35px; cursor: pointer; color: #fff; }
     .menu-content { padding: 90px 25px 30px; }
+    
     .account-info-box { padding: 15px; border: 1px solid #222; background: rgba(255,255,255,0.02); border-radius: 15px; margin-bottom: 25px; }
     .account-info-box .label { font-weight: 900; color: #fff; font-size: 1.1rem; display: block; }
     .account-info-box .sub { color: #666; font-size: 0.8rem; display: block; }
 
     .menu-content a, .menu-content button { width: 100%; display: flex; align-items: center; gap: 14px; padding: 14px 18px; color: #ffeb3b; text-decoration: none; font-weight: 700; border-radius: 12px; background: transparent; border: none; font-family: inherit; cursor: pointer; transition: 0.25s; }
     .menu-content a:hover, .menu-content button:hover { background: rgba(0,114,255,0.12); color: #00e5ff; transform: translateX(5px); }
-    .menu-content .danger { color: #ff4b2b; border-top: 1px solid #222; margin-top: 10px; padding-top: 20px; }
+    .menu-content .danger { color: #ff4b2b; border-top: 1px solid #222 !important; margin-top: 10px; padding-top: 20px; border-radius: 0; }
+    
     .overlay-bg { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9998; backdrop-filter: blur(5px); }
 
-    /* Hero & Cards */
+    /* Hero Section */
     .hero { background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); color: #fff; text-align: center; padding: 6rem 1.5rem; border-bottom: 3px solid #0072ff; }
-    .cards { display: grid; grid-template-columns: 1fr; padding: 2rem 1.5rem; gap: 2.5rem; max-width: 1200px; margin: 0 auto; perspective: 1000px; }
+    
+    /* 3D Cards Container */
+    .cards { display: grid; grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 2.5rem; max-width: 1200px; margin: 0 auto; perspective: 1000px; }
     @media (min-width: 768px) { .cards { grid-template-columns: repeat(3, 1fr); } }
-    .card { padding: 4rem 2rem; border-radius: 30px; text-align: center; transition: 0.5s ease; border: 1px solid rgba(255,255,255,0.1); transform-style: preserve-3d; background: #111; }
-    .card:hover { transform: translateY(-12px) rotateX(10deg); box-shadow: 0 20px 40px rgba(0,114,255,0.2); }
-    .card i { font-size: 3.5rem; margin-bottom: 2rem; }
+    
+    .card { 
+      padding: 3rem 2rem; 
+      border-radius: 30px; 
+      text-align: center; 
+      transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.6s ease; 
+      border: 1px solid rgba(255,255,255,0.1); 
+      transform-style: preserve-3d; 
+      background: #111;
+      cursor: pointer;
+    }
+    .card:hover { 
+      transform: translateY(-15px) rotateX(10deg) rotateY(5deg); 
+      box-shadow: 0 25px 50px rgba(0,114,255,0.3); 
+      border-color: #0072ff;
+    }
+    .card i { font-size: 3.5rem; margin-bottom: 2rem; transition: 0.3s; }
+    .card:hover i { transform: translateZ(30px); }
 
-    /* Articles Section (Original Logic) */
+    /* Articles (Hidden by default unless data exists) */
     .articles-section { padding: 4rem 2rem; max-width: 1000px; margin: 0 auto; }
-    .article-card { background: #0a0a0a; border: 1px solid #222; padding: 20px; border-radius: 15px; margin-bottom: 20px; transition: 0.3s; }
-    .article-card:hover { border-color: #0072ff; }
-    .article-meta { font-size: 0.8rem; color: #666; margin: 5px 0 15px; }
-    .readBtn { background: #ffeb3b; color: #000; border: none; padding: 8px 20px; border-radius: 5px; cursor: pointer; font-weight: 700; }
+    .article-card { background: #0a0a0a; border: 1px solid #222; padding: 20px; border-radius: 15px; margin-bottom: 20px; }
 
-    /* Q&A */
+    /* Q&A Section */
     .qa { padding: 5rem 1.5rem; background: #000; }
     .qa-list { display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 1000px; margin: 0 auto; }
     @media (min-width: 768px) { .qa-list { grid-template-columns: repeat(2, 1fr); } }
-    .qa-item { background: #0a0a0a; border: 1px solid #222; border-radius: 12px; padding: 1.5rem; cursor: pointer; border-left: 6px solid #0072ff; }
-    .qa-viewer { margin: 3rem auto 0; max-width: 1000px; background: #111; border-radius: 20px; padding: 2rem; border: 1px solid #333; }
+    .qa-item { background: #0a0a0a; border: 1px solid #222; border-radius: 12px; padding: 1.5rem; cursor: pointer; border-left: 6px solid #0072ff; transition: 0.3s; }
+    .qa-item:hover { background: #111; transform: translateX(10px); color: #00e5ff; }
+    .qa-viewer { margin: 3rem auto 0; max-width: 1000px; background: #111; border-radius: 20px; padding: 2rem; min-height: 100px; border: 1px solid #333; }
   </style>
   <script src="/assests/js/env.js"></script>
 </head>
@@ -81,43 +99,43 @@
   </div>
 
   <section class="hero">
-    <h2>🚀 International Relations Hub</h2>
-    <p>Premium notes and career guidance.</p>
-  </section>
-
-  <section class="articles-section">
-    <h2>Approved Articles</h2>
-    <div id="articlesMsg"></div>
-    <div id="articlesList"></div>
+    <h2>🚀 Your Ultimate IR Resource</h2>
+    <p>Simplified notes and career paths for International Relations.</p>
   </section>
 
   <section class="cards">
-    <div class="card">
+    <div class="card" onclick="window.location.href='https://notes.ranausman.me'">
       <i class="fa-solid fa-book-open" style="color:#4ecca3"></i>
-      <h3>Notes</h3>
-      <a href="https://notes.ranausman.me" style="text-decoration:none; color:#4ecca3;">Access</a>
+      <h3>Lecture Notes</h3>
+      <p style="font-size: 0.9rem; color: #888;">Complete IR syllabus notes.</p>
     </div>
-    <div class="card">
+    <div class="card" onclick="window.location.href='opportunities.html'">
       <i class="fa-solid fa-graduation-cap" style="color:#ff4b2b"></i>
       <h3>Opportunities</h3>
-      <a href="opportunities.html" style="text-decoration:none; color:#ff4b2b;">Explore</a>
+      <p style="font-size: 0.9rem; color: #888;">Jobs, Internships & Scholarships.</p>
     </div>
-    <div class="card">
+    <div class="card" onclick="window.location.href='hacks.html'">
       <i class="fa-solid fa-rocket" style="color:#3282b8"></i>
       <h3>Study Hacks</h3>
-      <a href="hacks.html" style="text-decoration:none; color:#3282b8;">Get Tips</a>
+      <p style="font-size: 0.9rem; color: #888;">Smart tips for better grades.</p>
     </div>
   </section>
 
+  <section id="articlesSection" class="articles-section" style="display:none;">
+    <h2 style="text-align: center; margin-bottom: 2rem;">Recent Submissions</h2>
+    <div id="articlesMsg" style="text-align: center; color: #666;"></div>
+    <div id="articlesList"></div>
+  </section>
+
   <section class="qa">
-    <h2>Q&amp;A Hub</h2>
+    <h2 style="text-align: center; margin-bottom: 2.5rem;">Quick Q&amp;A Hub</h2>
     <div class="qa-list">
       <div class="qa-item" data-slug="why-study-ir.html">Why study IR?</div>
       <div class="qa-item" data-slug="is-ir-good-for-css.html">Is IR good for CSS?</div>
       <div class="qa-item" data-slug="ir-career-opportunities.html">Career opportunities?</div>
       <div class="qa-item" data-slug="how-to-take-effective-ir-notes.html">How to take notes?</div>
     </div>
-    <div id="qa-viewer" class="qa-viewer"><p style="text-align:center;">Select a question.</p></div>
+    <div id="qa-viewer" class="qa-viewer"><p style="text-align:center; color: #555;">Select a question to view the answer.</p></div>
   </section>
 
   <script type="module" src="/assests/js/index.js"></script>
