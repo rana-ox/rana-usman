@@ -12,263 +12,113 @@
     * { box-sizing: border-box; }
     body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: #050505; color: #e0e0e0; min-height: 100vh; scroll-behavior: smooth; overflow-x: hidden; }
 
-    /* Navigation Header */
-    .nav-header {
-      background: #000;
-      padding: 1.2rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #1a1a1a;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
+    /* Navigation */
+    .nav-header { background: #000; padding: 1.2rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1a1a1a; position: sticky; top: 0; z-index: 1000; }
     .nav-header h1 { font-size: 1.5rem; letter-spacing: 2px; text-transform: uppercase; margin: 0; color: #fff; }
-    
-    .menu-trigger {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid #2a2a2a;
-      color: #ffeb3b;
-      padding: 10px 20px;
-      border-radius: 999px;
-      cursor: pointer;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+    .menu-trigger { background: rgba(255,255,255,0.03); border: 1px solid #2a2a2a; color: #ffeb3b; padding: 10px 20px; border-radius: 999px; cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 12px; transition: 0.3s; }
+    .menu-trigger:hover { border-color: #00e5ff; color: #00e5ff; }
 
-    /* Side Menu Drawer */
-    .side-menu {
-      height: 100%;
-      width: 0; 
-      position: fixed;
-      z-index: 9999;
-      top: 0;
-      right: 0;
-      background-color: #0a0a0a;
-      overflow-x: hidden;
-      transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: -15px 0 40px rgba(0,0,0,1);
-      border-left: 1px solid #222;
-    }
+    /* Side Menu */
+    .side-menu { height: 100%; width: 0; position: fixed; z-index: 9999; top: 0; right: 0; background-color: #0a0a0a; overflow-x: hidden; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -15px 0 40px rgba(0,0,0,1); border-left: 1px solid #222; }
     .close-btn { position: absolute; top: 15px; left: 20px; font-size: 35px; cursor: pointer; color: #fff; }
-
     .menu-content { padding: 90px 25px 30px; }
-    
-    .account-info-box { 
-      padding: 15px; 
-      border: 1px solid #222; 
-      background: rgba(255,255,255,0.02);
-      border-radius: 15px;
-      margin-bottom: 25px; 
-    }
+    .account-info-box { padding: 15px; border: 1px solid #222; background: rgba(255,255,255,0.02); border-radius: 15px; margin-bottom: 25px; }
     .account-info-box .label { font-weight: 900; color: #fff; font-size: 1.1rem; display: block; }
     .account-info-box .sub { color: #666; font-size: 0.8rem; display: block; }
 
-    .menu-content a, .menu-content button {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 14px 18px;
-      color: #ffeb3b;
-      text-decoration: none;
-      font-weight: 700;
-      transition: 0.25s;
-      border-radius: 12px;
-      background: transparent;
-      border: none;
-      font-family: inherit;
-      font-size: 0.95rem;
-      text-align: left;
-      cursor: pointer;
-    }
-    .menu-content a:hover, .menu-content button:hover { background: rgba(0,114,255,0.12); color: #00e5ff; }
-    .menu-content .danger { color: #ff4b2b; margin-top: 10px; border-top: 1px solid #222; padding-top: 20px; }
-    .menu-content .group-title { color: #444; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; padding: 20px 10px 8px; font-weight: 900; }
-
+    .menu-content a, .menu-content button { width: 100%; display: flex; align-items: center; gap: 14px; padding: 14px 18px; color: #ffeb3b; text-decoration: none; font-weight: 700; border-radius: 12px; background: transparent; border: none; font-family: inherit; cursor: pointer; transition: 0.25s; }
+    .menu-content a:hover, .menu-content button:hover { background: rgba(0,114,255,0.12); color: #00e5ff; transform: translateX(5px); }
+    .menu-content .danger { color: #ff4b2b; border-top: 1px solid #222; margin-top: 10px; padding-top: 20px; }
     .overlay-bg { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9998; backdrop-filter: blur(5px); }
 
-    /* Hero & Content */
+    /* Hero & Cards */
     .hero { background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); color: #fff; text-align: center; padding: 6rem 1.5rem; border-bottom: 3px solid #0072ff; }
-    .about-container { max-width: 1000px; margin: -4rem auto 3rem; padding: 2.5rem; background: rgba(22, 22, 22, 0.98); border-radius: 25px; display: flex; flex-direction: column; align-items: center; gap: 40px; border: 1px solid #333; box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
-    @media (min-width: 768px) { .about-container { flex-direction: row; text-align: left; } .about-right { border-left: 4px solid #0072ff; padding-left: 40px; } }
-
-    /* 3D Hover Cards */
     .cards { display: grid; grid-template-columns: 1fr; padding: 2rem 1.5rem; gap: 2.5rem; max-width: 1200px; margin: 0 auto; perspective: 1000px; }
     @media (min-width: 768px) { .cards { grid-template-columns: repeat(3, 1fr); } }
-    .card {
-      padding: 4rem 2rem; border-radius: 30px; text-align: center;
-      transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
-      border: 1px solid rgba(255,255,255,0.1); transform-style: preserve-3d;
-      background: #111;
-    }
-    .card:hover { transform: translateY(-10px) rotateX(10deg); }
-    .card-notes { background: linear-gradient(145deg, #1a1a2e, #16213e); }
-    .card-opps { background: linear-gradient(145deg, #2d142c, #4a0e0e); }
-    .card-hacks { background: linear-gradient(145deg, #1b262c, #0f4c75); }
+    .card { padding: 4rem 2rem; border-radius: 30px; text-align: center; transition: 0.5s ease; border: 1px solid rgba(255,255,255,0.1); transform-style: preserve-3d; background: #111; }
+    .card:hover { transform: translateY(-12px) rotateX(10deg); box-shadow: 0 20px 40px rgba(0,114,255,0.2); }
     .card i { font-size: 3.5rem; margin-bottom: 2rem; }
 
-    /* Q&A Section */
-    .qa { padding: 5rem 1.5rem; background: #000; border-top: 1px solid #1a1a1a; }
+    /* Articles Section (Original Logic) */
+    .articles-section { padding: 4rem 2rem; max-width: 1000px; margin: 0 auto; }
+    .article-card { background: #0a0a0a; border: 1px solid #222; padding: 20px; border-radius: 15px; margin-bottom: 20px; transition: 0.3s; }
+    .article-card:hover { border-color: #0072ff; }
+    .article-meta { font-size: 0.8rem; color: #666; margin: 5px 0 15px; }
+    .readBtn { background: #ffeb3b; color: #000; border: none; padding: 8px 20px; border-radius: 5px; cursor: pointer; font-weight: 700; }
+
+    /* Q&A */
+    .qa { padding: 5rem 1.5rem; background: #000; }
     .qa-list { display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 1000px; margin: 0 auto; }
     @media (min-width: 768px) { .qa-list { grid-template-columns: repeat(2, 1fr); } }
-    .qa-item { background: #0a0a0a; border: 1px solid #222; border-radius: 12px; padding: 1.5rem; text-decoration: none; color: #ddd; font-weight: 600; display: block; border-left: 6px solid #0072ff; transition: 0.3s; }
-    .qa-item:hover { transform: translateX(10px); color: #00e5ff; }
-    .qa-viewer { margin: 3rem auto 0; max-width: 1000px; background: rgba(15, 15, 15, 0.9); border-radius: 20px; padding: 2rem; min-height: 150px; border: 1px solid #333; }
-    
-    footer { background: #000; color: #ffeb3b; text-align: center; padding: 4rem 1.5rem; border-top: 1px solid #1a1a1a; }
+    .qa-item { background: #0a0a0a; border: 1px solid #222; border-radius: 12px; padding: 1.5rem; cursor: pointer; border-left: 6px solid #0072ff; }
+    .qa-viewer { margin: 3rem auto 0; max-width: 1000px; background: #111; border-radius: 20px; padding: 2rem; border: 1px solid #333; }
   </style>
-
   <script src="/assests/js/env.js"></script>
 </head>
 <body>
-
-  <div id="overlay" class="overlay-bg" onclick="closeMenu()"></div>
+  <div id="overlay" class="overlay-bg"></div>
 
   <header class="nav-header">
     <h1>IR Notes Hub</h1>
-    <button class="menu-trigger" onclick="openMenu()">
-      <i class="fa-solid fa-bars"></i> Menu
-    </button>
+    <button class="menu-trigger" id="openMenuBtn"><i class="fa-solid fa-bars"></i> Menu</button>
   </header>
 
   <div id="sideMenu" class="side-menu">
-    <span class="close-btn" onclick="closeMenu()">&times;</span>
+    <span class="close-btn" id="closeMenuBtn">&times;</span>
     <div class="menu-content">
       <div class="account-info-box">
         <span id="accountLabel" class="label">Guest</span>
         <span id="accountSub" class="sub">Not logged in</span>
       </div>
-
-      <div class="group-title">Main</div>
-      <a href="https://www.ranausman.me"><i class="fa-solid fa-house"></i> Home</a>
-      <a href="opportunities.html"><i class="fa-solid fa-graduation-cap"></i> Opportunities</a>
-      <a href="hacks.html"><i class="fa-solid fa-rocket"></i> Study Hacks</a>
-      <a href="https://notes.ranausman.me"><i class="fa-solid fa-book"></i> Notes</a>
-      
-      <div class="group-title">Account</div>
+      <a href="/"><i class="fa-solid fa-house"></i> Home</a>
       <a id="menuLogin" href="/login.html"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
       <a id="menuSignup" href="/signup.html"><i class="fa-solid fa-user-plus"></i> Sign up</a>
       <a id="menuSubmit" href="/upload.html" style="display:none;"><i class="fa-solid fa-cloud-arrow-up"></i> Submit PDF</a>
-      <a id="menuMySub" href="/my-submissions.html" style="display:none;"><i class="fa-solid fa-folder-open"></i> My Library</a>
-      <a id="menuChangePw" href="/change-password.html" style="display:none;"><i class="fa-solid fa-key"></i> Security</a>
-      <button id="menuLogout" class="danger" style="display:none;"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+      <a id="menuMySub" href="/my-submissions.html" style="display:none;"><i class="fa-solid fa-folder-open"></i> Library</a>
+      <a id="adminLink" href="/admin.html" style="display:none;"><i class="fa-solid fa-user-shield"></i> Admin Panel</a>
+      <button id="logoutBtn" class="danger" style="display:none;"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
     </div>
   </div>
 
   <section class="hero">
-    <h2>🚀 Your Ultimate IR Resource</h2>
-    <p>Simplified notes and study hacks for IR students.</p>
+    <h2>🚀 International Relations Hub</h2>
+    <p>Premium notes and career guidance.</p>
   </section>
 
-  <section class="about-container">
-    <div class="about-left">
-      <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="rana-xo" data-version="v1">
-        <a class="badge-base__link LI-simple-link" href="https://pk.linkedin.com/in/rana-xo?trk=profile-badge"></a>
-      </div>
-    </div>
-    <div class="about-right">
-      <h3>About the Author</h3>
-      <p>I am <b>Rana Usman</b>, specializing in International Relations.</p>
-    </div>
+  <section class="articles-section">
+    <h2>Approved Articles</h2>
+    <div id="articlesMsg"></div>
+    <div id="articlesList"></div>
   </section>
 
   <section class="cards">
-    <div class="card card-notes">
+    <div class="card">
       <i class="fa-solid fa-book-open" style="color:#4ecca3"></i>
-      <h3>Lecture Notes</h3>
-      <a href="https://notes.ranausman.me" style="color:#4ecca3; font-weight:800; text-decoration:none;">Access Now</a>
+      <h3>Notes</h3>
+      <a href="https://notes.ranausman.me" style="text-decoration:none; color:#4ecca3;">Access</a>
     </div>
-    <div class="card card-opps">
+    <div class="card">
       <i class="fa-solid fa-graduation-cap" style="color:#ff4b2b"></i>
       <h3>Opportunities</h3>
-      <a href="opportunities.html" style="color:#ff4b2b; font-weight:800; text-decoration:none;">Explore</a>
+      <a href="opportunities.html" style="text-decoration:none; color:#ff4b2b;">Explore</a>
     </div>
-    <div class="card card-hacks">
+    <div class="card">
       <i class="fa-solid fa-rocket" style="color:#3282b8"></i>
       <h3>Study Hacks</h3>
-      <a href="hacks.html" style="color:#3282b8; font-weight:800; text-decoration:none;">Get Tips</a>
+      <a href="hacks.html" style="text-decoration:none; color:#3282b8;">Get Tips</a>
     </div>
   </section>
 
-  <section id="qa" class="qa">
+  <section class="qa">
     <h2>Q&amp;A Hub</h2>
     <div class="qa-list">
-      <a href="#" class="qa-item" data-slug="why-study-ir.html">Why study IR?</a>
-      <a href="#" class="qa-item" data-slug="is-ir-good-for-css.html">Is IR good for CSS?</a>
-      <a href="#" class="qa-item" data-slug="ir-career-opportunities.html">Career opportunities?</a>
-      <a href="#" class="qa-item" data-slug="how-to-take-effective-ir-notes.html">How to take notes?</a>
+      <div class="qa-item" data-slug="why-study-ir.html">Why study IR?</div>
+      <div class="qa-item" data-slug="is-ir-good-for-css.html">Is IR good for CSS?</div>
+      <div class="qa-item" data-slug="ir-career-opportunities.html">Career opportunities?</div>
+      <div class="qa-item" data-slug="how-to-take-effective-ir-notes.html">How to take notes?</div>
     </div>
-    <div id="qa-viewer" class="qa-viewer">
-      <p style="text-align:center; color: #666;">Select a question above to see the answer.</p>
-    </div>
+    <div id="qa-viewer" class="qa-viewer"><p style="text-align:center;">Select a question.</p></div>
   </section>
-
-  <footer>
-    <p>&copy; 2026 Notes by Rana Usman</p>
-  </footer>
-
-  <script>
-    function openMenu() { document.getElementById("sideMenu").style.width = "320px"; document.getElementById("overlay").style.display = "block"; }
-    function closeMenu() { document.getElementById("sideMenu").style.width = "0"; document.getElementById("overlay").style.display = "none"; }
-
-    // Q&A Logic
-    document.querySelector('.qa-list').addEventListener('click', async (e) => {
-      const link = e.target.closest('a.qa-item');
-      if (!link) return;
-      e.preventDefault();
-      const viewer = document.getElementById('qa-viewer');
-      const slug = link.getAttribute('data-slug');
-      viewer.innerHTML = '<p>Loading...</p>';
-      try {
-        const res = await fetch(`/questions/${slug}`);
-        viewer.innerHTML = await res.text();
-      } catch (err) { viewer.innerHTML = '<p>Error loading answer.</p>'; }
-    });
-
-    // ACCOUNT UI SYNC - THE FIX
-    async function syncAccount() {
-      const sb = window.supabase;
-      if (!sb || !sb.auth) return;
-
-      const { data: { session } } = await sb.auth.getSession();
-      const user = session?.user;
-      
-      const label = document.getElementById("accountLabel");
-      const sub = document.getElementById("accountSub");
-
-      if (user) {
-        label.textContent = user.user_metadata?.full_name || user.email.split('@')[0];
-        sub.textContent = user.email;
-        document.getElementById("menuLogin").style.display = "none";
-        document.getElementById("menuSignup").style.display = "none";
-        document.getElementById("menuSubmit").style.display = "flex";
-        document.getElementById("menuMySub").style.display = "flex";
-        document.getElementById("menuChangePw").style.display = "flex";
-        document.getElementById("menuLogout").style.display = "flex";
-      } else {
-        label.textContent = "Guest";
-        sub.textContent = "Not logged in";
-      }
-    }
-
-    // This loop ensures that even if Supabase loads slowly, we catch it.
-    const runSync = setInterval(() => {
-      if (window.supabase) {
-        syncAccount();
-        window.supabase.auth.onAuthStateChange(() => syncAccount());
-        clearInterval(runSync);
-      }
-    }, 500);
-
-    document.getElementById("menuLogout").onclick = async () => {
-      await window.supabase.auth.signOut();
-      window.location.reload();
-    };
-  </script>
 
   <script type="module" src="/assests/js/index.js"></script>
 </body>
