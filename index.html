@@ -6,45 +6,7 @@
   <link rel="canonical" href="https://www.ranausman.me/">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Favicons (browser tab + search engines) -->
   <link rel="icon" href="/assests/img/icon.png" type="image/png">
-  <link rel="icon" href="/assests/img/icon.ico" type="image/x-icon">
-  <link rel="shortcut icon" href="/assests/img/icon.ico" type="image/x-icon">
-  <link rel="apple-touch-icon" href="/assests/img/icon.png">
-
-  <meta name="description" content="Get the best study hacks, time management tips, and exclusive student benefits like the GitHub Student Developer Pack for Federal Urdu University students.">
-  <meta name="keywords" content="Study Hacks, IR Notes, Federal Urdu University, GitHub Student Pack">
-
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.ranausman.me/">
-  <meta property="og:title" content="IR Notes Hub | Free Notes, Study Hacks and Opportunities">
-  <meta property="og:description" content="Unlock smart tips and exclusive student benefits. Federal Urdu University students can now get the GitHub Developer Program for free!">
-  <meta property="og:image" content="https://www.ranausman.me/assests/img/icon.png">
-  <meta property="og:site_name" content="Notes by Rana Usman">
-
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://www.ranausman.me/">
-  <meta property="twitter:title" content="IR Notes Hub — Notes, Study Hacks & Opportunities">
-  <meta property="twitter:description" content="Unlock smart tips and exclusive student benefits. Federal Urdu University students can now get the GitHub Developer Program for free!">
-  <meta property="twitter:image" content="https://www.ranausman.me/assests/img/close-up-of-student-studying.jpg">
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Notes by Rana Usman",
-    "alternateName": "IR Notes Hub",
-    "url": "https://ranausman.me/",
-    "publisher": {
-      "@type": "Person",
-      "name": "Rana Usman",
-      "url": "https://www.ranausman.me/",
-      "image": "https://ranausman.me/assests/img/icon.png"
-    }
-  }
-  </script>
-
-  <script src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
@@ -52,277 +14,189 @@
     * { box-sizing: border-box; }
     body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: #050505; color: #e0e0e0; min-height: 100vh; scroll-behavior: smooth; overflow-x: hidden; }
 
-    /* Navigation */
-    nav { background: #000; color: #fff; display: flex; flex-direction: column; align-items: center; padding: 1.5rem; border-bottom: 1px solid #1a1a1a; }
-    nav h1 { font-size: 1.5rem; letter-spacing: 2px; text-transform: uppercase; margin: 0; }
-    nav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; margin: 15px 0 0; padding: 0; gap: 18px; }
-    nav ul li a { color: #ffeb3b; text-decoration: none; font-weight: 700; font-size: 0.9rem; transition: 0.3s; }
-    nav ul li a:hover { color: #00e5ff; text-shadow: 0 0 10px #00e5ff; }
-
-    @media (min-width: 768px) {
-      nav { flex-direction: row; justify-content: space-between; padding: 1.2rem 3rem; }
-      nav ul { margin: 0; align-items: center; }
+    /* --- NEW NAVIGATION HEADER --- */
+    .top-nav {
+      background: #000;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #1a1a1a;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
+    .top-nav h1 { font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase; margin: 0; color: #fff; }
 
-    /* ===== Account Panel (always visible) ===== */
-    .account-panel {
-      display: inline-flex;
+    /* The Hamburger Button */
+    .menu-trigger {
+      background: none;
+      border: none;
+      color: #ffeb3b;
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: flex;
       align-items: center;
       gap: 10px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid #2a2a2a;
-      background: rgba(255,255,255,0.03);
-      position: relative;
-    }
-    .account-dot {
-      width: 34px;
-      height: 34px;
-      border-radius: 999px;
-      border: 1px solid #2a2a2a;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffeb3b;
-      background: transparent;
-      cursor: pointer;
-      transition: 0.25s;
-      font-size: 18px;
-      line-height: 1;
-      font-weight: 900;
-    }
-    .account-dot:hover {
-      color: #00e5ff;
-      border-color: #0072ff;
-      box-shadow: 0 0 15px rgba(0,114,255,0.35);
-      transform: translateY(-1px);
+      font-weight: 600;
     }
 
-    .account-meta {
+    /* --- THE SLIDE-OVER SIDE MENU --- */
+    .side-drawer {
+      height: 100%;
+      width: 0; /* Hidden by default */
+      position: fixed;
+      z-index: 2000; /* High z-index to stay on top */
+      top: 0;
+      right: 0;
+      background-color: #0a0a0a;
+      overflow-x: hidden;
+      transition: 0.4s ease-in-out;
+      padding-top: 60px;
+      box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+      border-left: 1px solid #222;
+    }
+
+    .side-drawer .close-btn {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      font-size: 30px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .drawer-content {
       display: flex;
       flex-direction: column;
-      line-height: 1.1;
-      max-width: 240px;
-    }
-    .account-meta .label {
-      font-weight: 900;
-      font-size: 0.82rem;
-      color: #fff;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      max-width: 240px;
-    }
-    .account-meta .sub {
-      font-weight: 700;
-      font-size: 0.72rem;
-      color: #999;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      max-width: 240px;
+      padding: 20px;
     }
 
-    .account-menu {
-      position: absolute;
-      right: 0;
-      top: calc(100% + 10px);
-      width: 290px;
-      background: rgba(10,10,10,0.96);
-      border: 1px solid #2a2a2a;
-      border-radius: 16px;
-      padding: 10px;
-      box-shadow: 0 18px 50px rgba(0,0,0,0.85);
-      display: none;
-      z-index: 99999;
-    }
-
-    .account-menu .group-title {
-      color: #777;
-      font-weight: 900;
-      font-size: 0.72rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      padding: 10px 10px 6px;
-    }
-
-    .account-menu a,
-    .account-menu button {
-      width: 100%;
+    .drawer-content a, .drawer-content button {
+      padding: 15px 20px;
+      text-decoration: none;
+      font-size: 1.1rem;
+      color: #ffeb3b;
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 10px 10px;
-      border-radius: 12px;
-      border: 0;
-      background: transparent;
-      color: #ffeb3b;
-      text-decoration: none;
-      cursor: pointer;
-      font-weight: 900;
-      font-family: inherit;
-      font-size: 0.9rem;
-      transition: 0.2s;
+      gap: 12px;
+      border-bottom: 1px solid #1a1a1a;
+      transition: 0.3s;
+      background: none;
+      border-left: none; border-right: none; border-top: none;
+      width: 100%;
       text-align: left;
+      font-family: inherit;
+      font-weight: 600;
     }
 
-    .account-menu a:hover,
-    .account-menu button:hover {
-      background: rgba(0,114,255,0.18);
+    .drawer-content a:hover, .drawer-content button:hover {
+      background: #111;
       color: #00e5ff;
+      padding-left: 30px;
     }
 
-    .account-menu .danger {
-      color: #ff4b2b;
-    }
-    .account-menu .danger:hover {
-      background: rgba(255,75,43,0.12);
-      color: #ff7b64;
-    }
-
-    .account-divider {
-      height: 1px;
-      background: #222;
-      margin: 6px 0;
-      border: 0;
+    .drawer-section-title {
+      color: #666;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 20px 20px 5px;
     }
 
-    /* Hero Section */
+    /* --- OVERLAY --- */
+    .menu-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      z-index: 1500;
+    }
+
+    /* Account Meta inside Menu */
+    .drawer-account-info {
+        padding: 0 20px 20px;
+        border-bottom: 1px solid #222;
+    }
+    #drawerLabel { color: #fff; font-weight: 700; display: block; }
+    #drawerSub { color: #888; font-size: 0.8rem; }
+
+    /* Rest of your existing CSS (Hero, Cards, etc.) */
     .hero { background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); color: #fff; text-align: center; padding: 5rem 1.5rem; border-bottom: 3px solid #0072ff; }
     .hero h2 { font-size: 2.2rem; margin-bottom: 10px; }
-
-    /* About Container */
-    .about-container {
-      max-width: 1000px; margin: -3rem auto 2rem; padding: 2rem;
-      background: rgba(22, 22, 22, 0.95); border-radius: 20px;
-      display: flex; flex-direction: column; align-items: center; gap: 25px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.9); border: 1px solid #333;
-      backdrop-filter: blur(10px);
-    }
-    .about-left { width: 100%; display: flex; justify-content: center; }
+    .about-container { max-width: 1000px; margin: -3rem auto 2rem; padding: 2rem; background: rgba(22, 22, 22, 0.95); border-radius: 20px; display: flex; flex-direction: column; align-items: center; gap: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.9); border: 1px solid #333; backdrop-filter: blur(10px); }
     .about-right { width: 100%; text-align: center; }
     .about-right h3 { color: #fff; font-size: 1.8rem; margin: 0 0 15px 0; }
     .about-right p { color: #bbb; line-height: 1.7; margin-bottom: 25px; }
-
-    .email-box {
-      display: inline-flex; align-items: center; background: #0072ff; color: #fff;
-      padding: 12px 25px; border-radius: 10px; text-decoration: none; font-weight: 700;
-      transition: 0.4s; border: 1px solid transparent;
-    }
-    .email-box:hover { background: #0056b3; box-shadow: 0 0 25px #0072ff; transform: translateY(-3px); border-color: #00e5ff; }
-
-    @media (min-width: 768px) {
-      .about-container { flex-direction: row; text-align: left; padding: 3rem; gap: 40px; }
-      .about-left { flex: 1; }
-      .about-right { flex: 1.5; border-left: 4px solid #0072ff; padding-left: 35px; text-align: left; }
-    }
-
-    /* Cards Layout */
+    .email-box { display: inline-flex; align-items: center; background: #0072ff; color: #fff; padding: 12px 25px; border-radius: 10px; text-decoration: none; font-weight: 700; transition: 0.4s; border: 1px solid transparent; }
     .cards { display: grid; grid-template-columns: 1fr; padding: 2rem 1.5rem; gap: 2rem; max-width: 1200px; margin: 0 auto; perspective: 1000px; }
-    @media (min-width: 768px) { .cards { grid-template-columns: repeat(3, 1fr); gap: 2.5rem; padding: 3rem 2rem; } }
-
-    .card {
-      padding: 3.5rem 2rem; border-radius: 25px; text-align: center;
-      transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
-      border: 1px solid rgba(255,255,255,0.1); transform-style: preserve-3d;
-      position: relative; overflow: hidden;
+    @media (min-width: 768px) { 
+        .cards { grid-template-columns: repeat(3, 1fr); gap: 2.5rem; padding: 3rem 2rem; } 
+        .about-container { flex-direction: row; text-align: left; padding: 3rem; gap: 40px; }
+        .about-right { flex: 1.5; border-left: 4px solid #0072ff; padding-left: 35px; text-align: left; }
     }
-
+    .card { padding: 3.5rem 2rem; border-radius: 25px; text-align: center; transition: 0.5s; border: 1px solid rgba(255,255,255,0.1); background: #1a1a2e; }
     .card-notes { background: linear-gradient(145deg, #1a1a2e, #16213e); }
     .card-opps { background: linear-gradient(145deg, #2d142c, #4a0e0e); }
     .card-hacks { background: linear-gradient(145deg, #1b262c, #0f4c75); }
-
-    .card:hover { transform: translateY(-10px) rotateX(10deg) rotateY(-5deg); z-index: 10; }
-    .card-notes:hover { border-color: #4ecca3; box-shadow: 0 20px 40px rgba(78, 204, 163, 0.4); }
-    .card-opps:hover { border-color: #ff4b2b; box-shadow: 0 20px 40px rgba(255, 75, 43, 0.4); }
-    .card-hacks:hover { border-color: #3282b8; box-shadow: 0 20px 40px rgba(50, 130, 184, 0.4); }
-
-    .card i { font-size: 3.5rem; margin-bottom: 1.5rem; transform: translateZ(50px); transition: 0.3s; }
-    .card-notes i { color: #4ecca3; }
-    .card-opps i { color: #ff4b2b; }
-    .card-hacks i { color: #3282b8; }
-
-    .button { display: inline-block; padding: 1rem 2.2rem; border-radius: 50px; text-decoration: none; font-weight: 800; text-transform: uppercase; transition: 0.4s; transform: translateZ(40px); }
+    .card i { font-size: 3.5rem; margin-bottom: 1.5rem; }
+    .button { display: inline-block; padding: 1rem 2.2rem; border-radius: 50px; text-decoration: none; font-weight: 800; text-transform: uppercase; transition: 0.4s; }
     .btn-notes { background: #4ecca3; color: #1a1a2e; }
-    .btn-notes:hover { box-shadow: 0 0 25px #4ecca3, 0 0 50px rgba(78, 204, 163, 0.4); transform: translateZ(60px) scale(1.05); }
     .btn-opps { background: #ff4b2b; color: #fff; }
-    .btn-opps:hover { box-shadow: 0 0 25px #ff4b2b, 0 0 50px rgba(255, 75, 43, 0.4); transform: translateZ(60px) scale(1.05); }
     .btn-hacks { background: #3282b8; color: #fff; }
-    .btn-hacks:hover { box-shadow: 0 0 25px #3282b8, 0 0 50px rgba(50, 130, 184, 0.4); transform: translateZ(60px) scale(1.05); }
-
-    .card h3 { color: #fff; font-size: 1.6rem; transform: translateZ(40px); }
-    .card p { color: #ccc; margin-bottom: 2rem; transform: translateZ(30px); }
-
-    /* Q&A Section */
     .qa { padding: 4rem 1.5rem; background: #000; border-top: 1px solid #222; }
-    .qa h2 { text-align: center; color: #fff; font-size: 2.2rem; margin-bottom: 30px; }
-    .qa-list { display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 900px; margin: 0 auto; }
-    @media (min-width: 768px) { .qa-list { grid-template-columns: repeat(2, 1fr); } }
-
-    .qa-item {
-      background: #0a0a0a; border: 1px solid #222; border-radius: 12px; padding: 1.2rem;
-      text-decoration: none; color: #ddd; font-weight: 600; display: block;
-      border-left: 6px solid #0072ff; transition: 0.3s;
-    }
-    .qa-item:hover { background: #111; transform: translateX(10px); color: #00e5ff; border-color: #0072ff; }
-
-    .qa-viewer { margin: 2rem auto 0; max-width: 900px; background: rgba(15, 15, 15, 0.9); border-radius: 15px; padding: 2rem; min-height: 150px; border: 1px solid #333; }
-
+    .qa-item { background: #0a0a0a; border: 1px solid #222; border-radius: 12px; padding: 1.2rem; text-decoration: none; color: #ddd; font-weight: 600; display: block; border-left: 6px solid #0072ff; margin-bottom: 10px; transition: 0.3s; }
     footer { background: #000; color: #ffeb3b; text-align: center; padding: 3rem 1.5rem; border-top: 1px solid #1a1a1a; }
   </style>
 
-  <!-- Supabase env (public) -->
   <script src="/assests/js/env.js"></script>
-  <script src="/assests/js/account-panel.js"></script>
 </head>
 <body>
 
-  <nav>
+  <div id="menuOverlay" class="menu-overlay" onclick="closeNav()"></div>
+
+  <div class="top-nav">
     <h1>IR Notes Hub</h1>
+    <button class="menu-trigger" onclick="openNav()">
+      <i class="fa-solid fa-bars"></i> Menu
+    </button>
+  </div>
 
-    <ul>
-      <li><a href="https://www.ranausman.me">Home</a></li>
-      <li><a href="opportunities.html">Opportunities</a></li>
-      <li><a href="hacks.html">Study Hacks</a></li>
-      <li><a href="https://notes.ranausman.me">Notes</a></li>
-      <li><a href="/articles/">Articles</a></li>
-      <li><a href="#qa">Q&amp;A</a></li>
+  <div id="sideDrawer" class="side-drawer">
+    <span class="close-btn" onclick="closeNav()">&times;</span>
+    
+    <div class="drawer-account-info">
+        <span id="drawerLabel">Guest</span>
+        <span id="drawerSub">Not logged in</span>
+    </div>
 
-      <!-- Always-visible Account Panel -->
-      <li>
-        <div class="account-panel" id="accountPanel">
-          <button class="account-dot" id="accountBtn" type="button" aria-label="Account menu" title="Account">⋮</button>
-          <div class="account-meta">
-            <div class="label" id="accountLabel">Guest</div>
-            <div class="sub" id="accountSub">Not logged in</div>
-          </div>
+    <div class="drawer-content">
+      <div class="drawer-section-title">Navigation</div>
+      <a href="https://www.ranausman.me"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="opportunities.html"><i class="fa-solid fa-graduation-cap"></i> Opportunities</a>
+      <a href="hacks.html"><i class="fa-solid fa-rocket"></i> Study Hacks</a>
+      <a href="https://notes.ranausman.me"><i class="fa-solid fa-book"></i> Notes</a>
+      <a href="/articles/"><i class="fa-solid fa-newspaper"></i> Articles</a>
+      <a href="#qa" onclick="closeNav()"><i class="fa-solid fa-circle-question"></i> Q&A</a>
 
-          <div class="account-menu" id="accountMenu" role="menu" aria-hidden="true">
-            <div class="group-title">Account</div>
-
-            <!-- Logged OUT options -->
-            <a id="menuLogin" href="/login.html" role="menuitem"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
-            <a id="menuSignup" href="/signup.html" role="menuitem"><i class="fa-solid fa-user-plus"></i> Sign up</a>
-
-            <hr class="account-divider" />
-
-            <div class="group-title">Articles</div>
-            <a href="/articles/" role="menuitem"><i class="fa-regular fa-file-lines"></i> Browse articles</a>
-
-            <!-- Logged IN options -->
-            <a id="menuSubmit" href="/upload.html" role="menuitem" style="display:none;"><i class="fa-solid fa-cloud-arrow-up"></i> Submit PDF</a>
-            <a id="menuMySub" href="/my-submissions.html" role="menuitem" style="display:none;"><i class="fa-solid fa-folder-open"></i> My submissions</a>
-            <a id="menuChangePw" href="/change-password.html" role="menuitem" style="display:none;"><i class="fa-solid fa-key"></i> Change password</a>
-            <a id="menuAdmin" href="/admin.html" role="menuitem" style="display:none;"><i class="fa-solid fa-shield-halved"></i> Admin</a>
-
-            <button id="menuLogout" type="button" role="menuitem" class="danger" style="display:none;">
-              <i class="fa-solid fa-right-from-bracket"></i> Logout
-            </button>
-          </div>
-        </div>
-      </li>
-    </ul>
-  </nav>
+      <div class="drawer-section-title">Account Settings</div>
+      <a id="menuLogin" href="/login.html"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+      <a id="menuSignup" href="/signup.html"><i class="fa-solid fa-user-plus"></i> Sign up</a>
+      
+      <a id="menuSubmit" href="/upload.html" style="display:none;"><i class="fa-solid fa-cloud-arrow-up"></i> Submit PDF</a>
+      <a id="menuMySub" href="/my-submissions.html" style="display:none;"><i class="fa-solid fa-folder-open"></i> My Submissions</a>
+      <a id="menuChangePw" href="/change-password.html" style="display:none;"><i class="fa-solid fa-key"></i> Change Password</a>
+      
+      <button id="menuLogout" class="danger" style="display:none; color: #ff4b2b;">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </button>
+    </div>
+  </div>
 
   <header class="hero">
     <h2>🚀 Your Ultimate IR Resource</h2>
@@ -331,9 +205,7 @@
 
   <section class="about-container">
     <div class="about-left">
-      <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="dark" data-type="VERTICAL"
-data-vanity="rana-xo"
-data-version="v1">
+      <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="rana-xo" data-version="v1">
         <a class="badge-base__link LI-simple-link" href="https://pk.linkedin.com/in/rana-xo?trk=profile-badge"></a>
       </div>
     </div>
@@ -369,14 +241,13 @@ data-version="v1">
 
   <section id="qa" class="qa">
     <h2>Q&amp;A Hub</h2>
-    <div class="qa-list">
-      <a href="/questions/why-study-ir.html" class="qa-item" data-slug="why-study-ir.html">Why study IR?</a>
-      <a href="/questions/is-ir-good-for-css.html" class="qa-item" data-slug="is-ir-good-for-css.html">Is IR good for CSS?</a>
-      <a href="/questions/ir-career-opportunities.html" class="qa-item" data-slug="ir-career-opportunities.html">Career opportunities?</a>
-      <a href="/questions/how-to-take-effective-ir-notes.html" class="qa-item" data-slug="how-to-take-effective-ir-notes.html">How to take notes?</a>
+    <div class="qa-list" style="max-width: 900px; margin: 0 auto; display: grid; gap: 10px;">
+      <a href="#" class="qa-item" data-slug="why-study-ir.html">Why study IR?</a>
+      <a href="#" class="qa-item" data-slug="is-ir-good-for-css.html">Is IR good for CSS?</a>
+      <a href="#" class="qa-item" data-slug="ir-career-opportunities.html">Career opportunities?</a>
     </div>
-    <div id="qa-viewer" class="qa-viewer">
-      <p style="text-align:center; color: #666;">Select a question above to see the answer.</p>
+    <div id="qa-viewer" style="max-width: 900px; margin: 20px auto; padding: 20px; border: 1px solid #333; border-radius: 10px; background: #0a0a0a;">
+        <p style="text-align: center; color: #666;">Select a question to view answer.</p>
     </div>
   </section>
 
@@ -385,156 +256,59 @@ data-version="v1">
   </footer>
 
   <script>
-    (function () {
-      const list = document.querySelector('.qa-list');
-      const viewer = document.getElementById('qa-viewer');
+    /* Menu Open/Close Logic */
+    function openNav() {
+      document.getElementById("sideDrawer").style.width = "320px";
+      document.getElementById("menuOverlay").style.display = "block";
+    }
 
-      list.addEventListener('click', async function (e) {
-        const link = e.target.closest('a.qa-item');
-        if (!link) return;
+    function closeNav() {
+      document.getElementById("sideDrawer").style.width = "0";
+      document.getElementById("menuOverlay").style.display = "none";
+    }
 
-        e.preventDefault();
-
-        const slug = link.getAttribute('data-slug');
-        viewer.innerHTML = '<div style="text-align:center;"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:2rem; color:#0072ff;"></i><p>Loading...</p></div>';
-
-        try {
-          const res = await fetch(`/questions/${slug}`);
-          if (!res.ok) throw new Error();
-          viewer.innerHTML = await res.text();
-        } catch (err) {
-          viewer.innerHTML = '<p style="color:#ff4b2b; text-align:center;">Answer not found.</p>';
-        }
-      });
-    })();
-  </script>
-
-  <!-- Your existing app logic (creates window.supabase) -->
-  <script type="module" src="/assests/js/index.js"></script>
-
-  <!-- Account panel logic: uses window.supabase (no new clients) -->
-  <script>
-    (function () {
-      const panel = document.getElementById("accountPanel");
-      const btn = document.getElementById("accountBtn");
-      const menu = document.getElementById("accountMenu");
-
-      function setOpen(open) {
-        if (!menu) return;
-        menu.style.display = open ? "block" : "none";
-        menu.setAttribute("aria-hidden", open ? "false" : "true");
-      }
-
-      document.addEventListener("click", (e) => {
-        if (!panel) return;
-        if (!panel.contains(e.target)) setOpen(false);
-      });
-
-      btn?.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const isOpen = menu?.style.display === "block";
-        setOpen(!isOpen);
-      });
-
-      async function waitForClient() {
+    /* Supabase Integration Logic */
+    async function waitForClient() {
         for (let i = 0; i < 100; i++) {
           if (window.supabase?.auth) return window.supabase;
           await new Promise(r => setTimeout(r, 50));
         }
         return null;
-      }
+    }
 
-      const label = document.getElementById("accountLabel");
-      const sub = document.getElementById("accountSub");
-
-      const menuLogin = document.getElementById("menuLogin");
-      const menuSignup = document.getElementById("menuSignup");
-      const menuSubmit = document.getElementById("menuSubmit");
-      const menuMySub = document.getElementById("menuMySub");
-      const menuChangePw = document.getElementById("menuChangePw");
-      const menuAdmin = document.getElementById("menuAdmin");
-      const menuLogout = document.getElementById("menuLogout");
-
-      function show(el, on) {
-        if (!el) return;
-        el.style.display = on ? "" : "none";
-      }
-
-      async function refreshAccountUI(client) {
-        const { data } = await client.auth.getSession();
-        const session = data.session;
-        const loggedIn = !!session;
-
-        if (!loggedIn) {
-          if (label) label.textContent = "Guest";
-          if (sub) sub.textContent = "Not logged in";
-
-          show(menuLogin, true);
-          show(menuSignup, true);
-
-          show(menuSubmit, false);
-          show(menuMySub, false);
-          show(menuChangePw, false);
-          show(menuAdmin, false);
-          show(menuLogout, false);
-          return;
-        }
-
-        const email = session.user?.email || "Account";
-        const name =
-          session.user?.user_metadata?.full_name ||
-          session.user?.user_metadata?.name ||
-          "";
-
-        if (label) label.textContent = name ? name : "Logged in";
-        if (sub) sub.textContent = email;
-
-        show(menuLogin, false);
-        show(menuSignup, false);
-
-        show(menuSubmit, true);
-        show(menuMySub, true);
-        show(menuChangePw, true);
-        show(menuAdmin, false); // add role-based admin later if you want
-        show(menuLogout, true);
-      }
-
-      (async function init() {
+    (async function init() {
         const client = await waitForClient();
-        if (!client) {
-          console.warn("window.supabase client not found. Ensure /assests/js/index.js initializes it.");
-          return;
-        }
+        if (!client) return;
 
-        await refreshAccountUI(client);
+        const refreshUI = async () => {
+            const { data } = await client.auth.getSession();
+            const session = data.session;
+            const loggedIn = !!session;
 
-        client.auth.onAuthStateChange(async () => {
-          await refreshAccountUI(client);
+            // Update Header/Drawer Text
+            document.getElementById("drawerLabel").textContent = loggedIn ? (session.user?.user_metadata?.full_name || "User") : "Guest";
+            document.getElementById("drawerSub").textContent = loggedIn ? session.user?.email : "Not logged in";
+
+            // Toggle Buttons
+            document.getElementById("menuLogin").style.display = loggedIn ? "none" : "flex";
+            document.getElementById("menuSignup").style.display = loggedIn ? "none" : "flex";
+            document.getElementById("menuSubmit").style.display = loggedIn ? "flex" : "none";
+            document.getElementById("menuMySub").style.display = loggedIn ? "flex" : "none";
+            document.getElementById("menuChangePw").style.display = loggedIn ? "flex" : "none";
+            document.getElementById("menuLogout").style.display = loggedIn ? "flex" : "none";
+        };
+
+        refreshUI();
+        client.auth.onAuthStateChange(refreshUI);
+
+        document.getElementById("menuLogout").addEventListener("click", async () => {
+            await client.auth.signOut();
+            closeNav();
         });
-
-        menuLogout?.addEventListener("click", async () => {
-          setOpen(false);
-          await client.auth.signOut();
-
-          const el = document.createElement("div");
-          el.textContent = "Logged out";
-          el.style.position = "fixed";
-          el.style.right = "16px";
-          el.style.bottom = "16px";
-          el.style.zIndex = "99999";
-          el.style.padding = "10px 12px";
-          el.style.borderRadius = "14px";
-          el.style.border = "1px solid #ffeb3b";
-          el.style.background = "rgba(255,235,59,0.12)";
-          el.style.color = "#fff";
-          el.style.backdropFilter = "blur(10px)";
-          el.style.fontWeight = "800";
-          document.body.appendChild(el);
-          setTimeout(() => el.remove(), 1400);
-        });
-      })();
     })();
   </script>
+
+  <script type="module" src="/assests/js/index.js"></script>
+  <script src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
 </body>
 </html>
